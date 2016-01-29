@@ -76,21 +76,13 @@ sparsebnFit.list <- function(li){
 
     if( !is.list(li)){
         stop("Input must be a list!")
-    } else if( length(li) != 6 || !setequal(names(li), c("sbm", "lambda", "nedge", "pp", "nn", "time"))){
-        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: sbm (SparseBlockMatrixR), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
-    } else if( !is.SparseBlockMatrixR(li$sbm)){
-        stop("'sbm' component must be a valid SparseBlockMatrixR object!")
-    } else if(num.edges(li$sbm) != li$nedge){
-        stop("Attempting to set nedge to an improper value: Must be equal to the number of nonzero values in sbm.")
+    } else if( length(li) != 6 || !setequal(names(li), c("edges", "lambda", "nedge", "pp", "nn", "time"))){
+        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: edges (edgeList), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
+    } else if( !is.edgeList(li$edges)){
+        stop("'edges' component must be a valid edgeList object!")
+    } else if(num.edges(li$edges) != li$nedge){
+        stop("Attempting to set nedge to an improper value: Must be equal to the number of nonzero values in edges.")
     }
-
-    #
-    # Output DAG as an edge list (i.e. an edgeList object).
-    #  This is NOT the same as sbm$rows since some of these rows may correspond to edges with zero coefficients.
-    #  See docs for SpareBlockMatrixR class for details.
-    #
-    names(li)[1] <- "edges"
-    li$edges <- as.edgeList.SparseBlockMatrixR(li$edges) # Before coercion, li$edges is actually an SBM object
 
     ### Update values to be consistent with edgeList
     if(li$pp != num.nodes(li$edges)){
@@ -157,7 +149,10 @@ num.samples.sparsebnFit <- function(cf){
 # Internal function to convert estimates from the (Rho, R) parametrization to
 #  the standard (B, Omega) parametrization.
 #
+# !!! 1-29-16: This function needs to be deprecated
+#
 to_B.sparsebnFit <- function(cf){
+    .Deprecated()
     cf$sbm <- to_B(cf$sbm)
 
     cf
