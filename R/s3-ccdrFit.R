@@ -1,5 +1,5 @@
 #
-#  s3-ccdrFit.R
+#  s3-sparsebnFit.R
 #  ccdr
 #
 #  Created by Bryon Aragam (local) on 2/4/15.
@@ -7,11 +7,11 @@
 #
 
 #------------------------------------------------------------------------------#
-# ccdrFit S3 Class for R
+# sparsebnFit S3 Class for R
 #------------------------------------------------------------------------------#
 
 #
-# ccdrFit S3 class skeleton
+# sparsebnFit S3 class skeleton
 #
 # Data
 # * edgeList edges          // edge list, adjacency matrix, or graphNEL object of DAG estimate
@@ -22,21 +22,21 @@
 # * numeric time            // time to run CCDr algorithm
 #
 # Methods
-# * is.ccdrFit
-# * ccdrFit.list
-# * as.list.ccdrFit
-# * print.ccdrFit
+# * is.sparsebnFit
+# * sparsebnFit.list
+# * as.list.sparsebnFit
+# * print.sparsebnFit
 # * get.adjacency.matrix
-# * num.nodes.ccdrFit
-# * num.edges.ccdrFit
-# * num.samples.ccdrFit
-# * to_B.ccdrFit
+# * num.nodes.sparsebnFit
+# * num.edges.sparsebnFit
+# * num.samples.sparsebnFit
+# * to_B.sparsebnFit
 #
 
-#' ccdrFit class
+#' sparsebnFit class
 #'
 #' Main class for representing DAG estimates: Represents a single DAG estimate in the solution path.
-#' Generally speaking, these estimates should be wrapped up in a \code{\link{ccdrPath-class}} object, but
+#' Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath-class}} object, but
 #' can be handled separately if desired (be careful!).
 #'
 #' @section Slots:
@@ -55,16 +55,16 @@
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 #'
 #' @docType class
-#' @name ccdrFit-class
+#' @name sparsebnFit-class
 NULL
 
 #' @export
-is.ccdrFit <- function(cf){
-    inherits(cf, "ccdrFit")
-} # END IS.CCDRFIT
+is.sparsebnFit <- function(cf){
+    inherits(cf, "sparsebnFit")
+} # END IS.sparsebnFit
 
-# ccdrFit constructor
-ccdrFit.list <- function(li){
+# sparsebnFit constructor
+sparsebnFit.list <- function(li){
 
     #
     # Need to be careful when using this constructor directly since it allows the nedge
@@ -77,7 +77,7 @@ ccdrFit.list <- function(li){
     if( !is.list(li)){
         stop("Input must be a list!")
     } else if( length(li) != 6 || !setequal(names(li), c("sbm", "lambda", "nedge", "pp", "nn", "time"))){
-        stop("Input is not coercable to an object of type ccdrFit, check list for the following elements: sbm (SparseBlockMatrixR), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
+        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: sbm (SparseBlockMatrixR), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
     } else if( !is.SparseBlockMatrixR(li$sbm)){
         stop("'sbm' component must be a valid SparseBlockMatrixR object!")
     } else if(num.edges(li$sbm) != li$nedge){
@@ -94,26 +94,26 @@ ccdrFit.list <- function(li){
 
     ### Update values to be consistent with edgeList
     if(li$pp != num.nodes(li$edges)){
-        stop("Attempting to create ccdrFit object with inconsistent number of nodes! input = ", li$pp, " != output = ", num.nodes(li$edges))
+        stop("Attempting to create sparsebnFit object with inconsistent number of nodes! input = ", li$pp, " != output = ", num.nodes(li$edges))
     }
     li$pp <- num.nodes(li$edges)
 
     if(li$nedge != num.edges(li$edges)){
-        stop("Attempting to create ccdrFit object with inconsistent number of edges! input = ", li$nedge, " != output = ", num.edges(li$edges))
+        stop("Attempting to create sparsebnFit object with inconsistent number of edges! input = ", li$nedge, " != output = ", num.edges(li$edges))
     }
     li$nedge <- num.edges(li$edges)
 
     ### Final output
-    structure(li, class = "ccdrFit")
-} # END CCDRFIT.LIST
+    structure(li, class = "sparsebnFit")
+} # END sparsebnFit.LIST
 
 #' @export
-as.list.ccdrFit <- function(cf){
+as.list.sparsebnFit <- function(cf){
     list(edges = cf$edges, lambda = cf$lambda, nedge = cf$nedge, pp = cf$pp, nn = cf$nn, time = cf$time)
-} # END AS.LIST.CCDRFIT
+} # END AS.LIST.sparsebnFit
 
 #' @export
-print.ccdrFit <- function(cf){
+print.sparsebnFit <- function(cf){
     MAX_NODES <- 20
 
     cat("CCDr estimate\n",
@@ -126,38 +126,38 @@ print.ccdrFit <- function(cf){
     if(cf$pp < MAX_NODES) {
         # print(get.adjacency.matrix(cf))
     }
-} # END PRINT.CCDRFIT
+} # END PRINT.sparsebnFit
 
 #' @export
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
-get.adjacency.matrix.ccdrFit <- function(cf){
+get.adjacency.matrix.sparsebnFit <- function(cf){
     get.adjacency.matrix.edgeList(cf$edges)
-} # END GET.ADJACENCY.MATRIX.CCDRFIT
+} # END GET.ADJACENCY.MATRIX.sparsebnFit
 
 #' @export
 #' @describeIn num.nodes
-num.nodes.ccdrFit <- function(cf){
+num.nodes.sparsebnFit <- function(cf){
     cf$pp
-} # END NUM.NODES.CCDRFIT
+} # END NUM.NODES.sparsebnFit
 
 #' @export
 #' @describeIn num.edges
-num.edges.ccdrFit <- function(cf){
+num.edges.sparsebnFit <- function(cf){
     cf$nedge
-} # END NUM.EDGES.CCDRFIT
+} # END NUM.EDGES.sparsebnFit
 
 #' @export
 #' @describeIn num.samples
-num.samples.ccdrFit <- function(cf){
+num.samples.sparsebnFit <- function(cf){
     cf$nn
-} # END NUM.SAMPLES.CCDRFIT
+} # END NUM.SAMPLES.sparsebnFit
 
 #------------------------------------------------------------------------------#
-# to_B.ccdrFit
+# to_B.sparsebnFit
 # Internal function to convert estimates from the (Rho, R) parametrization to
 #  the standard (B, Omega) parametrization.
 #
-to_B.ccdrFit <- function(cf){
+to_B.sparsebnFit <- function(cf){
     cf$sbm <- to_B(cf$sbm)
 
     cf

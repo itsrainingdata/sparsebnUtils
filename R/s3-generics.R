@@ -12,13 +12,13 @@
 #   CONTENTS:
 #
 
-# Generics for ccdrPath
-ccdrPath <- function(x) UseMethod("ccdrPath", x)
-as.ccdrPath <- function(x) UseMethod("as.ccdrPath", x)
+# Generics for sparsebnPath
+sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
+as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
 
-# Generics for ccdrFit
-ccdrFit <- function(x) UseMethod("ccdrFit", x)
-as.ccdrFit <- function(x) UseMethod("as.ccdrFit", x)
+# Generics for sparsebnFit
+sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
+as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 
 # Generics for SparseBlockMatrixR
 SparseBlockMatrixR <- function(x) UseMethod("SparseBlockMatrixR", x)
@@ -42,7 +42,7 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 
 #' lambda.grid
 #'
-#' Extracts the lambda values from a \code{\link{ccdrPath-class}} object.
+#' Extracts the lambda values from a \code{\link{sparsebnPath-class}} object.
 #'
 #' @export
 lambda.grid <- function(x) UseMethod("lambda.grid", x)

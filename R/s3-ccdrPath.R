@@ -1,5 +1,5 @@
 #
-#  s3-ccdrPath.R
+#  s3-sparsebnPath.R
 #  ccdr
 #
 #  Created by Bryon Aragam (local) on 7/24/15.
@@ -7,72 +7,72 @@
 #
 
 #------------------------------------------------------------------------------#
-# ccdrPath S3 Class for R
+# sparsebnPath S3 Class for R
 #------------------------------------------------------------------------------#
 
 #
-# ccdrPath S3 class skeleton
+# sparsebnPath S3 class skeleton
 #
 # Data
 # * <wrapper for a list>
 #
 # Methods
-# * is.ccdrPath
-# * ccdrPath.list
-# * print.ccdrPath
-# * as.list.ccdrPath
-# * num.nodes.ccdrPath
-# * num.edges.ccdrPath
-# * num.samples.ccdrPath
-# * lambda.grid.ccdrPath
-# * get.adjacency.matrix.ccdrPath
+# * is.sparsebnPath
+# * sparsebnPath.list
+# * print.sparsebnPath
+# * as.list.sparsebnPath
+# * num.nodes.sparsebnPath
+# * num.edges.sparsebnPath
+# * num.samples.sparsebnPath
+# * lambda.grid.sparsebnPath
+# * get.adjacency.matrix.sparsebnPath
 #
 
-#' ccdrPath class
+#' sparsebnPath class
 #'
 #' Convenience wrapper class for output of CCDr algorithm: Represents the entire solution path
-#' of the CCDr algorithm. Its components are of type \code{\link{ccdrFit-class}}. Also inherits
+#' of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit-class}}. Also inherits
 #' from \code{\link{list}}.
 #'
 #' Each value of lambda in the (discrete) solution path corresponds to a single DAG estimate, which
 #' is of the form (Phi, Rho) (see \href{http://arxiv.org/abs/1401.0852}{Aragam and Zhou (2015), JMLR} for details).
-#' Internally, this estimate is represented by a \code{\link{ccdrFit-class}} object. The full solution
-#' path is then represented as a \code{\link{list}} of \code{\link{ccdrFit-class}} objects: This class is essentially a wrapper for this list.
+#' Internally, this estimate is represented by a \code{\link{sparsebnFit-class}} object. The full solution
+#' path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit-class}} objects: This class is essentially a wrapper for this list.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}}, \code{\link{lambda.grid}},
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 #'
 #' @docType class
-#' @name ccdrPath-class
+#' @name sparsebnPath-class
 NULL
 
 #' @export
-is.ccdrPath <- function(cp){
-    inherits(cp, "ccdrPath")
-} # END IS.CCDRPATH
+is.sparsebnPath <- function(cp){
+    inherits(cp, "sparsebnPath")
+} # END IS.sparsebnPath
 
-# ccdrPath constructor
-ccdrPath.list <- function(li){
-    if(!check_list_class(li, "ccdrFit")){
-        stop("Some component is not of type ccdrPath -- ccdrPath objects must consist of ccdrFit components only.")
+# sparsebnPath constructor
+sparsebnPath.list <- function(li){
+    if(!check_list_class(li, "sparsebnFit")){
+        stop("Some component is not of type sparsebnPath -- sparsebnPath objects must consist of sparsebnFit components only.")
     }
 
     ### Note that we still allow these objects to inherit from the base list class
-    structure(li, class = c("ccdrPath", "list"))
-} # END CCDRPATH.LIST
+    structure(li, class = c("sparsebnPath", "list"))
+} # END sparsebnPath.LIST
 
-#' print.ccdrPath
+#' print.sparsebnPath
 #'
-#' Prints the contents of a \code{\link{ccdrPath-class}} object neatly.
+#' Prints the contents of a \code{\link{sparsebnPath-class}} object neatly.
 #'
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
 #' @export
-print.ccdrPath <- function(cp, verbose = FALSE){
+print.sparsebnPath <- function(cp, verbose = FALSE){
     if(verbose){
-        print.default(cp) # default generic reverts to list => separate calls to print.ccdrFit for each component
+        print.default(cp) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
         cat("CCDr solution path\n",
             length(cp), " estimates for lambda in [", min(lambda.grid(cp)), ",", max(lambda.grid(cp)), "]\n",
@@ -81,45 +81,45 @@ print.ccdrPath <- function(cp, verbose = FALSE){
             num.samples(cp), " observations\n",
             sep = "")
     }
-} # END PRINT.CCDRPATH
+} # END PRINT.sparsebnPath
 
 #' @export
-as.list.ccdrPath <- function(cp){
+as.list.sparsebnPath <- function(cp){
     class(cp) <- "list"
     cp
-} # END AS.LIST.CCDRPATH
+} # END AS.LIST.sparsebnPath
 
 #' @export
 #' @describeIn num.nodes
-num.nodes.ccdrPath <- function(cp){
+num.nodes.sparsebnPath <- function(cp){
     unique(unlist(lapply(cp, function(x) x$pp)))
-} # END NUM.NODES.CCDRPATH
+} # END NUM.NODES.sparsebnPath
 
 #' @export
 #' @describeIn num.edges
-num.edges.ccdrPath <- function(cp){
+num.edges.sparsebnPath <- function(cp){
     ### unique(.) not needed since different estimates should have different # of edges
     unlist(lapply(cp, function(x) x$nedge))
-} # END NUM.EDGES.CCDRPATH
+} # END NUM.EDGES.sparsebnPath
 
 #' @export
 #' @describeIn num.samples
-num.samples.ccdrPath <- function(cp){
+num.samples.sparsebnPath <- function(cp){
     unique(unlist(lapply(cp, function(x) x$nn)))
-} # END NUM.SAMPLES.CCDRPATH
+} # END NUM.SAMPLES.sparsebnPath
 
-#' lambda.grid.ccdrPath
+#' lambda.grid.sparsebnPath
 #'
 #' @export
-lambda.grid.ccdrPath <- function(cp){
+lambda.grid.sparsebnPath <- function(cp){
     lambdas <- unlist(lapply(cp, function(x){ x$lambda}))
     names(lambdas) <- NULL
 
     lambdas
-} # END LAMBDA.GRID.CCDRPATH
+} # END LAMBDA.GRID.sparsebnPath
 
 #' @export
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
-get.adjacency.matrix.ccdrPath <- function(cp){
+get.adjacency.matrix.sparsebnPath <- function(cp){
     lapply(cp, get.adjacency.matrix)
-} # END GET.ADJACENCY.MATRIX.CCDRPATH
+} # END GET.ADJACENCY.MATRIX.sparsebnPath
