@@ -1,13 +1,14 @@
 #
-#  ccdr-functions.R
-#  ccdr
+#  sparsebnUtils-lambdas.R
+#  sparsebnUtils
 #
-#  Created by Bryon Aragam (local) on 2/4/15.
-#  Copyright (c) 2014-2015 Bryon Aragam (local). All rights reserved.
+#  Created by Bryon Aragam (local) on 1/22/16.
+#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
 #
 
+
 #
-# PACKAGE CCDR: Functions
+# PACKAGE SPARSEBNUTILS: Lambdas
 #
 #   CONTENTS:
 #     generate.lambdas
