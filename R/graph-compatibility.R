@@ -10,6 +10,22 @@
 # Various utility functions for enforcing compatibility with the 'graph' package from BioConductor.
 #
 
+to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
+
+to_graphNEL.edgeList <- function(el){
+    edge_list_to_graphNEL_edgeL(el)
+}
+
+to_graphNEL.sparsebnFit <- function(sbf){
+    sbf$edges <- to_graphNEL(sbf$edges)
+
+    sbf
+}
+
+to_graphNEL.sparsebnPath <- function(sbp){
+    lapply(sbp, to_graphNEL)
+}
+
 #
 # Helper function to convert an edge list to a graphNEL compatible edge list
 #  The main difference is instead of listing parents for each node, graphNEL requires
@@ -62,26 +78,4 @@ edge_list_to_graphNEL_edgeL <- function(el){
     names(el.graphNEL) <- as.character(1:numnode)
 
     el.graphNEL
-}
-
-to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
-
-to_graphNEL.SparseBlockMatrixR <- function(sbm){
-    el <- edge.list(sbm)
-    el <- edge_list_to_graphNEL_edgeL(el)
-
-    graphNEL(nodes = as.character(1:num.nodes(sbm)), edgeL = el, edgemode = 'directed')
-}
-
-to_graphNEL.ccdrFit <- function(cf){
-    #
-    # REALLY SHOULD RENAME SBM SINCE THIS CAN CHANGE TYPE (SBM, matrix, graphNEL)
-    #
-    cf$sbm <- to_graphNEL(cf$sbm)
-
-    cf
-}
-
-to_graphNEL.ccdrPath <- function(cp){
-    lapply(cp, to_graphNEL)
 }
