@@ -6,7 +6,6 @@
 #  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
 #
 
-
 #
 # PACKAGE SPARSEBNUTILS: Lambdas
 #

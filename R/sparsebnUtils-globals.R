@@ -1,13 +1,13 @@
 #
-#  ccdr-globals.R
-#  ccdrAlgorithm
+#  sparsebnUtils-globals.R
+#  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
 #  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
 #
 
 #
-# PACKAGE CCDRALGORITHM: Global variables
+# PACKAGE SPARSEBNUTILS: Global variables
 #
 #   CONTENTS:
 #     .MACHINE_EPS
