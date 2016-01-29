@@ -12,6 +12,10 @@
 #   CONTENTS:
 #
 
+# Generics for sparsebnData
+sparsebnData <- function(x) UseMethod("sparsebnData", x)
+as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
+
 # Generics for sparsebnPath
 sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
 as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
