@@ -115,7 +115,7 @@ num.nodes.edgeList <- function(edgeL){
 #' @export
 #' @describeIn num.edges
 num.edges.edgeList <- function(edgeL){
-    sum(unlist(lapply(edgeL, length)))
+    sum(sapply(edgeL, length))
 } # END NUM.EDGES.EDGELIST
 
 #' @export
