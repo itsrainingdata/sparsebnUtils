@@ -10,5 +10,5 @@ test_that("check_list_class behaves as expected", {
 
     ### Empty list
     expect_warning(check_list_class(list(), "character"), "no elements")
-    expect_true(check_list_class(list(), "character"))
+    expect_true(suppressWarnings(check_list_class(list(), "character")))
 })
