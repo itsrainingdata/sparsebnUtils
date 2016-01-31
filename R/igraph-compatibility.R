@@ -13,6 +13,11 @@
 to_igraph <- function(x) UseMethod("to_igraph", x)
 
 to_igraph.edgeList <- function(el){
+    ### This function requires the 'igraph' package to be installed
+    if (!requireNamespace("igraph", quietly = TRUE)) {
+        stop("igraph package required to coerce data to 'igraph' type!", call. = FALSE)
+    }
+
     el.igraph <- edgeList_to_igraph_edgelist(el)
 
     igraph::graph_from_edgelist(el.igraph, directed = TRUE)

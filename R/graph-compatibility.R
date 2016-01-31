@@ -13,6 +13,11 @@
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
 to_graphNEL.edgeList <- function(el){
+    ### This function require the 'graph' package to be installed
+    if (!requireNamespace("graph", quietly = TRUE)) {
+        stop("graph package (from BioConductor) required to coerce data to 'graphNEL' type!", call. = FALSE)
+    }
+
     el.graphNEL <- edgeList_to_graphNEL_edgeL(el)
     names.graphNEL <- as.character(1:num.nodes(el))
 
