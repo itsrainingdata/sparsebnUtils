@@ -13,7 +13,10 @@
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
 to_graphNEL.edgeList <- function(el){
-    edge_list_to_graphNEL_edgeL(el)
+    el.graphNEL <- edgeList_to_graphNEL_edgeL(el)
+    names.graphNEL <- as.character(1:num.nodes(el))
+
+    graph::graphNEL(nodes = names.graphNEL, edgeL = el.graphNEL, edgemode = 'directed')
 }
 
 to_graphNEL.sparsebnFit <- function(sbf){
@@ -31,7 +34,7 @@ to_graphNEL.sparsebnPath <- function(sbp){
 #  The main difference is instead of listing parents for each node, graphNEL requires
 #  listing children for each parent. There are also different naming and indexing conventions.
 #
-edge_list_to_graphNEL_edgeL <- function(el){
+edgeList_to_graphNEL_edgeL <- function(el){
     #----------- EXAMPLE -----------
     # Default:
     # [[1]]
@@ -60,7 +63,7 @@ edge_list_to_graphNEL_edgeL <- function(el){
     #
     #-------------------------------
 
-    numnode <- length(el) # Number of nodes should be same as length of default edge list
+    numnode <- num.nodes(el) # Number of nodes should be same as length of default edge list
 
     ### Invert the child-parent relationships (aka implicit transpose of adjacency matrix)
     el.graphNEL <- vector(mode = "list", length = numnode)
