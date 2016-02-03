@@ -24,10 +24,6 @@ as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
 sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
 as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 
-# Generics for SparseBlockMatrixR
-SparseBlockMatrixR <- function(x) UseMethod("SparseBlockMatrixR", x)
-as.SparseBlockMatrixR <- function(x) UseMethod("as.SparseBlockMatrixR", x)
-
 # Generics for sparse
 sparse <- function(x) UseMethod("sparse", x)
 as.sparse <- function(x) UseMethod("as.sparse", x)
