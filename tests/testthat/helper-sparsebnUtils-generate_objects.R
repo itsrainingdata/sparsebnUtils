@@ -18,7 +18,7 @@ generate_empty_sparsebnPath <- function(){
 }
 
 generate_empty_adjacency_matrix <- function(){
-    m <- matrix(0, nrow = 0, ncol = 0)
+    m <- matrix(0, nrow = 1, ncol = 1)
     m
     # Matrix::Matrix(m)
 }
