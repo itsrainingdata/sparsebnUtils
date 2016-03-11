@@ -52,9 +52,13 @@ is.edgeList <- function(edgeL){
 
 #' @export
 edgeList.list <- function(li){
-    ### Minimal consistency checks for this class
     if(!is.list(li)){
         stop("Input must be a list!")
+    }
+
+    ### Don't allow length zero lists: What would that represent anyway?
+    if(length(li) == 0){
+        stop("Input must have at least one component!")
     }
 
     structure(li, class = c("edgeList", "list"))
