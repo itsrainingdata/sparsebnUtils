@@ -75,6 +75,13 @@ num.samples <- function(x) UseMethod("num.samples", x)
 #' @export
 is.zero <- function(x) UseMethod("is.zero", x)
 
+#' estimate.parameters
+#'
+#' Estimates the parameters of a DAG
+#'
+#' @export
+estimate.parameters <- function(fit, data) UseMethod("estimate.parameters", fit)
+
 # Internal generics
 reIndexC <- function(x) UseMethod("reIndexC", x)
 reIndexR <- function(x) UseMethod("reIndexR", x)
