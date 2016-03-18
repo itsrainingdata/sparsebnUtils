@@ -58,6 +58,8 @@ sparsebnData.list <- function(li){
         stop("Input must be a list!")
     } else if( length(li) != 2 || !setequal(names(li), c("data", "ivn"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), ivn (list)")
+    } else if( !sparsebnUtils::check_if_data_matrix(li$data)){
+        stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(li$data)))
     } else if(nrow(li$data) != length(li$ivn)){
         stop("The length of the ivn list must equal the number of rows in the data!")
     }
@@ -81,6 +83,13 @@ sparsebnData.data.frame <- function(data){
     sparsebnData.list(list(data = data, ivn = ivn))
 }
 
+# sparsebnData constructor
+#  Default constructor for matrix input
+sparsebnData.matrix <- function(data){
+    sparsebnData.data.frame(as.data.frame(data))
+}
+
+# Default print method
 print.sparsebnData <- function(sbd){
     print(sbd$data)
 }
