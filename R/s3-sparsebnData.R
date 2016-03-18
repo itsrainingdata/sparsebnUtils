@@ -89,6 +89,10 @@ sparsebnData.matrix <- function(data){
     sparsebnData.data.frame(as.data.frame(data))
 }
 
+num.samples.sparsebnData <- function(sbd){
+    nrow(sbd$data)
+}
+
 # Default print method
 print.sparsebnData <- function(sbd){
     print(sbd$data)
