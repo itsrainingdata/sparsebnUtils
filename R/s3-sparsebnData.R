@@ -33,14 +33,26 @@
 
 #' sparsebnData class
 #'
-#' Convenience wrapper class for observational and experimental data.
+#' This class stores data that may contain interventions on some or all of the observations. It also
+#' allows for the degenerate case with no interventions, i.e. purely observational data.
+#'
+#' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object and a
+#' list of interventions. The list should be the same size as the number of rows in the dataset, and each
+#' component indicates which column(s) in the dataset is (are) under intervention. If an observation has no
+#' interventions, then the corresponding component is \code{NULL}. If this list only contains \code{NULL} values,
+#' then the data is purely observational.
 #'
 #' Also inherits from \code{\link{list}}.
 #'
+#' @section Slots:
+#' \describe{
+#' \item{\code{data}}{(data.frame) Dataset.}
+#' \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
+#' }
 #'
 #' @section Methods:
-#' \code{\link{first.method.name}}
-#' \code{\link{second.method.name}}
+#' \code{\link{num.samples}}
+#' \code{\link{print}}
 #'
 #' @docType class
 #' @name sparsebnData-class
@@ -96,4 +108,6 @@ num.samples.sparsebnData <- function(sbd){
 # Default print method
 print.sparsebnData <- function(sbd){
     print(sbd$data)
+
+    ### Add a message about the interventions as well / if purely obs, etc.
 }

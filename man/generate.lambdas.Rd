@@ -23,7 +23,6 @@ Convenience function for creating a grid of lambdas.
 }
 \details{
 See Section 5.3 of \href{http://arxiv.org/abs/1401.0852}{Aragam and Zhou (2015), JMLR}
-for a discussion of regularization paths (also, solution paths) as used in the CCDr
-algorithm.
+for a discussion of regularization paths (also, solution paths).
 }
 
