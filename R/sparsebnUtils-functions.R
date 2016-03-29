@@ -17,14 +17,20 @@
 #     cor_vector
 #
 
-# Special function to check if an object is EITHER matrix or Matrix object
+# Check if an object is EITHER matrix or Matrix object
 check_if_matrix <- function(m){
     is.matrix(m) || inherits(m, "Matrix")
 } # END .CHECK_IF_MATRIX
 
+# Check if an object is a valid dataset
 check_if_data_matrix <- function(df){
-    is.data.frame(df) || is.matrix(df)
+    is.data.frame(df) || check_if_matrix(df)
 } # END .CHECK_IF_DATA_MATRIX
+
+# Check if a dataset contains missing data
+check_if_complete_data <- function(df){
+    (count_nas(df) == 0)
+} # END .CHECK_IF_COMPLETE_DATA
 
 # Count missing values in a matrix or data.frame
 count_nas <- function(df){
@@ -35,12 +41,12 @@ count_nas <- function(df){
     sum(is.na(df))
 } # END .COUNT_NAS
 
-# Special function to return types for each element in a list
+# Return the types for each element in a list
 list_classes <- function(li){
     unlist(lapply(li, class))
 } # END .LIST_CLASSES
 
-# Return TRUE if every element of li inherits check.class, FALSE otherwise
+# Return TRUE if every element of a list inherits check.class, FALSE otherwise
 check_list_class <- function(li, check.class){
     if(length(li) == 0){
         warning("List contains no elements!")
@@ -60,12 +66,9 @@ col_classes <- function(X){
     apply(X, 2, class)
 } # END .COL_CLASSES
 
+# Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
+#  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
 cor_vector <- function(X){
-# This is now implicitly checked via col_classes
-#     if( !is.data.frame(X) && !is.matrix(X)){
-#         stop("Input must either be a data.frame or a matrix!")
-#     }
-
     check.numeric <- (col_classes(X) != "numeric")
     if( any(check.numeric)){
         not.numeric <- which(check.numeric)

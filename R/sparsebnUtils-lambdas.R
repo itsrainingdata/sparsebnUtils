@@ -19,8 +19,7 @@
 #' Convenience function for creating a grid of lambdas.
 #'
 #' See Section 5.3 of \href{http://arxiv.org/abs/1401.0852}{Aragam and Zhou (2015), JMLR}
-#' for a discussion of regularization paths (also, solution paths) as used in the CCDr
-#' algorithm.
+#' for a discussion of regularization paths (also, solution paths).
 #'
 #' @param lambda.max Maximum value of lambda; in terms of the algorithm this is the initial value
 #'                   of the regularization parameter in the solution path.
