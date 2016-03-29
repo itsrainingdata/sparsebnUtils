@@ -93,21 +93,23 @@ sparsebnData.data.frame <- function(data){
 
     ### Final output
     sparsebnData.list(list(data = data, ivn = ivn))
-}
+} # END SPARSEBNDATA.DATA.FRAME
 
 # sparsebnData constructor
 #  Default constructor for matrix input
 sparsebnData.matrix <- function(data){
     sparsebnData.data.frame(as.data.frame(data))
-}
+} # END SPARSEBNDATA.MATRIX
 
+#' @export
+#' @describeIn num.samples
 num.samples.sparsebnData <- function(sbd){
     nrow(sbd$data)
-}
+} # END NUM.SAMPLES.SPARSEBNDATA
 
 # Default print method
 print.sparsebnData <- function(sbd){
     print(sbd$data)
 
     ### Add a message about the interventions as well / if purely obs, etc.
-}
+} # END PRINT.SPARSEBNDATA

@@ -12,23 +12,32 @@
 #   CONTENTS:
 #
 
-# Generics for sparsebnData
+### Generics for sparsebnData
+#' @export
 sparsebnData <- function(x) UseMethod("sparsebnData", x)
+
+#' @export
 as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
 
-# Generics for sparsebnPath
+### Generics for sparsebnPath
+#' @export
 sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
+
+#' @export
 as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
 
-# Generics for sparsebnFit
+### Generics for sparsebnFit
+#' @export
 sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
+
+#' @export
 as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 
-# Generics for sparse
+### Generics for sparse
 sparse <- function(x) UseMethod("sparse", x)
 as.sparse <- function(x) UseMethod("as.sparse", x)
 
-# Generics for various exported utility functions
+### Generics for various exported utility functions
 
 #' get.adjacency.matrix
 #'
@@ -81,6 +90,7 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #'
 #' @export
 estimate.parameters <- function(fit, data) UseMethod("estimate.parameters", fit)
+# estimate.parameters <- function(fit, data, opt) UseMethod("estimate.parameters", fit)
 
 # Internal generics
 reIndexC <- function(x) UseMethod("reIndexC", x)

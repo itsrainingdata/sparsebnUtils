@@ -11,6 +11,9 @@
 #
 #   CONTENTS:
 #     check_if_matrix
+#     check_if_data_matrix
+#     check_if_complete_data
+#     count_nas
 #     list_classes
 #     check_list_class
 #     col_classes
