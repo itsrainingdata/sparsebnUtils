@@ -87,3 +87,12 @@ cor_vector <- function(X){
 
     cors
 } # END .COR_VECTOR
+
+# Utility to capitalize the first letter in a string
+#  Borrowed verbatim from the 'Hmisc' package
+capitalize <- function(string) {
+    capped <- grep("^[^A-Z]*$", string, perl = TRUE)
+    substr(string[capped], 1, 1) <- toupper(substr(string[capped],
+        1, 1))
+    return(string)
+} # END CAPITALIZE

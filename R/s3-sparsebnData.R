@@ -134,10 +134,10 @@ print.sparsebnData <- function(sbd, n = 5L){
 
     cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(sbd), num.samples(sbd) - 2*n))
     if(is.obs(sbd)){
-        cat(sprintf("Observational data"))
+        cat(sprintf("Observational data with %s observations", sbd$type))
     } else{
 
-        cat(sprintf("Data w/ interventions on %d/%d rows.", count.interventions(sbd), num.samples(sbd)))
+        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(sbd$type), count.interventions(sbd), num.samples(sbd)))
     }
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA
