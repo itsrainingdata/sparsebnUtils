@@ -16,6 +16,7 @@
 # Data
 # * data.frame data     // data
 # * list ivn            // list of nodes under intervention for each row (observation)
+# * character type     // either "continuous", "discrete", or "mixed"
 #
 
 #
@@ -68,12 +69,14 @@ sparsebnData.list <- function(li){
 
     if( !is.list(li)){
         stop("Input must be a list!")
-    } else if( length(li) != 2 || !setequal(names(li), c("data", "ivn"))){
+    } else if( length(li) != 3 || !setequal(names(li), c("data", "ivn", "type"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), ivn (list)")
     } else if( !sparsebnUtils::check_if_data_matrix(li$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(li$data)))
     } else if(nrow(li$data) != length(li$ivn)){
         stop("The length of the ivn list must equal the number of rows in the data!")
+    } else if(!(li$type %in% c("continuous", "discrete", "mixed"))){
+        stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
     }
 
     ### Final output
@@ -83,24 +86,27 @@ sparsebnData.list <- function(li){
 # sparsebnData constructor
 #  Default constructor for data.frame input
 #' @export
-sparsebnData.data.frame <- function(data){
+sparsebnData.data.frame <- function(data, ivn, type){
 
     #
-    # If the input is a pure data.frame, ASSUME all rows are observational. If the data
-    #  is experimental, the user needs to specify this by passing in 'ivn' (see sparsebnData.list).
+    # If the user fails to specify a list of interventions, ASSUME all rows are observational. If the data
+    #  is experimental, the user needs to specify this by passing in 'ivn' (see also sparsebnData.list).
     #
 
-    ivn <- vector("list", length = nrow(data))
+    if(missing(ivn)){
+        warning("A list of interventions was not specified: Assuming data is purely observational.")
+        ivn <- vector("list", length = nrow(data))
+    }
 
     ### Final output
-    sparsebnData.list(list(data = data, ivn = ivn))
+    sparsebnData.list(list(data = data, ivn = ivn, type = type))
 } # END SPARSEBNDATA.DATA.FRAME
 
 # sparsebnData constructor
 #  Default constructor for matrix input
 #' @export
-sparsebnData.matrix <- function(data){
-    sparsebnData.data.frame(as.data.frame(data))
+sparsebnData.matrix <- function(data, ivn, type){
+    sparsebnData.data.frame(as.data.frame(data), ivn, type)
 } # END SPARSEBNDATA.MATRIX
 
 #' @export
@@ -141,6 +147,17 @@ print.sparsebnData <- function(sbd, n = 5L){
 as.data.frame.sparsebnData <- function(x){
     data.frame(x$data)
 } # END AS.DATA.FRAME.SPARSEBNDATA
+
+### Internal method for picking the correct family for fitting parameters
+pick_family.sparsebnData <- function(sbd){
+    if(sbd$type == "continuous"){
+        return("gaussian")
+    } else if(sbd$type == "discrete"){
+        return("binomial")
+    } else{
+        stop("'mixed' type not supported for inference yet!")
+    }
+}
 
 ### Borrow the print.data.table method from the 'data.table' package without needing to import the entire package
 ###  This is an experimental method!

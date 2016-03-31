@@ -14,7 +14,7 @@
 
 ### Generics for sparsebnData
 #' @export
-sparsebnData <- function(x) UseMethod("sparsebnData", x)
+sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
 #' @export
 as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
@@ -90,9 +90,9 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #'
 #' @export
 estimate.parameters <- function(fit, data) UseMethod("estimate.parameters", fit)
-# estimate.parameters <- function(fit, data, opt) UseMethod("estimate.parameters", fit)
 
 # Internal generics
+pick_family <- function(x) UseMethod("pick_family", x)
 reIndexC <- function(x) UseMethod("reIndexC", x)
 reIndexR <- function(x) UseMethod("reIndexR", x)
 .num_edges <- function(x) UseMethod(".num_edges", x)
