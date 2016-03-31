@@ -109,14 +109,80 @@ num.samples.sparsebnData <- function(sbd){
     nrow(sbd$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
 
-# Default print method
-print.sparsebnData <- function(sbd){
-    print(sbd$data)
+# Returns TRUE if the data contains no interventions, i.e. is purely observational
+#' @export
+is.obs <- function(sbd){
+    all(unlist(lapply(dat$ivn, is.null)))
+} # END IS.OBS
 
+# Returns the number of rows with at least one intervention
+#' @export
+count.interventions <- function(sbd){
+    sum(unlist(lapply(dat$ivn, function(x) !is.null(x))))
+} # END COUNT.INTERVENTIONS
+
+# Default print method
+print.sparsebnData <- function(sbd, n = 5L){
+    # print(head(sbd$data, n = n), row.names = FALSE)
+    .print_data_frame(sbd$data, topn = n)
+
+    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(sbd), num.samples(sbd) - 2*n))
+    if(is.obs(sbd)){
+        cat(sprintf("Observational data"))
+    } else{
+
+        cat(sprintf("Data w/ interventions on %d/%d rows.", count.interventions(sbd), num.samples(sbd)))
+    }
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA
 
+# Convert a sparsebnData object back to a data.frame
 #' @export
 as.data.frame.sparsebnData <- function(x){
     data.frame(x$data)
 } # END AS.DATA.FRAME.SPARSEBNDATA
+
+### Borrow the print.data.table method from the 'data.table' package without needing to import the entire package
+###  This is an experimental method!
+.print_data_frame <- function(x,
+                              topn=5,   # (5) print the top topn and bottom topn rows with '---' inbetween
+                              nrows=5, # (100) under this the whole (small) table is printed, unless topn is provided
+                              row.names = TRUE, ...){
+    if (!is.numeric(nrows)) nrows = 100L
+    if (!is.infinite(nrows)) nrows = as.integer(nrows)
+    if (nrows <= 0L) return(invisible())   # ability to turn off printing
+    if (!is.numeric(topn)) topn = 5L
+    topnmiss = missing(topn)
+    topn = max(as.integer(topn),1L)
+    if (nrow(x) == 0L) {
+        if (length(x)==0L)
+           cat("Null data.table (0 rows and 0 cols)\n")  # See FAQ 2.5 and NEWS item in v1.8.9
+        else
+           cat("Empty data.table (0 rows) of ",length(x)," col",if(length(x)>1L)"s",": ",paste(head(names(x),6),collapse=","),if(ncol(x)>6)"...","\n",sep="")
+        return()
+    }
+    if (topn*2<nrow(x) && (nrow(x)>nrows || !topnmiss)) {
+        toprint = rbind(head(x, topn), tail(x, topn))
+        rn = c(seq_len(topn), seq.int(to=nrow(x), length.out=topn))
+        printdots = TRUE
+    } else {
+        toprint = x
+        rn = seq_len(nrow(x))
+        printdots = FALSE
+    }
+    toprint=format(toprint, ...)
+    # FR #5020 - add row.names = logical argument to print.data.table
+    if (isTRUE(row.names)) rownames(toprint)=paste(format(rn,right=TRUE),":",sep="") else rownames(toprint)=rep.int("", nrow(x))
+    if (is.null(names(x))) colnames(toprint)=rep("NA", ncol(toprint)) # fixes bug #4934
+    if (printdots) {
+        toprint = rbind(head(toprint,topn),"---"="",tail(toprint,topn))
+        rownames(toprint) = format(rownames(toprint),justify="right")
+        print(toprint,right=TRUE,quote=FALSE)
+        return(invisible())
+    }
+    if (nrow(toprint)>20L)
+        # repeat colnames at the bottom if over 20 rows so you don't have to scroll up to see them
+        toprint=rbind(toprint,matrix(colnames(toprint),nrow=1)) # fixes bug #4934
+    print(toprint,right=TRUE,quote=FALSE)
+    invisible()
+}
