@@ -82,6 +82,7 @@ sparsebnData.list <- function(li){
 
 # sparsebnData constructor
 #  Default constructor for data.frame input
+#' @export
 sparsebnData.data.frame <- function(data){
 
     #
@@ -97,6 +98,7 @@ sparsebnData.data.frame <- function(data){
 
 # sparsebnData constructor
 #  Default constructor for matrix input
+#' @export
 sparsebnData.matrix <- function(data){
     sparsebnData.data.frame(as.data.frame(data))
 } # END SPARSEBNDATA.MATRIX
@@ -113,3 +115,8 @@ print.sparsebnData <- function(sbd){
 
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA
+
+#' @export
+as.data.frame.sparsebnData <- function(x){
+    data.frame(x$data)
+} # END AS.DATA.FRAME.SPARSEBNDATA
