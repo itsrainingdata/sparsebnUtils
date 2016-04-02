@@ -42,7 +42,7 @@
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}
 #'
 #' @docType class
-#' @name edgeList-class
+#' @name edgeList
 NULL
 
 #' @export

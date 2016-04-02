@@ -36,12 +36,12 @@
 #' sparsebnFit class
 #'
 #' Main class for representing DAG estimates: Represents a single DAG estimate in the solution path.
-#' Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath-class}} object, but
+#' Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath}} object, but
 #' can be handled separately if desired (be careful!).
 #'
 #' @section Slots:
 #' \describe{
-#' \item{\code{edges}}{(edgeList) Edge list of estimated DAG (see \code{\link{edgeList-class}}).}
+#' \item{\code{edges}}{(edgeList) Edge list of estimated DAG (see \code{\link{edgeList}}).}
 #' \item{\code{lambda}}{(numeric) Value of lambda for this estimate.}
 #' \item{\code{nedge}}{(integer) Number of edges in this estimate.}
 #' \item{\code{pp}}{(integer) Number of nodes.}
@@ -55,7 +55,7 @@
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 #'
 #' @docType class
-#' @name sparsebnFit-class
+#' @name sparsebnFit
 NULL
 
 #' @export

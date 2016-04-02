@@ -16,7 +16,7 @@
 # Data
 # * data.frame data     // data
 # * list ivn            // list of nodes under intervention for each row (observation)
-# * character type     // either "continuous", "discrete", or "mixed"
+# * character type      // either "continuous", "discrete", or "mixed"
 #
 
 #
@@ -56,7 +56,7 @@
 #' \code{\link{print}}
 #'
 #' @docType class
-#' @name sparsebnData-class
+#' @name sparsebnData
 NULL
 
 #' @export

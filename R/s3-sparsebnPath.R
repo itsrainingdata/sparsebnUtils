@@ -31,20 +31,20 @@
 #' sparsebnPath class
 #'
 #' Convenience wrapper class for output of CCDr algorithm: Represents the entire solution path
-#' of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit-class}}. Also inherits
+#' of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
 #' from \code{\link{list}}.
 #'
 #' Each value of lambda in the (discrete) solution path corresponds to a single DAG estimate, which
 #' is of the form (Phi, Rho) (see \href{http://arxiv.org/abs/1401.0852}{Aragam and Zhou (2015), JMLR} for details).
-#' Internally, this estimate is represented by a \code{\link{sparsebnFit-class}} object. The full solution
-#' path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit-class}} objects: This class is essentially a wrapper for this list.
+#' Internally, this estimate is represented by a \code{\link{sparsebnFit}} object. The full solution
+#' path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit}} objects: This class is essentially a wrapper for this list.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}}, \code{\link{lambda.grid}},
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 #'
 #' @docType class
-#' @name sparsebnPath-class
+#' @name sparsebnPath
 NULL
 
 #' @export
@@ -64,7 +64,7 @@ sparsebnPath.list <- function(li){
 
 #' print.sparsebnPath
 #'
-#' Prints the contents of a \code{\link{sparsebnPath-class}} object neatly.
+#' Prints the contents of a \code{\link{sparsebnPath}} object neatly.
 #'
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
