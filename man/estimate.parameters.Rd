@@ -4,7 +4,7 @@
 \alias{estimate.parameters}
 \title{estimate.parameters}
 \usage{
-estimate.parameters(fit, data, opt)
+estimate.parameters(fit, data, ...)
 }
 \description{
 Estimates the parameters of a DAG

@@ -11,6 +11,6 @@
 large graphs or large solution paths. (default = \code{FALSE})}
 }
 \description{
-Prints the contents of a \code{\link{sparsebnPath-class}} object neatly.
+Prints the contents of a \code{\link{sparsebnPath}} object neatly.
 }
 

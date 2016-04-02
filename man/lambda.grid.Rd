@@ -7,6 +7,6 @@
 lambda.grid(x)
 }
 \description{
-Extracts the lambda values from a \code{\link{sparsebnPath-class}} object.
+Extracts the lambda values from a \code{\link{sparsebnPath}} object.
 }
 
