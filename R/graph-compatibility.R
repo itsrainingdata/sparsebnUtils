@@ -10,6 +10,13 @@
 # Various utility functions for enforcing compatibility with the 'graph' package from BioConductor.
 #
 
+#' Conversion to graphNEL object
+#'
+#' \code{to_graphNEL} converts an object to a \code{\link[graph]{graphNEL}} object.
+#' At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{graphNEL}.
+#'
+#' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
+#'
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
 to_graphNEL.edgeList <- function(el){

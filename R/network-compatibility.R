@@ -10,6 +10,13 @@
 # Various utility functions for enforcing compatibility with the 'network' package (part of statnet).
 #
 
+#' Conversion to network object
+#'
+#' \code{igraph} converts an object to a \code{\link[network]{network}} object.
+#' At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{network}.
+#'
+#' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
+#'
 to_network <- function(x) UseMethod("to_network", x)
 
 to_network.edgeList <- function(el){

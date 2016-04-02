@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph-compatibility.R
 \name{to_graphNEL}
 \alias{to_graphNEL}
-\title{Conversion to graphNEL objects}
+\title{Conversion to graphNEL object}
 \usage{
 to_graphNEL(x)
 }

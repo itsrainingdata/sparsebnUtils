@@ -10,6 +10,13 @@
 # Various utility functions for enforcing compatibility with the 'igraph' package.
 #
 
+#' Conversion to igraph object
+#'
+#' \code{igraph} converts an object to an \code{\link[igraph]{igraph}} object.
+#' At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{igraph}.
+#'
+#' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
+#'
 to_igraph <- function(x) UseMethod("to_igraph", x)
 
 to_igraph.edgeList <- function(el){
