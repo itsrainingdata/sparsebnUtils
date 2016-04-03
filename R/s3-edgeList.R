@@ -111,19 +111,19 @@ get.adjacency.matrix.edgeList <- function(edgeL){
 } # END GET.ADJACENCY.MATRIX.EDGELIST
 
 #' @export
-#' @describeIn num.nodes
+#' @describeIn num.nodes Extracts the number of nodes of \link{edgeList} object.
 num.nodes.edgeList <- function(edgeL){
     length(edgeL)
 } # END NUM.NODES.EDGELIST
 
 #' @export
-#' @describeIn num.edges
+#' @describeIn num.edges Extracts the number of edges of \link{edgeList} object.
 num.edges.edgeList <- function(edgeL){
     sum(sapply(edgeL, length))
 } # END NUM.EDGES.EDGELIST
 
 #' @export
-#' @describeIn is.zero
+#' @describeIn is.zero Determines whether or not the object represents a null graph with no edges.
 is.zero.edgeList <- function(edgeL){
     (num.edges(edgeL) == 0)
 } # END IS.ZERO.EDGELIST

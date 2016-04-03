@@ -2,11 +2,11 @@
 % Please edit documentation in R/s3-sparsebnPath.R
 \name{lambda.grid.sparsebnPath}
 \alias{lambda.grid.sparsebnPath}
-\title{lambda.grid.sparsebnPath}
+\title{Extract regularization path from solution path}
 \usage{
 \method{lambda.grid}{sparsebnPath}(cp)
 }
 \description{
-lambda.grid.sparsebnPath
+Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 }
 

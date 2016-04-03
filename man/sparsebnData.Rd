@@ -22,12 +22,16 @@ Also inherits from \code{\link{list}}.
 \describe{
 \item{\code{data}}{(data.frame) Dataset.}
 \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
+\item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
 }
 }
 
 \section{Methods}{
 
-\code{\link{num.samples}}
 \code{\link{print}}
+\code{\link{num.samples}}
+\code{\link{is.obs}}
+\code{\link{count.interventions}}
+\code{\link{as.data.frame}}
 }
 

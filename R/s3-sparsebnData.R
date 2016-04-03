@@ -49,11 +49,15 @@
 #' \describe{
 #' \item{\code{data}}{(data.frame) Dataset.}
 #' \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
+#' \item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
 #' }
 #'
 #' @section Methods:
-#' \code{\link{num.samples}}
 #' \code{\link{print}}
+#' \code{\link{num.samples}}
+#' \code{\link{is.obs}}
+#' \code{\link{count.interventions}}
+#' \code{\link{as.data.frame}}
 #'
 #' @docType class
 #' @name sparsebnData
@@ -85,7 +89,6 @@ sparsebnData.list <- function(li){
 
 # sparsebnData constructor
 #  Default constructor for data.frame input
-#' @export
 sparsebnData.data.frame <- function(data, ivn, type){
 
     #
@@ -104,24 +107,30 @@ sparsebnData.data.frame <- function(data, ivn, type){
 
 # sparsebnData constructor
 #  Default constructor for matrix input
-#' @export
 sparsebnData.matrix <- function(data, ivn, type){
     sparsebnData.data.frame(as.data.frame(data), ivn, type)
 } # END SPARSEBNDATA.MATRIX
 
 #' @export
-#' @describeIn num.samples
+#' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
 num.samples.sparsebnData <- function(sbd){
     nrow(sbd$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
 
-# Returns TRUE if the data contains no interventions, i.e. is purely observational
+
+#' Check if data is observational
+#'
+#' Returns TRUE if the data contains no interventions, i.e. is purely observational
+#'
 #' @export
 is.obs <- function(sbd){
     all(unlist(lapply(dat$ivn, is.null)))
 } # END IS.OBS
 
-# Returns the number of rows with at least one intervention
+#' Count the number of rows under intervention
+#'
+#' Returns the number of rows with at least one intervention
+#'
 #' @export
 count.interventions <- function(sbd){
     sum(unlist(lapply(dat$ivn, function(x) !is.null(x))))
@@ -143,7 +152,6 @@ print.sparsebnData <- function(sbd, n = 5L){
 } # END PRINT.SPARSEBNDATA
 
 # Convert a sparsebnData object back to a data.frame
-#' @export
 as.data.frame.sparsebnData <- function(x){
     data.frame(x$data)
 } # END AS.DATA.FRAME.SPARSEBNDATA

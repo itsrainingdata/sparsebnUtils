@@ -58,7 +58,6 @@
 #' @name sparsebnFit
 NULL
 
-#' @export
 is.sparsebnFit <- function(cf){
     inherits(cf, "sparsebnFit")
 } # END IS.sparsebnFit
@@ -99,12 +98,10 @@ sparsebnFit.list <- function(li){
     structure(li, class = "sparsebnFit")
 } # END sparsebnFit.LIST
 
-#' @export
 as.list.sparsebnFit <- function(cf){
     list(edges = cf$edges, lambda = cf$lambda, nedge = cf$nedge, pp = cf$pp, nn = cf$nn, time = cf$time)
 } # END AS.LIST.sparsebnFit
 
-#' @export
 print.sparsebnFit <- function(cf){
     MAX_NODES <- 20
 
@@ -127,19 +124,19 @@ get.adjacency.matrix.sparsebnFit <- function(cf){
 } # END GET.ADJACENCY.MATRIX.sparsebnFit
 
 #' @export
-#' @describeIn num.nodes
+#' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
 num.nodes.sparsebnFit <- function(cf){
     cf$pp
 } # END NUM.NODES.sparsebnFit
 
 #' @export
-#' @describeIn num.edges
+#' @describeIn num.edges Extracts the number of edges of \link{sparsebnFit} object.
 num.edges.sparsebnFit <- function(cf){
     cf$nedge
 } # END NUM.EDGES.sparsebnFit
 
 #' @export
-#' @describeIn num.samples
+#' @describeIn num.samples Extracts the number of samples of \link{sparsebnFit} object.
 num.samples.sparsebnFit <- function(cf){
     cf$nn
 } # END NUM.SAMPLES.sparsebnFit
