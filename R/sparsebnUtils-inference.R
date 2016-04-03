@@ -77,5 +77,5 @@ fit_dag <- function(parents,
         vars[j] <- var(dag.fit$residuals)
     }
 
-    list(B = coefs, Omega = Matrix::Diagonal(pp, vars))
+    list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
 }
