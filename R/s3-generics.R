@@ -84,9 +84,15 @@ num.samples <- function(x) UseMethod("num.samples", x)
 #' @export
 is.zero <- function(x) UseMethod("is.zero", x)
 
-#' estimate.parameters
+#' Estimate the parameters of a Bayesian network
 #'
-#' Estimates the parameters of a DAG
+#' Given the structure of a Bayesian network, estimate the parameters (weights) using ordinary least
+#' squares (for Gaussian data) or logistic regression (for discrete data).
+#'
+#' The low-level fitting method is \code{\link{fit_dag}}.
+#'
+#' @param fit A fitted object containing the Bayesian network structure to fit.
+#' @param data Data to use for fitting.
 #'
 #' @export
 estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
@@ -96,5 +102,5 @@ pick_family <- function(x) UseMethod("pick_family", x)
 reIndexC <- function(x) UseMethod("reIndexC", x)
 reIndexR <- function(x) UseMethod("reIndexR", x)
 .num_edges <- function(x) UseMethod(".num_edges", x)
-to_B <- function(x) UseMethod("to_B", x)
+# to_B <- function(x) UseMethod("to_B", x)
 

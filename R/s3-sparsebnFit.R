@@ -148,9 +148,9 @@ num.samples.sparsebnFit <- function(cf){
 #
 # !!! 1-29-16: This function needs to be deprecated
 #
-to_B.sparsebnFit <- function(cf){
-    .Deprecated()
-    cf$sbm <- to_B(cf$sbm)
-
-    cf
-}
+# to_B.sparsebnFit <- function(cf){
+#     .Deprecated()
+#     cf$sbm <- to_B(cf$sbm)
+#
+#     cf
+# }

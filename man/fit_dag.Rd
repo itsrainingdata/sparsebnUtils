@@ -20,6 +20,6 @@ Basic computing engine called by \code{\link{estimate.parameters}} for fitting p
 in a Bayesian network. Should not be used directly unless by experienced users.
 }
 \details{
-Can call either \code\link{{lm.fit}} or \code{link{glm.fit}}, with any choice of family.
+Can call either \code{\link{lm.fit}} or \code{link{glm.fit}}, with any choice of family.
 }
 
