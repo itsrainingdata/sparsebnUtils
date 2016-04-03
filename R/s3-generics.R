@@ -51,7 +51,7 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 
 #' lambda.grid
 #'
-#' Extracts the lambda values from a \code{\link{sparsebnPath-class}} object.
+#' Extracts the lambda values from a \code{\link{sparsebnPath}} object.
 #'
 #' @export
 lambda.grid <- function(x) UseMethod("lambda.grid", x)
@@ -89,7 +89,7 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #' Estimates the parameters of a DAG
 #'
 #' @export
-estimate.parameters <- function(fit, data) UseMethod("estimate.parameters", fit)
+estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
 
 # Internal generics
 pick_family <- function(x) UseMethod("pick_family", x)

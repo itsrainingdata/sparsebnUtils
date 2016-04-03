@@ -86,7 +86,7 @@ cor_vector <- function(X){
     cors <- cors[upper.tri(cors, diag = TRUE)]
 
     cors
-} # END .COR_VECTOR
+} # END COR_VECTOR
 
 # Utility to capitalize the first letter in a string
 #  Borrowed verbatim from the 'Hmisc' package
