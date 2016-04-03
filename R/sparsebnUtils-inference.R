@@ -37,9 +37,18 @@ choose_fit_method <- function(edges, data, ...){
     }
 }
 
-# Low-level method for fitting parameters in a DAG
-#  Allows for either lm.fit or glm.fit, with any choice of family
-#
+#' Inference in Bayesian networks
+#'
+#' Basic computing engine called by \code{\link{estimate.parameters}} for fitting parameters
+#' in a Bayesian network. Should not be used directly unless by experienced users.
+#'
+#' Can call either \code\link{{lm.fit}} or \code{link{glm.fit}}, with any choice of family.
+#'
+#' @param parents \code{\link{edgeList}} object.
+#' @param dat Data.
+#' @param call Either \code{"lm.fit"} or \code{"glm.fit"}.
+#' @param ... If \code{call = "glm.fit"}, specify \code{family} here. Also allows for other parameters to \code{lm.fit} and \code{glm.fit}.
+#'
 fit_dag <- function(parents,
                     dat,
                     call = "lm.fit",

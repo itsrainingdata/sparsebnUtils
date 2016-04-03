@@ -2,11 +2,20 @@
 % Please edit documentation in R/s3-generics.R
 \name{estimate.parameters}
 \alias{estimate.parameters}
-\title{estimate.parameters}
+\title{Estimate the parameters of a Bayesian network}
 \usage{
 estimate.parameters(fit, data, ...)
 }
+\arguments{
+\item{fit}{A fitted object containing the Bayesian network structure to fit.}
+
+\item{data}{Data to use for fitting.}
+}
 \description{
-Estimates the parameters of a DAG
+Given the structure of a Bayesian network, estimate the parameters (weights) using ordinary least
+squares (for Gaussian data) or logistic regression (for discrete data).
+}
+\details{
+The low-level fitting method is \code{\link{fit_dag}}.
 }
 
