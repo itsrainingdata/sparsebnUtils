@@ -11,7 +11,7 @@ num.samples(x)
 
 \method{num.samples}{sparsebnData}(data)
 
-\method{num.samples}{sparsebnFit}(cf)
+\method{num.samples}{sparsebnFit}(fit)
 
 \method{num.samples}{sparsebnPath}(cp)
 }

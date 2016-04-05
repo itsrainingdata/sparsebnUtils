@@ -58,8 +58,8 @@
 #' @name sparsebnFit
 NULL
 
-is.sparsebnFit <- function(cf){
-    inherits(cf, "sparsebnFit")
+is.sparsebnFit <- function(fit){
+    inherits(fit, "sparsebnFit")
 } # END IS.sparsebnFit
 
 # sparsebnFit constructor
@@ -98,47 +98,47 @@ sparsebnFit.list <- function(li){
     structure(li, class = "sparsebnFit")
 } # END sparsebnFit.LIST
 
-as.list.sparsebnFit <- function(cf){
-    list(edges = cf$edges, lambda = cf$lambda, nedge = cf$nedge, pp = cf$pp, nn = cf$nn, time = cf$time)
+as.list.sparsebnFit <- function(fit){
+    list(edges = fit$edges, lambda = fit$lambda, nedge = fit$nedge, pp = fit$pp, nn = fit$nn, time = fit$time)
 } # END AS.LIST.sparsebnFit
 
-print.sparsebnFit <- function(cf){
+print.sparsebnFit <- function(fit){
     MAX_NODES <- 20
 
     cat("CCDr estimate\n",
-        cf$nn, " observations\n",
-        "lambda = ", cf$lambda, "\n",
+        fit$nn, " observations\n",
+        "lambda = ", fit$lambda, "\n",
         sep = "")
 
     cat("\nDAG: \n")
-    print(cf$edges)
-    if(cf$pp < MAX_NODES) {
-        # print(get.adjacency.matrix(cf))
+    print(fit$edges)
+    if(fit$pp < MAX_NODES) {
+        # print(get.adjacency.matrix(fit))
     }
 } # END PRINT.sparsebnFit
 
 #' @export
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
-get.adjacency.matrix.sparsebnFit <- function(cf){
-    get.adjacency.matrix.edgeList(cf$edges)
+get.adjacency.matrix.sparsebnFit <- function(fit){
+    get.adjacency.matrix.edgeList(fit$edges)
 } # END GET.ADJACENCY.MATRIX.sparsebnFit
 
 #' @export
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
-num.nodes.sparsebnFit <- function(cf){
-    cf$pp
+num.nodes.sparsebnFit <- function(fit){
+    fit$pp
 } # END NUM.NODES.sparsebnFit
 
 #' @export
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnFit} object.
-num.edges.sparsebnFit <- function(cf){
-    cf$nedge
+num.edges.sparsebnFit <- function(fit){
+    fit$nedge
 } # END NUM.EDGES.sparsebnFit
 
 #' @export
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnFit} object.
-num.samples.sparsebnFit <- function(cf){
-    cf$nn
+num.samples.sparsebnFit <- function(fit){
+    fit$nn
 } # END NUM.SAMPLES.sparsebnFit
 
 #------------------------------------------------------------------------------#
@@ -148,9 +148,9 @@ num.samples.sparsebnFit <- function(cf){
 #
 # !!! 1-29-16: This function needs to be deprecated
 #
-# to_B.sparsebnFit <- function(cf){
+# to_B.sparsebnFit <- function(fit){
 #     .Deprecated()
-#     cf$sbm <- to_B(cf$sbm)
+#     fit$sbm <- to_B(fit$sbm)
 #
-#     cf
+#     fit
 # }

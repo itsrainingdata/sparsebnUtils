@@ -11,7 +11,7 @@
 
 get.adjacency.matrix(x)
 
-\method{get.adjacency.matrix}{sparsebnFit}(cf)
+\method{get.adjacency.matrix}{sparsebnFit}(fit)
 
 \method{get.adjacency.matrix}{sparsebnPath}(cp)
 }

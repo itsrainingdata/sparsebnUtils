@@ -11,7 +11,7 @@
 
 num.edges(x)
 
-\method{num.edges}{sparsebnFit}(cf)
+\method{num.edges}{sparsebnFit}(fit)
 
 \method{num.edges}{sparsebnPath}(cp)
 }

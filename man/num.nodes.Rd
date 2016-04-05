@@ -11,7 +11,7 @@
 
 num.nodes(x)
 
-\method{num.nodes}{sparsebnFit}(cf)
+\method{num.nodes}{sparsebnFit}(fit)
 
 \method{num.nodes}{sparsebnPath}(cp)
 }
