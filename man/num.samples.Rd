@@ -9,7 +9,7 @@
 \usage{
 num.samples(x)
 
-\method{num.samples}{sparsebnData}(sbd)
+\method{num.samples}{sparsebnData}(data)
 
 \method{num.samples}{sparsebnFit}(cf)
 

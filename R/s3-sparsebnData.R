@@ -27,9 +27,9 @@
 #  different treatments (i.e. number and/or identity of manipulated nodes).
 #
 # Examples:
-#  1) sbd$ivn[1] = NULL: No nodes were under intervention for the first observation
-#  2) sbd$ivn[10] = c(1): The first node was under intervention for the tenth observation
-#  3) sbd$ivn[120] = c(1,5,500): The 1st, 5th, and 500th nodes were under intervention for the 120th observation
+#  1) data$ivn[1] = NULL: No nodes were under intervention for the first observation
+#  2) data$ivn[10] = c(1): The first node was under intervention for the tenth observation
+#  3) data$ivn[120] = c(1,5,500): The 1st, 5th, and 500th nodes were under intervention for the 120th observation
 #
 
 #' sparsebnData class
@@ -63,9 +63,8 @@
 #' @name sparsebnData
 NULL
 
-#' @export
-is.sparsebnData <- function(sbd){
-    inherits(sbd, "sparsebnData")
+is.sparsebnData <- function(data){
+    inherits(data, "sparsebnData")
 } # END IS.SPARSEBNDATA
 
 # sparsebnData constructor
@@ -113,8 +112,8 @@ sparsebnData.matrix <- function(data, ivn, type){
 
 #' @export
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
-num.samples.sparsebnData <- function(sbd){
-    nrow(sbd$data)
+num.samples.sparsebnData <- function(data){
+    nrow(data$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
 
 
@@ -123,8 +122,8 @@ num.samples.sparsebnData <- function(sbd){
 #' Returns TRUE if the data contains no interventions, i.e. is purely observational
 #'
 #' @export
-is.obs <- function(sbd){
-    all(unlist(lapply(dat$ivn, is.null)))
+is.obs <- function(data){
+    all(unlist(lapply(data$ivn, is.null)))
 } # END IS.OBS
 
 #' Count the number of rows under intervention
@@ -132,21 +131,21 @@ is.obs <- function(sbd){
 #' Returns the number of rows with at least one intervention
 #'
 #' @export
-count.interventions <- function(sbd){
-    sum(unlist(lapply(dat$ivn, function(x) !is.null(x))))
+count.interventions <- function(data){
+    sum(unlist(lapply(data$ivn, function(x) !is.null(x))))
 } # END COUNT.INTERVENTIONS
 
 # Default print method
-print.sparsebnData <- function(sbd, n = 5L){
-    # print(head(sbd$data, n = n), row.names = FALSE)
-    .print_data_frame(sbd$data, topn = n)
+print.sparsebnData <- function(data, n = 5L){
+    # print(head(data$data, n = n), row.names = FALSE)
+    .print_data_frame(data$data, topn = n)
 
-    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(sbd), num.samples(sbd) - 2*n))
-    if(is.obs(sbd)){
-        cat(sprintf("Observational data with %s observations", sbd$type))
+    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(data), num.samples(data) - 2*n))
+    if(is.obs(data)){
+        cat(sprintf("Observational data with %s observations", data$type))
     } else{
 
-        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(sbd$type), count.interventions(sbd), num.samples(sbd)))
+        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(data$type), count.interventions(data), num.samples(data)))
     }
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA
@@ -157,10 +156,10 @@ as.data.frame.sparsebnData <- function(x){
 } # END AS.DATA.FRAME.SPARSEBNDATA
 
 ### Internal method for picking the correct family for fitting parameters
-pick_family.sparsebnData <- function(sbd){
-    if(sbd$type == "continuous"){
+pick_family.sparsebnData <- function(data){
+    if(data$type == "continuous"){
         return("gaussian")
-    } else if(sbd$type == "discrete"){
+    } else if(data$type == "discrete"){
         return("binomial")
     } else{
         stop("'mixed' type not supported for inference yet!")

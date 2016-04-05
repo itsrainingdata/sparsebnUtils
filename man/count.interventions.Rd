@@ -4,7 +4,7 @@
 \alias{count.interventions}
 \title{Count the number of rows under intervention}
 \usage{
-count.interventions(sbd)
+count.interventions(data)
 }
 \description{
 Returns the number of rows with at least one intervention

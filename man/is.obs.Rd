@@ -4,7 +4,7 @@
 \alias{is.obs}
 \title{Check if data is observational}
 \usage{
-is.obs(sbd)
+is.obs(data)
 }
 \description{
 Returns TRUE if the data contains no interventions, i.e. is purely observational
