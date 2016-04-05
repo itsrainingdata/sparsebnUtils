@@ -4,7 +4,7 @@
 \alias{lambda.grid.sparsebnPath}
 \title{Extract regularization path from solution path}
 \usage{
-\method{lambda.grid}{sparsebnPath}(cp)
+\method{lambda.grid}{sparsebnPath}(path)
 }
 \description{
 Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.

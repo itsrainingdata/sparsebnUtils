@@ -13,7 +13,7 @@ num.samples(x)
 
 \method{num.samples}{sparsebnFit}(fit)
 
-\method{num.samples}{sparsebnPath}(cp)
+\method{num.samples}{sparsebnPath}(path)
 }
 \description{
 Extracts the number of samples of the associated object.

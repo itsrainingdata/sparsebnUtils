@@ -47,8 +47,8 @@
 #' @name sparsebnPath
 NULL
 
-is.sparsebnPath <- function(cp){
-    inherits(cp, "sparsebnPath")
+is.sparsebnPath <- function(path){
+    inherits(path, "sparsebnPath")
 } # END IS.sparsebnPath
 
 # sparsebnPath constructor
@@ -68,55 +68,55 @@ sparsebnPath.list <- function(li){
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
-print.sparsebnPath <- function(cp, verbose = FALSE){
+print.sparsebnPath <- function(path, verbose = FALSE){
     if(verbose){
-        print.default(cp) # default generic reverts to list => separate calls to print.sparsebnFit for each component
+        print.default(path) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
         cat("CCDr solution path\n",
-            length(cp), " estimates for lambda in [", min(lambda.grid(cp)), ",", max(lambda.grid(cp)), "]\n",
-            "Number of edges per solution: ", paste(num.edges(cp), collapse = "-"), "\n",
-            num.nodes(cp), " nodes\n",
-            num.samples(cp), " observations\n",
+            length(path), " estimates for lambda in [", min(lambda.grid(path)), ",", max(lambda.grid(path)), "]\n",
+            "Number of edges per solution: ", paste(num.edges(path), collapse = "-"), "\n",
+            num.nodes(path), " nodes\n",
+            num.samples(path), " observations\n",
             sep = "")
     }
 } # END PRINT.SPARSEBNPATH
 
-as.list.sparsebnPath <- function(cp){
-    class(cp) <- "list"
-    cp
+as.list.sparsebnPath <- function(path){
+    class(path) <- "list"
+    path
 } # END AS.LIST.SPARSEBNPATH
 
 #' @export
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnPath} object.
-num.nodes.sparsebnPath <- function(cp){
-    unique(unlist(lapply(cp, function(x) x$pp)))
+num.nodes.sparsebnPath <- function(path){
+    unique(unlist(lapply(path, function(x) x$pp)))
 } # END NUM.NODES.SPARSEBNPATH
 
 #' @export
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnPath} object.
-num.edges.sparsebnPath <- function(cp){
+num.edges.sparsebnPath <- function(path){
     ### unique(.) not needed since different estimates should have different # of edges
-    unlist(lapply(cp, function(x) x$nedge))
+    unlist(lapply(path, function(x) x$nedge))
 } # END NUM.EDGES.SPARSEBNPATH
 
 #' @export
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnPath} object.
-num.samples.sparsebnPath <- function(cp){
-    unique(unlist(lapply(cp, function(x) x$nn)))
+num.samples.sparsebnPath <- function(path){
+    unique(unlist(lapply(path, function(x) x$nn)))
 } # END NUM.SAMPLES.SPARSEBNPATH
 
 #' Extract regularization path from solution path
 #'
 #' Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 #'
-lambda.grid.sparsebnPath <- function(cp){
-    lambdas <- unlist(lapply(cp, function(x){ x$lambda}))
+lambda.grid.sparsebnPath <- function(path){
+    lambdas <- unlist(lapply(path, function(x){ x$lambda}))
     names(lambdas) <- NULL
 
     lambdas
 } # END LAMBDA.GRID.sparsebnPath
 
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
-get.adjacency.matrix.sparsebnPath <- function(cp){
-    lapply(cp, get.adjacency.matrix)
+get.adjacency.matrix.sparsebnPath <- function(path){
+    lapply(path, get.adjacency.matrix)
 } # END GET.ADJACENCY.MATRIX.sparsebnPath

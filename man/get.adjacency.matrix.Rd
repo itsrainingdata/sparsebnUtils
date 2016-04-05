@@ -13,7 +13,7 @@ get.adjacency.matrix(x)
 
 \method{get.adjacency.matrix}{sparsebnFit}(fit)
 
-\method{get.adjacency.matrix}{sparsebnPath}(cp)
+\method{get.adjacency.matrix}{sparsebnPath}(path)
 }
 \value{
 \code{matrix}

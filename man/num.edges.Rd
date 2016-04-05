@@ -13,7 +13,7 @@ num.edges(x)
 
 \method{num.edges}{sparsebnFit}(fit)
 
-\method{num.edges}{sparsebnPath}(cp)
+\method{num.edges}{sparsebnPath}(path)
 }
 \description{
 Extracts the number of edges of the associated graph object.

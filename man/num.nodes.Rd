@@ -13,7 +13,7 @@ num.nodes(x)
 
 \method{num.nodes}{sparsebnFit}(fit)
 
-\method{num.nodes}{sparsebnPath}(cp)
+\method{num.nodes}{sparsebnPath}(path)
 }
 \description{
 Extracts the number of nodes of the associated graph object.
