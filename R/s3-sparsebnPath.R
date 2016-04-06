@@ -47,11 +47,13 @@
 #' @name sparsebnPath
 NULL
 
+#' @export
 is.sparsebnPath <- function(path){
     inherits(path, "sparsebnPath")
 } # END IS.sparsebnPath
 
 # sparsebnPath constructor
+#' @export
 sparsebnPath.list <- function(li){
     if(!check_list_class(li, "sparsebnFit")){
         stop("Some component is not of type sparsebnPath -- sparsebnPath objects must consist of sparsebnFit components only.")
@@ -68,6 +70,7 @@ sparsebnPath.list <- function(li){
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
+#' @export
 print.sparsebnPath <- function(path, verbose = FALSE){
     if(verbose){
         print.default(path) # default generic reverts to list => separate calls to print.sparsebnFit for each component
@@ -81,26 +84,27 @@ print.sparsebnPath <- function(path, verbose = FALSE){
     }
 } # END PRINT.SPARSEBNPATH
 
+#' @export
 as.list.sparsebnPath <- function(path){
     class(path) <- "list"
     path
 } # END AS.LIST.SPARSEBNPATH
 
-#' @export
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnPath} object.
+#' @export
 num.nodes.sparsebnPath <- function(path){
     unique(unlist(lapply(path, function(x) x$pp)))
 } # END NUM.NODES.SPARSEBNPATH
 
-#' @export
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnPath} object.
+#' @export
 num.edges.sparsebnPath <- function(path){
     ### unique(.) not needed since different estimates should have different # of edges
     unlist(lapply(path, function(x) x$nedge))
 } # END NUM.EDGES.SPARSEBNPATH
 
-#' @export
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnPath} object.
+#' @export
 num.samples.sparsebnPath <- function(path){
     unique(unlist(lapply(path, function(x) x$nn)))
 } # END NUM.SAMPLES.SPARSEBNPATH
@@ -109,6 +113,7 @@ num.samples.sparsebnPath <- function(path){
 #'
 #' Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 #'
+#' @export
 lambda.grid.sparsebnPath <- function(path){
     lambdas <- unlist(lapply(path, function(x){ x$lambda}))
     names(lambdas) <- NULL
@@ -117,6 +122,7 @@ lambda.grid.sparsebnPath <- function(path){
 } # END LAMBDA.GRID.sparsebnPath
 
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
+#' @export
 get.adjacency.matrix.sparsebnPath <- function(path){
     lapply(path, get.adjacency.matrix)
 } # END GET.ADJACENCY.MATRIX.sparsebnPath

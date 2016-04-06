@@ -7,7 +7,7 @@
 #
 
 # Export everything in this package so the other packages can use all of the methods
-#' @exportPattern ^[^\\.]
+# #' @exportPattern ^[^\\.] <--- DON'T USE THIS!
 
 .onAttach <- function(libname, pkgname){
     ### Only sparsebn needs a package startup message

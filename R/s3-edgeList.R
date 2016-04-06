@@ -50,6 +50,7 @@ is.edgeList <- function(edgeL){
     inherits(edgeL, "edgeList")
 } # END IS.EDGELIST
 
+#' @export
 edgeList.list <- function(li){
     if(!is.list(li)){
         stop("Input must be a list!")
@@ -63,6 +64,8 @@ edgeList.list <- function(li){
     structure(li, class = c("edgeList", "list"))
 } # END EDGELIST.LIST
 
+#' @method print edgeList
+#' @export
 print.edgeList <- function(edgeL){
     if(num.edges(edgeL) == 0){
         edgeL.out <- paste0("<Empty graph on ", num.nodes(edgeL), " nodes.>")
@@ -81,16 +84,19 @@ print.edgeList <- function(edgeL){
     cat("edgeList object\n", edgeL.out, "\n", sep = "")
 }
 
+#' @export
 as.matrix.edgeList <- function(edgeL){
     as.matrix(get.adjacency.matrix.edgeList(edgeL))
 }
 
+#' @export
 as.list.edgeList <- function(edgeL){
     class(edgeL) <- "list"
     edgeL
 }
 
 #' @describeIn get.adjacency.matrix Convert internal \code{edgeList} representation to an adjacency matrix
+#' @export
 get.adjacency.matrix.edgeList <- function(edgeL){
     numnode <- length(edgeL)
     Matrix.out <- Matrix::Matrix(0, nrow = numnode, ncol = numnode)
@@ -106,16 +112,19 @@ get.adjacency.matrix.edgeList <- function(edgeL){
 } # END GET.ADJACENCY.MATRIX.EDGELIST
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{edgeList} object.
+#' @export
 num.nodes.edgeList <- function(edgeL){
     length(edgeL)
 } # END NUM.NODES.EDGELIST
 
 #' @describeIn num.edges Extracts the number of edges of \link{edgeList} object.
+#' @export
 num.edges.edgeList <- function(edgeL){
     sum(sapply(edgeL, length))
 } # END NUM.EDGES.EDGELIST
 
 #' @describeIn is.zero Determines whether or not the object represents a null graph with no edges.
+#' @export
 is.zero.edgeList <- function(edgeL){
     (num.edges(edgeL) == 0)
 } # END IS.ZERO.EDGELIST

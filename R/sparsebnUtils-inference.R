@@ -15,14 +15,17 @@
 #
 
 ### DAG fitting --------------------------------------------------------
+#' @export
 estimate.parameters.edgeList <- function(edges, data, ...){
     choose_fit_method(edges, data, ...)
 }
 
+#' @export
 estimate.parameters.sparsebnFit <- function(fit, data, ...){
     estimate.parameters.edgeList(fit$edges, data)
 }
 
+#' @export
 estimate.parameters.sparsebnPath <- function(path, data, ...){
     lapply(path, function(x){ estimate.parameters.sparsebnFit(x, data)})
 }
@@ -50,6 +53,7 @@ choose_fit_method <- function(edges, data, ...){
 #' @param call Either \code{"lm.fit"} or \code{"glm.fit"}.
 #' @param ... If \code{call = "glm.fit"}, specify \code{family} here. Also allows for other parameters to \code{lm.fit} and \code{glm.fit}.
 #'
+#' @export
 fit_dag <- function(parents,
                     dat,
                     call = "lm.fit",
@@ -91,23 +95,33 @@ fit_dag <- function(parents,
 }
 
 ### Covariance fitting --------------------------------------------------------
-get.covariance.matrix.matrix <- function(coefs, vars, ...){
-    get.covariance.matrix.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
+#' @export
+get.covariance.matrix <- function(coefs, vars, ...){
+    get.covariance.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
 }
 
-get.covariance.matrix.Matrix <- function(coefs, vars, ...){
+#' @export
+get.covariance.Matrix <- function(coefs, vars, ...){
     if(missing(vars)) stop("Must specify variance matrix!")
 
     cov_mat(coefs, vars)
 }
 
-estimate.covariance.matrix.sparsebnFit <- function(fit, data, ...){
-    fitted.dag <- estimate.parameters(fit, data)
-    get.covariance.matrix(fitted.dag$coefs, fitted.dag$vars)
+#' @export
+get.covariance.list <- function(li, ...){
+    stopifnot(check_list_names(li, c("coefs", "vars")))
+    get.covariance(li$coefs, li$vars)
 }
 
-estimate.covariance.matrix.sparsebnPath <- function(path, data, ...){
-    lapply(path, function(x) estimate.covariance.matrix.sparsebnFit(x, data, ...))
+#' @export
+estimate.covariance.sparsebnFit <- function(fit, data, ...){
+    fitted.dag <- estimate.parameters(fit, data)
+    get.covariance(fitted.dag$coefs, fitted.dag$vars)
+}
+
+#' @export
+estimate.covariance.sparsebnPath <- function(path, data, ...){
+    lapply(path, function(x) estimate.covariance.sparsebnFit(x, data, ...))
 }
 
 cov_mat <- function(coefs, vars){
@@ -119,23 +133,33 @@ cov_mat <- function(coefs, vars){
 }
 
 ### Inverse covariance fitting --------------------------------------------------------
-get.concentration.matrix.matrix <- function(coefs, vars, ...){
-    get.concentration.matrix.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
+#' @export
+get.precision.matrix <- function(coefs, vars, ...){
+    get.precision.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
 }
 
-get.concentration.matrix.Matrix <- function(coefs, vars, ...){
+#' @export
+get.precision.Matrix <- function(coefs, vars, ...){
     if(missing(vars)) stop("Must specify variance matrix!")
 
     inv_cov_mat(coefs, vars)
 }
 
-estimate.concentration.matrix.sparsebnFit <- function(fit, data, ...){
-    fitted.dag <- estimate.parameters(fit, data)
-    get.concentration.matrix(fitted.dag$coefs, fitted.dag$vars)
+#' @export
+get.precision.list <- function(li, ...){
+    stopifnot(check_list_names(li, c("coefs", "vars")))
+    get.precision(li$coefs, li$vars)
 }
 
-estimate.concentration.matrix.sparsebnPath <- function(path, data, ...){
-    lapply(path, function(x) estimate.concentration.matrix.sparsebnFit(x, data, ...))
+#' @export
+estimate.precision.sparsebnFit <- function(fit, data, ...){
+    fitted.dag <- estimate.parameters(fit, data)
+    get.precision(fitted.dag$coefs, fitted.dag$vars)
+}
+
+#' @export
+estimate.precision.sparsebnPath <- function(path, data, ...){
+    lapply(path, function(x) estimate.precision.sparsebnFit(x, data, ...))
 }
 
 inv_cov_mat <- function(coefs, vars){

@@ -12,30 +12,40 @@
 #   CONTENTS:
 #
 
-### Generics for sparsebnData
+### Generics for sparsebnData ----------------------------------------
 #' @export
 sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
 #' @export
 as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
 
-### Generics for sparsebnPath
+### Generics for sparsebnPath ----------------------------------------
 #' @export
 sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
 
 #' @export
 as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
 
-### Generics for sparsebnFit
+### Generics for sparsebnFit ----------------------------------------
 #' @export
 sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
 
 #' @export
 as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 
-### Generics for sparse
+### Generics for sparse ---------------------------------------------
+#' @export
 sparse <- function(x) UseMethod("sparse", x)
+
+#' @export
 as.sparse <- function(x) UseMethod("as.sparse", x)
+
+### Generics for edgeList ---------------------------------------------
+#' @export
+edgeList <- function(x) UseMethod("edgeList", x)
+
+#' @export
+as.edgeList <- function(x) UseMethod("as.edgeList", x) # NOTE: Right now this is extended (only) in ccdrAlgorithm,
 
 ### Generics for various exported utility functions
 
@@ -97,7 +107,7 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #' @export
 estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
 
-#' get.covariance.matrix
+#' get.covariance
 #'
 #' Computes the implied covariance (or concentration) matrix of the associated graph object.
 #'
@@ -105,12 +115,13 @@ estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters",
 #' \code{matrix}
 #'
 #' @export
-get.covariance.matrix <- function(x, ...) UseMethod("get.covariance.matrix", x)
+get.covariance <- function(x, ...) UseMethod("get.covariance", x)
 
-#' @rdname get.covariance.matrix
-get.concentration.matrix <- function(x, ...) UseMethod("get.concentration.matrix", x)
+#' @rdname get.covariance
+#' @export
+get.precision <- function(x, ...) UseMethod("get.precision", x)
 
-#' estimate.covariance.matrix
+#' estimate.covariance
 #'
 #' Estimates the covariance (or concentration) matrix implied by the associated graph object.
 #'
@@ -118,10 +129,11 @@ get.concentration.matrix <- function(x, ...) UseMethod("get.concentration.matrix
 #' \code{matrix}
 #'
 #' @export
-estimate.covariance.matrix <- function(fit, data, ...) UseMethod("estimate.covariance.matrix", fit)
+estimate.covariance <- function(fit, data, ...) UseMethod("estimate.covariance", fit)
 
-#' @rdname estimate.covariance.matrix
-estimate.concentration.matrix <- function(x, ...) UseMethod("estimate.concentration.matrix", x)
+#' @rdname estimate.covariance
+#' @export
+estimate.precision <- function(x, ...) UseMethod("estimate.precision", x)
 
 # Internal generics
 pick_family <- function(x) UseMethod("pick_family", x)

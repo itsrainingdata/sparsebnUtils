@@ -17,8 +17,10 @@
 #'
 #' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
 #'
+#' @export
 to_network <- function(x) UseMethod("to_network", x)
 
+#' @export
 to_network.edgeList <- function(el){
     ### This function requires the 'network' package to be installed
     if (!requireNamespace("network", quietly = TRUE)) {
@@ -38,12 +40,14 @@ to_network.edgeList <- function(el){
 
 }
 
+#' @export
 to_network.sparsebnFit <- function(sbf){
     sbf$edges <- to_network(sbf$edges)
 
     sbf
 }
 
+#' @export
 to_network.sparsebnPath <- function(sbp){
     lapply(sbp, to_network)
 }

@@ -63,18 +63,20 @@
 #' @name sparsebnData
 NULL
 
+#' @export
 is.sparsebnData <- function(data){
     inherits(data, "sparsebnData")
 } # END IS.SPARSEBNDATA
 
 # sparsebnData constructor
+#' @export
 sparsebnData.list <- function(li){
 
     if( !is.list(li)){
         stop("Input must be a list!")
     } else if( length(li) != 3 || !setequal(names(li), c("data", "ivn", "type"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), ivn (list)")
-    } else if( !sparsebnUtils::check_if_data_matrix(li$data)){
+    } else if( !check_if_data_matrix(li$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(li$data)))
     } else if(nrow(li$data) != length(li$ivn)){
         stop("The length of the ivn list must equal the number of rows in the data!")
@@ -88,6 +90,7 @@ sparsebnData.list <- function(li){
 
 # sparsebnData constructor
 #  Default constructor for data.frame input
+#' @export
 sparsebnData.data.frame <- function(data, ivn, type){
 
     #
@@ -106,12 +109,13 @@ sparsebnData.data.frame <- function(data, ivn, type){
 
 # sparsebnData constructor
 #  Default constructor for matrix input
+#' @export
 sparsebnData.matrix <- function(data, ivn, type){
     sparsebnData.data.frame(as.data.frame(data), ivn, type)
 } # END SPARSEBNDATA.MATRIX
 
-#' @export
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
+#' @export
 num.samples.sparsebnData <- function(data){
     nrow(data$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
@@ -136,6 +140,7 @@ count.interventions <- function(data){
 } # END COUNT.INTERVENTIONS
 
 # Default print method
+#' @export
 print.sparsebnData <- function(data, n = 5L){
     # print(head(data$data, n = n), row.names = FALSE)
     .print_data_frame(data$data, topn = n)

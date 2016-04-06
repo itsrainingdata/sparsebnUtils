@@ -17,8 +17,10 @@
 #'
 #' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
 #'
+#' @export
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
+#' @export
 to_graphNEL.edgeList <- function(el){
     ### This function require the 'graph' package to be installed
     if (!requireNamespace("graph", quietly = TRUE)) {
@@ -31,12 +33,14 @@ to_graphNEL.edgeList <- function(el){
     graph::graphNEL(nodes = names.graphNEL, edgeL = el.graphNEL, edgemode = 'directed')
 }
 
+#' @export
 to_graphNEL.sparsebnFit <- function(sbf){
     sbf$edges <- to_graphNEL(sbf$edges)
 
     sbf
 }
 
+#' @export
 to_graphNEL.sparsebnPath <- function(sbp){
     lapply(sbp, to_graphNEL)
 }

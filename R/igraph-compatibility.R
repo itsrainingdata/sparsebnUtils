@@ -17,8 +17,10 @@
 #'
 #' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
 #'
+#' @export
 to_igraph <- function(x) UseMethod("to_igraph", x)
 
+#' @export
 to_igraph.edgeList <- function(el){
     ### This function requires the 'igraph' package to be installed
     if (!requireNamespace("igraph", quietly = TRUE)) {
@@ -30,12 +32,14 @@ to_igraph.edgeList <- function(el){
     igraph::graph_from_edgelist(el.igraph, directed = TRUE)
 }
 
+#' @export
 to_igraph.sparsebnFit <- function(sbf){
     sbf$edges <- to_igraph(sbf$edges)
 
     sbf
 }
 
+#' @export
 to_igraph.sparsebnPath <- function(sbp){
     lapply(sbp, to_igraph)
 }
