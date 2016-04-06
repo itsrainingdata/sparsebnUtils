@@ -14,6 +14,7 @@
 #       fit_ols_dag
 #
 
+### DAG fitting --------------------------------------------------------
 estimate.parameters.edgeList <- function(edges, data, ...){
     choose_fit_method(edges, data, ...)
 }
@@ -87,4 +88,60 @@ fit_dag <- function(parents,
     }
 
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
+}
+
+### Covariance fitting --------------------------------------------------------
+get.covariance.matrix.matrix <- function(coefs, vars, ...){
+    get.covariance.matrix.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
+}
+
+get.covariance.matrix.Matrix <- function(coefs, vars, ...){
+    if(missing(vars)) stop("Must specify variance matrix!")
+
+    cov_mat(coefs, vars)
+}
+
+estimate.covariance.matrix.sparsebnFit <- function(fit, data, ...){
+    fitted.dag <- estimate.parameters(fit, data)
+    get.covariance.matrix(fitted.dag$coefs, fitted.dag$vars)
+}
+
+estimate.covariance.matrix.sparsebnPath <- function(path, data, ...){
+    lapply(path, function(x) estimate.covariance.matrix.sparsebnFit(x, data, ...))
+}
+
+cov_mat <- function(coefs, vars){
+    # Checks: nrow = ncol
+
+    pp <- nrow(coefs)
+    identity_mat <- Matrix::Diagonal(pp, rep(1, pp))
+    Matrix::t(Matrix::solve(identity_mat - coefs)) %*% vars %*% Matrix::solve(identity_mat - coefs)
+}
+
+### Inverse covariance fitting --------------------------------------------------------
+get.concentration.matrix.matrix <- function(coefs, vars, ...){
+    get.concentration.matrix.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
+}
+
+get.concentration.matrix.Matrix <- function(coefs, vars, ...){
+    if(missing(vars)) stop("Must specify variance matrix!")
+
+    inv_cov_mat(coefs, vars)
+}
+
+estimate.concentration.matrix.sparsebnFit <- function(fit, data, ...){
+    fitted.dag <- estimate.parameters(fit, data)
+    get.concentration.matrix(fitted.dag$coefs, fitted.dag$vars)
+}
+
+estimate.concentration.matrix.sparsebnPath <- function(path, data, ...){
+    lapply(path, function(x) estimate.concentration.matrix.sparsebnFit(x, data, ...))
+}
+
+inv_cov_mat <- function(coefs, vars){
+    # Checks: nrow = ncol
+
+    pp <- nrow(coefs)
+    identity_mat <- Matrix::Diagonal(pp, rep(1, pp))
+    (identity_mat - coefs) %*% Matrix::solve(vars) %*% Matrix::t(identity_mat - coefs)
 }

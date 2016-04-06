@@ -97,10 +97,41 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #' @export
 estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
 
+#' get.covariance.matrix
+#'
+#' Computes the implied covariance (or concentration) matrix of the associated graph object.
+#'
+#' @return
+#' \code{matrix}
+#'
+#' @export
+get.covariance.matrix <- function(x, ...) UseMethod("get.covariance.matrix", x)
+
+#' @rdname get.covariance.matrix
+get.concentration.matrix <- function(x, ...) UseMethod("get.concentration.matrix", x)
+
+#' estimate.covariance.matrix
+#'
+#' Estimates the covariance (or concentration) matrix implied by the associated graph object.
+#'
+#' @return
+#' \code{matrix}
+#'
+#' @export
+estimate.covariance.matrix <- function(fit, data, ...) UseMethod("estimate.covariance.matrix", fit)
+
+#' @rdname estimate.covariance.matrix
+estimate.concentration.matrix <- function(x, ...) UseMethod("estimate.concentration.matrix", x)
+
 # Internal generics
 pick_family <- function(x) UseMethod("pick_family", x)
+
+#' @export
 reIndexC <- function(x) UseMethod("reIndexC", x)
+
+#' @export
 reIndexR <- function(x) UseMethod("reIndexR", x)
+
 .num_edges <- function(x) UseMethod(".num_edges", x)
 # to_B <- function(x) UseMethod("to_B", x)
 
