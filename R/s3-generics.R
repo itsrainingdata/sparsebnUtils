@@ -14,7 +14,7 @@
 
 ### Generics for sparsebnData ----------------------------------------
 #' @export
-sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
+sparsebnData <- function(data, ...) UseMethod("sparsebnData", data)
 
 #' @export
 as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
