@@ -48,8 +48,8 @@
 NULL
 
 #' @export
-is.sparsebnPath <- function(path){
-    inherits(path, "sparsebnPath")
+is.sparsebnPath <- function(x){
+    inherits(x, "sparsebnPath")
 } # END IS.sparsebnPath
 
 # sparsebnPath constructor

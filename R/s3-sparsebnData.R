@@ -64,8 +64,8 @@
 NULL
 
 #' @export
-is.sparsebnData <- function(data){
-    inherits(data, "sparsebnData")
+is.sparsebnData <- function(x){
+    inherits(x, "sparsebnData")
 } # END IS.SPARSEBNDATA
 
 # sparsebnData constructor
@@ -91,7 +91,13 @@ sparsebnData.list <- function(li){
 # sparsebnData constructor
 #  Default constructor for data.frame input
 #' @export
-sparsebnData.data.frame <- function(data, ivn, type){
+sparsebnData.data.frame <- function(data, type, ivn){
+
+    ### User must specify type
+    if(missing(type)){
+        stop("The data type (continuous or discrete?) was not specified: Must choose type = 'continuous' or type = 'discrete'.")
+        ivn <- vector("list", length = nrow(data))
+    }
 
     #
     # If the user fails to specify a list of interventions, ASSUME all rows are observational. If the data
@@ -104,14 +110,14 @@ sparsebnData.data.frame <- function(data, ivn, type){
     }
 
     ### Final output
-    sparsebnData.list(list(data = data, ivn = ivn, type = type))
+    sparsebnData.list(list(data = data, type = type, ivn = ivn))
 } # END SPARSEBNDATA.DATA.FRAME
 
 # sparsebnData constructor
 #  Default constructor for matrix input
 #' @export
-sparsebnData.matrix <- function(data, ivn, type){
-    sparsebnData.data.frame(as.data.frame(data), ivn, type)
+sparsebnData.matrix <- function(data, type, ivn){
+    sparsebnData.data.frame(as.data.frame(data), type, ivn)
 } # END SPARSEBNDATA.MATRIX
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.

@@ -59,8 +59,8 @@
 NULL
 
 #' @export
-is.sparsebnFit <- function(fit){
-    inherits(fit, "sparsebnFit")
+is.sparsebnFit <- function(x){
+    inherits(x, "sparsebnFit")
 } # END IS.sparsebnFit
 
 # sparsebnFit constructor

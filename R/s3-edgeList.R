@@ -46,8 +46,8 @@
 NULL
 
 #' @export
-is.edgeList <- function(edgeL){
-    inherits(edgeL, "edgeList")
+is.edgeList <- function(x){
+    inherits(x, "edgeList")
 } # END IS.EDGELIST
 
 #' @export
