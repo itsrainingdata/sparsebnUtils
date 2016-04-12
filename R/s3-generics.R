@@ -17,21 +17,21 @@
 sparsebnData <- function(data, ...) UseMethod("sparsebnData", data)
 
 #' @export
-as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
+as.sparsebnData <- function(data) UseMethod("as.sparsebnData", data)
 
 ### Generics for sparsebnPath ----------------------------------------
 #' @export
-sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
+sparsebnPath <- function(path) UseMethod("sparsebnPath", path)
 
 #' @export
-as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
+as.sparsebnPath <- function(path) UseMethod("as.sparsebnPath", path)
 
 ### Generics for sparsebnFit ----------------------------------------
 #' @export
-sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
+sparsebnFit <- function(fit) UseMethod("sparsebnFit", fit)
 
 #' @export
-as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
+as.sparsebnFit <- function(fit) UseMethod("as.sparsebnFit", fit)
 
 ### Generics for sparse ---------------------------------------------
 #' @export
