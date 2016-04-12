@@ -93,10 +93,19 @@ sparsebnData.list <- function(li){
 #' @export
 sparsebnData.data.frame <- function(data, type, ivn){
 
+    type_list <- c("continuous", "discrete")
+
     ### User must specify type
     if(missing(type)){
         stop("The data type (continuous or discrete?) was not specified: Must choose type = 'continuous' or type = 'discrete'.")
         ivn <- vector("list", length = nrow(data))
+    } else{
+        match_string <- pmatch(type, type_list) # use partial matching to select type
+        if(is.na(match_string)){ # if there was no match, error
+            stop("Invalid 'type' entered: Must match one of \'continuous\', \'discrete\', \'mixed\'.")
+        } else{ # if match was found, use it
+            type <- type_list[match_string]
+        }
     }
 
     #
