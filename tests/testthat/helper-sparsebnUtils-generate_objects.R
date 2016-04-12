@@ -1,3 +1,12 @@
+### Generate fixed data
+generate_fixed_data_frame <- function(){
+    x <- rep(1L, 5)
+    y <- exp(1)^(1:5)
+    z <- sqrt(y)
+    data.frame(x, y, z)
+}
+
+### Generate fixed objects for empty graphs
 generate_empty_edgeList <- function(){
     sparsebnUtils::edgeList.list(list(integer(0)))
 }

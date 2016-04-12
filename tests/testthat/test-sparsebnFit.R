@@ -1,4 +1,4 @@
-context("sparsebnFit_constructor")
+context("sparsebnFit")
 
 ## True num.nodes = 5
 ## True num.edges = 5
