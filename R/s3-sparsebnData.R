@@ -84,6 +84,11 @@ sparsebnData.list <- function(li){
         stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
     }
 
+    num_missing <- count_nas(li$data)
+    if(num_missing > 0){
+        warning(has_missing_values(num_missing))
+    }
+
     ### Final output
     structure(li, class = "sparsebnData")
 } # END SPARSEBNDATA.LIST

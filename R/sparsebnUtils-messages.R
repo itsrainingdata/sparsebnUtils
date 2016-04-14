@@ -24,3 +24,8 @@ input_not_sparsebnData <- function(data){
 alg_input_data_frame <- function(){
     sprintf("Data input as a data.frame: In order to coerce your data to a valid sparsebnData object, we will assume the data is purely observational. In the future, it's best to do this yourself to prevent loss of information.")
 }
+
+#' @export
+has_missing_values <- function(count){
+    sprintf("Data contains %d missing values. Presently, all of the methods in this package require complete data. Please impute these missing values before running any of the learning algorithms.", count)
+}
