@@ -2,7 +2,7 @@ context("reIndex method for sparse objects")
 
 test_that("reIndexC <-> reIndexR returns original", {
     ### R -> C
-    sp <- sparsebnUtils::sparse.list(list(rows = c(1L), cols = c(1L), vals = pi, dim = c(2, 2), start = 1))
+    sp <- sparse(list(rows = c(1L), cols = c(1L), vals = pi, dim = c(2, 2), start = 1))
     expect_equal(reIndexR(reIndexC(sp)), sp)
 
 #     sbm <- SparseBlockMatrixR.list(list(rows = list(c(1L)), vals = list(c(pi)), blocks = list(integer(0)), sigmas = exp(1), start = 1))
@@ -18,7 +18,7 @@ test_that("reIndexC <-> reIndexR returns original", {
 
 test_that("reIndexC works as expected", {
     ### test on sparse
-    spR <- sparsebnUtils::sparse.list(list(rows = c(1L), cols = c(1L), vals = pi, dim = c(2, 2), start = 1))
+    spR <- sparse(list(rows = c(1L), cols = c(1L), vals = pi, dim = c(2, 2), start = 1))
     spC <- reIndexC(spR)
     expect_equal(spC, sparse.list(list(rows = c(0L), cols = c(0L), vals = pi, dim = c(2, 2), start = 0)))
 
@@ -30,7 +30,7 @@ test_that("reIndexC works as expected", {
 
 test_that("reIndexR works as expected", {
     ### test on sparse
-    spC <- sparsebnUtils::sparse.list(list(rows = c(0L), cols = c(0L), vals = pi, dim = c(2, 2), start = 0))
+    spC <- sparse(list(rows = c(0L), cols = c(0L), vals = pi, dim = c(2, 2), start = 0))
     spR <- reIndexR(spC)
     expect_equal(spR, sparse.list(list(rows = c(1L), cols = c(1L), vals = pi, dim = c(2, 2), start = 1)))
 

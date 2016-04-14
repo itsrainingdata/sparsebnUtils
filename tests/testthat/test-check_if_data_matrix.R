@@ -7,8 +7,9 @@ test_that("check_if_data_matrix behaves as expected", {
     expect_false(check_if_data_matrix(numeric(10)))
 
     ### Check Matrix package
-    library("Matrix")
-    expect_false(check_if_data_matrix(Matrix::Diagonal(10, 1)))
-    expect_false(check_if_data_matrix(Matrix::Matrix(matrix(0))))
+# 4-12-16: Why do we want Matrix objects to return FALSE here? Deprecated for now.
+#     library("Matrix")
+#     expect_false(check_if_data_matrix(Matrix::Diagonal(10, 1)))
+#     expect_false(check_if_data_matrix(Matrix::Matrix(matrix(0))))
 
 })

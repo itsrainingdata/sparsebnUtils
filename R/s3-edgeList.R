@@ -62,8 +62,8 @@ edgeList.list <- function(li){
     }
 
     ### Cannot assign a parent larger than total number of nodes, or < 1
-    max.node.index <- max(unlist(lapply(li, max)))
-    min.node.index <- min(unlist(lapply(li, min)))
+    max.node.index <- suppressWarnings(max(unlist(li))) # Ignore warning if graph is empty
+    min.node.index <- suppressWarnings(min(unlist(li))) #
     if(max.node.index > length(li) || min.node.index < 1){
         stop(sprintf("The indices of the parents must be between 1 and number of nodes (= length of list)!
                       Currently between %d and %d.", min.node.index, max.node.index))

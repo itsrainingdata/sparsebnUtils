@@ -114,7 +114,7 @@ sparsebnData.data.frame <- function(data, type, ivn){
     #
 
     if(missing(ivn)){
-        warning("A list of interventions was not specified: Assuming data is purely observational.")
+        message("A list of interventions was not specified: Assuming data is purely observational.")
         ivn <- vector("list", length = nrow(data))
     }
 
