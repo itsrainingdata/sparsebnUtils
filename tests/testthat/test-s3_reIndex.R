@@ -1,4 +1,4 @@
-context("reIndex method for sparse objects")
+context("reIndex")
 
 test_that("reIndexC <-> reIndexR returns original", {
     ### R -> C

@@ -1,6 +1,7 @@
 context("sparsebnData")
 
 dat <- generate_fixed_data_frame()
+dat_na <- generate_na_data_frame()
 
 test_that("sparsebnData constructor fails if input not a list, data.frame, or matrix", {
     expect_error(sparsebnData(1L))
@@ -18,6 +19,10 @@ test_that("sparsebnData constructor fails if type not specified or improperly sp
     expect_that(sparsebnData(data = dat, type = "cont"), not(throws_error()))
     expect_that(sparsebnData(data = dat, type = "d"), not(throws_error()))
     expect_that(sparsebnData(data = dat, type = "disc"), not(throws_error()))
+})
+
+test_that("sparsebnData constructor issues a warning if data has missing values, but does not fail", {
+    expect_warning(sparsebnData(data = dat_na, type = "continuous"), regexp = "Data contains [0-9]+")
 })
 
 test_that("print.sparsebnData functions properly", {

@@ -1,4 +1,4 @@
-context("gen_lambdas method for generating a grid of lambdas")
+context("gen_lambdas")
 
 test_that("gen_lambdas is the same as generate.lambdas", {
     lambda.max <- 10

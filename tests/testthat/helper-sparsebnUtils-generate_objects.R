@@ -6,6 +6,14 @@ generate_fixed_data_frame <- function(){
     data.frame(x, y, z)
 }
 
+### Generate fixed data
+generate_na_data_frame <- function(){
+    dat <- generate_fixed_data_frame()
+    dat[2,2] <- NA
+
+    dat
+}
+
 ### Generate fixed objects for empty graphs
 generate_empty_edgeList <- function(){
     edgeList(list(integer(0)))
