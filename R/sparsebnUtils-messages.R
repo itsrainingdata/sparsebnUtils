@@ -10,6 +10,8 @@
 # PACKAGE SPARSEBNUTILS: Messages
 #
 #   CONTENTS:
+#       input_not_sparsebnData
+#       alg_input_data_frame
 #
 #
 
@@ -20,7 +22,5 @@ input_not_sparsebnData <- function(data){
 
 #' @export
 alg_input_data_frame <- function(){
-    sprintf("Data input as a data.frame: In order to coerce your data to a valid sparsebnData object,
-             we will assume the data is purely observational. In the future, it's best to do this
-             yourself to prevent loss of information.")
+    sprintf("Data input as a data.frame: In order to coerce your data to a valid sparsebnData object, we will assume the data is purely observational. In the future, it's best to do this yourself to prevent loss of information.")
 }
