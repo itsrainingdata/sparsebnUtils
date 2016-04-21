@@ -126,3 +126,33 @@ lambda.grid.sparsebnPath <- function(path){
 get.adjacency.matrix.sparsebnPath <- function(path){
     lapply(path, get.adjacency.matrix)
 } # END GET.ADJACENCY.MATRIX.sparsebnPath
+
+#' @export
+"[.sparsebnPath" <- function(x, i){
+    ### Needed to ensure that naive subsetting of path objects as a list
+    ###  still returns a path object
+    sparsebnPath(as.list(x)[i])
+}
+
+#' @export
+plot.sparsebnPath <- function(path, ...){
+    par.default <- par()
+    par(mfrow = n2mfrow(length(path)), # Automatically choose a sensible grid to use
+        mai=rep(0,4)                   # Need to reset margins (why??? graph packages seem to handle this oddly)
+        )
+
+    ### Issues when plotting null DAG, so remove it
+    path <- path[-1]
+
+    tryCatch({
+        # lapply(path, plot)
+        for(fit in path){
+            plot(fit, ...)
+        }
+    }, error = function(c){
+        dev.off()
+        stop(c)
+    })
+
+    par(par.default) # restore user's original settings
+}

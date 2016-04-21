@@ -21,6 +21,11 @@
 to_network <- function(x) UseMethod("to_network", x)
 
 #' @export
+to_network.network <- function(net){
+    net
+}
+
+#' @export
 to_network.edgeList <- function(el){
     ### This function requires the 'network' package to be installed
     if (!requireNamespace("network", quietly = TRUE)) {

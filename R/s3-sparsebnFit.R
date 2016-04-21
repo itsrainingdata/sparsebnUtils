@@ -97,8 +97,24 @@ sparsebnFit.list <- function(li){
     }
     li$nedge <- num.edges(li$edges)
 
-    ### Final output
-    structure(li, class = "sparsebnFit")
+    ### Output with DAG as edgeList
+    out <- structure(li, class = "sparsebnFit")
+
+    ### Coerce to user's desired data structure
+    pkg_graph <- getGraphPackage()
+    if(!is.null(pkg_graph)){
+        if(pkg_graph == "graph"){
+            out <- to_graphNEL(out)
+        } else if(pkg_graph == "igraph"){
+            out <- to_igraph(out)
+        } else if(pkg_graph == "network"){
+            out <- to_network(out)
+        } else{
+            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+        }
+    }
+
+    out
 } # END sparsebnFit.LIST
 
 #' @export
@@ -145,6 +161,36 @@ num.edges.sparsebnFit <- function(fit){
 num.samples.sparsebnFit <- function(fit){
     fit$nn
 } # END NUM.SAMPLES.sparsebnFit
+
+#' @export
+plot.sparsebnFit <- function(fit, ...){
+    pkg_plot <- getPlotPackage()
+    pkg_graph <- getGraphPackage()
+
+    #
+    # NOTE: Need to be careful here... what if the user has built a bunch of models
+    #   using (e.g.) sparsebn.graph = "graph", changes their mind to use
+    #   sparsebn.graph = "network" mid-workflow? Now all of their fitted objects
+    #   still have 'graph' data but moving forward everything will use network. Need
+    #   to consider this carefully.
+    #
+
+    if(!is.null(pkg_graph)){
+        plot(fit$edges)
+    } else if(!is.null(pkg_plot)){
+        if(pkg_plot == "graph"){
+            plot(to_graphNEL(fit$edges), ...)
+        } else if(pkg_plot == "igraph"){
+            plot(to_igraph(fit$edges), ...)
+        } else if(pkg_plot == "network"){
+            plot(to_network(fit$edges), ...)
+        } else{
+            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+        }
+    } else{
+        stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
+    }
+}
 
 #------------------------------------------------------------------------------#
 # to_B.sparsebnFit

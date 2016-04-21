@@ -21,6 +21,11 @@
 to_igraph <- function(x) UseMethod("to_igraph", x)
 
 #' @export
+to_igraph.igraph <- function(ig){
+    ig
+}
+
+#' @export
 to_igraph.edgeList <- function(el){
     ### This function requires the 'igraph' package to be installed
     if (!requireNamespace("igraph", quietly = TRUE)) {

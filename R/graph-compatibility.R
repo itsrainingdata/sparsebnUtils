@@ -21,6 +21,11 @@
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
 #' @export
+to_graphNEL.graphNEL <- function(gr){
+    gr
+}
+
+#' @export
 to_graphNEL.edgeList <- function(el){
     ### This function require the 'graph' package to be installed
     if (!requireNamespace("graph", quietly = TRUE)) {
