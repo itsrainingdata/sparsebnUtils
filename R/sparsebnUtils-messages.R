@@ -29,3 +29,13 @@ alg_input_data_frame <- function(){
 has_missing_values <- function(count){
     sprintf("Data contains %d missing values. Presently, all of the methods in this package require complete data. Please impute these missing values before running any of the learning algorithms.", count)
 }
+
+#' @export
+invalid_pkg_specification <- function(){
+    sprintf("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+}
+
+#' @export
+pkg_not_installed <- function(pkg){
+    sprintf("The %s package is required in order to use this method. Please install it first.", pkg)
+}

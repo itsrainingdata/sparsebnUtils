@@ -1,6 +1,19 @@
 #' @export
-setGraphPackage <- function(pkg){
-    ### Need to add checks for packages
+setGraphPackage <- function(pkg, coerce = FALSE){
+    if(!is.null(pkg)){
+        if (!requireNamespace(pkg, quietly = TRUE)) {
+            stop(pkg_not_installed(pkg = pkg), call. = FALSE)
+        }
+
+        setPlotPackage(pkg = pkg) # plot package must match graph package
+    }
+
+    if(coerce){
+        warning(sprintf("coerce set to TRUE: All fitted objects will be converted to use objects from the %s package internally.", pkg))
+        tryCatch({
+            pkg_change_global_coerce()
+        }, error = function(c){ stop(c)})
+    }
     set_option("sparsebn.graph", pkg)
 }
 
@@ -9,13 +22,11 @@ getGraphPackage <- function(){
     get_option("sparsebn.graph")
 }
 
-#' @export
 setPlotPackage <- function(pkg){
     ### Need to add checks for packages
     set_option("sparsebn.plotting", pkg)
 }
 
-#' @export
 getPlotPackage <- function(){
     get_option("sparsebn.plotting")
 }

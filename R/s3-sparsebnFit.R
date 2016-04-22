@@ -110,7 +110,7 @@ sparsebnFit.list <- function(li){
         } else if(pkg_graph == "network"){
             out <- to_network(out)
         } else{
-            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+            stop(invalid_pkg_specification())
         }
     }
 
