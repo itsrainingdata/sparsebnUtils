@@ -47,7 +47,7 @@ to_graphNEL.sparsebnFit <- function(sbf){
 
 #' @export
 to_graphNEL.sparsebnPath <- function(sbp){
-    lapply(sbp, to_graphNEL)
+    sparsebnPath(lapply(sbp, to_graphNEL))
 }
 
 #

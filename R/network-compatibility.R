@@ -54,7 +54,7 @@ to_network.sparsebnFit <- function(sbf){
 
 #' @export
 to_network.sparsebnPath <- function(sbp){
-    lapply(sbp, to_network)
+    sparsebnPath(lapply(sbp, to_network))
 }
 
 #

@@ -46,7 +46,7 @@ to_igraph.sparsebnFit <- function(sbf){
 
 #' @export
 to_igraph.sparsebnPath <- function(sbp){
-    lapply(sbp, to_igraph)
+    sparsebnPath(lapply(sbp, to_igraph))
 }
 
 #
