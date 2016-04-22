@@ -22,7 +22,7 @@ getPlotPackage <- function(){
 
 set_option <- function(opt, val){
     opt_to_set <- list()
-    opt_to_set[[opt]] <- val
+    opt_to_set[opt] <- val
     options(opt_to_set)
     invisible()
 }
