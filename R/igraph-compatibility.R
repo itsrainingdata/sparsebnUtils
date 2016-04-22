@@ -32,9 +32,13 @@ to_igraph.edgeList <- function(el){
         stop("igraph package required to coerce data to 'igraph' type!", call. = FALSE)
     }
 
-    el.igraph <- edgeList_to_igraph_edgelist(el)
-
-    igraph::graph_from_edgelist(el.igraph, directed = TRUE)
+    if(num.edges(el) > 0){
+        el.igraph <- edgeList_to_igraph_edgelist(el)
+        igraph::graph_from_edgelist(el.igraph, directed = TRUE)
+    } else{
+        ### Special case to create empty graph
+        igraph::graph.empty(n = num.nodes(el), directed = TRUE)
+    }
 }
 
 #' @export
@@ -97,4 +101,19 @@ edgeList_to_igraph_edgelist <- function(el){
     #     }
 
     el.igraph
+}
+
+#' @export
+to_edgeList.igraph <- function(igr){
+    edgeList(igraph_to_edgeList_list(igr))
+}
+
+#
+# Helper function to convert a igraph object to an edgeList compatible list
+#
+igraph_to_edgeList_list <- function(igr){
+    igr.edgeL <- igraph::as_adj_list(igr, mode = "in")
+    igr.edgeL <- lapply(igr.edgeL, as.integer)
+
+    igr.edgeL
 }

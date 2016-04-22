@@ -156,3 +156,9 @@ plot.sparsebnPath <- function(path, ...){
 
     par(par.default) # restore user's original settings
 }
+
+#' @export
+to_edgeList.sparsebnPath <- function(path){
+    sparsebnPath(lapply(path, to_edgeList))
+}
+

@@ -103,3 +103,34 @@ edgeList_to_graphNEL_edgeL <- function(el){
 
     el.graphNEL
 }
+
+### These three functions need to be filled in
+as.edgeList.graphNEL <- function(gr){
+
+}
+
+as.sparsebnFit.graphNEL <- function(gr){
+
+}
+
+as.sparsebnPath.graphNEL <- function(gr){
+
+}
+
+#' @export
+to_edgeList.graph <- function(gr){
+    edgeList(graphNEL_to_edgeList_list(gr))
+}
+
+#
+# Helper function to convert a graphNEL object to an edgeList compatible list
+#
+graphNEL_to_edgeList_list <- function(gr){
+    ### Use inEdges to invert the parent-child relationships and coerce the indices to integers
+    gr.edgeL <- lapply(graph::inEdges(gr), as.integer)
+
+    ### Eliminate node names
+    names(gr.edgeL) <- NULL
+
+    gr.edgeL
+}
