@@ -47,6 +47,9 @@ edgeList <- function(x) UseMethod("edgeList", x)
 #' @export
 as.edgeList <- function(x) UseMethod("as.edgeList", x) # NOTE: Right now this is extended (only) in ccdrAlgorithm,
 
+#' @export
+to_edgeList <- function(x) UseMethod("to_edgeList", x)
+
 ### Generics for various exported utility functions
 
 #' get.adjacency.matrix

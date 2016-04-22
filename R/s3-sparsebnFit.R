@@ -192,6 +192,13 @@ plot.sparsebnFit <- function(fit, ...){
     }
 }
 
+#' @export
+to_edgeList.sparsebnFit <- function(fit){
+    fit$edges <- to_edgeList(fit$edges)
+
+    fit
+}
+
 #------------------------------------------------------------------------------#
 # to_B.sparsebnFit
 # Internal function to convert estimates from the (Rho, R) parametrization to

@@ -136,3 +136,8 @@ num.edges.edgeList <- function(edgeL){
 is.zero.edgeList <- function(edgeL){
     (num.edges(edgeL) == 0)
 } # END IS.ZERO.EDGELIST
+
+#' @export
+to_edgeList.edgeList <- function(el){
+    el
+}
