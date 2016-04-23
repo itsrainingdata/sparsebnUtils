@@ -119,7 +119,7 @@ sparse.matrix <- function(m, index = "R"){
 
     pp <- nrow(m)
 
-    nnz <- which(abs(m) > .MACHINE_EPS) - 1
+    nnz <- which(abs(m) > zero_threshold()) - 1
     vals <- double(length(nnz))
     rows <- integer(length(nnz))
     cols <- integer(length(nnz))
@@ -230,9 +230,9 @@ is.zero.sparse <- function(x){
 #
 .num_edges.sparse <- function(sp){
     ### Testing only for now
-    if(length(which(abs(sp$vals) > .MACHINE_EPS)) != length(sp$rows)){
+    if(length(which(abs(sp$vals) > zero_threshold())) != length(sp$rows)){
         stop("Error in .num_edges.sparse! Please check source code.")
     }
 
-    length(which(abs(sp$vals) > .MACHINE_EPS))
+    length(which(abs(sp$vals) > zero_threshold()))
 } # END .NUM_EDGES.SPARSE

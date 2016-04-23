@@ -1,3 +1,4 @@
+### This file has been deprecated!
 #
 #  sparsebnUtils-globals.R
 #  sparsebnUtils
@@ -13,4 +14,4 @@
 #     .MACHINE_EPS
 #
 
-.MACHINE_EPS <- .Machine$double.eps ^ 0.5 # approximately 1.5e-08, used to be 1e-12
+# .MACHINE_EPS <- .Machine$double.eps ^ 0.5 # approximately 1.5e-08, used to be 1e-12

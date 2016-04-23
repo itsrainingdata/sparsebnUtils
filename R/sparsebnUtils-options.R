@@ -20,6 +20,11 @@ getPlotPackage <- function(){
     get_option("sparsebn.plotting")
 }
 
+#' @export
+zero_threshold <- function(){
+    get_option("sparsebn.zerothreshold")
+}
+
 set_option <- function(opt, val){
     opt_to_set <- list()
     opt_to_set[opt] <- val

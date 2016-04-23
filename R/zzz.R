@@ -29,9 +29,9 @@
 #   )
 
   opt.sparsebn <- list(
-      sparsebn.graph = NULL,       # graph package to use / NULL = no external package
-      sparsebn.plotting = "igraph" # plotting mechanism to use
-      # .MACHINE_EPS?
+      sparsebn.graph = NULL,                              # graph package to use / NULL = no external package
+      sparsebn.plotting = "igraph",                       # plotting mechanism to use
+      sparsebn.zerothreshold = sqrt(.Machine$double.eps)  # threshold for numerical precision of zeroes
   )
 
   ### Only set the options which have not already been set (i.e. don't override defaults)
