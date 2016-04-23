@@ -6,6 +6,12 @@
 \usage{
 lambda.grid(x)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnPath}} object.}
+}
+\value{
+Vector of \code{numeric} lambda values in fitted object.
+}
 \description{
 Extracts the lambda values from a \code{\link{sparsebnPath}} object.
 }

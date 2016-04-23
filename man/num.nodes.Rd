@@ -15,6 +15,12 @@ num.nodes(x)
 
 \method{num.nodes}{sparsebnPath}(path)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
+}
+\value{
+Number of nodes as \code{integer}.
+}
 \description{
 Extracts the number of nodes of the associated graph object.
 }

@@ -47,6 +47,7 @@
 #' @name sparsebnPath
 NULL
 
+#' @rdname sparsebn-classes
 #' @export
 is.sparsebnPath <- function(x){
     inherits(x, "sparsebnPath")
@@ -134,6 +135,7 @@ get.adjacency.matrix.sparsebnPath <- function(path){
     sparsebnPath(as.list(x)[i])
 }
 
+#' @method plot sparsebnPath
 #' @export
 plot.sparsebnPath <- function(path, ...){
     par.default <- par()

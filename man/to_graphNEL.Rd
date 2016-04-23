@@ -7,10 +7,12 @@
 to_graphNEL(x)
 }
 \arguments{
-\item{x}{An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.}
+\item{x}{An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
+\code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.}
 }
 \description{
-\code{to_graphNEL} converts an object to a \code{\link[graph]{graphNEL}} object.
-At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{graphNEL}.
+\code{to_graphNEL} converts an object to a \code{\link[graph]{graphNEL}} object. Works on both fitted
+objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
+\code{\link[graph]{graphNEL}}. In the second, the conversion applies directly to the object.
 }
 

@@ -1,3 +1,20 @@
+#
+#  sparsebnUtils-utils.R
+#  sparsebnUtils
+#
+#  Created by Bryon Aragam (local) on 4/22/16.
+#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#
+
+#
+# PACKAGE SPARSEBNUTILS: Utils
+#
+#   CONTENTS:
+#     find_objects_by_type
+#     pkg_change_global_coerce
+#     coerce_global
+#
+
 find_objects_by_type <- function(types, name = ".GlobalEnv", ...){
     ### One-liner: ls()[unlist(lapply(lapply(ls(), function(x) class(get(x))), function(x) {"sparsebnPath" %in% x}))]
     ### Better one-liner

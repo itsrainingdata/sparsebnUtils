@@ -37,19 +37,20 @@
 #' This class stores data that may contain interventions on some or all of the observations. It also
 #' allows for the degenerate case with no interventions, i.e. purely observational data.
 #'
-#' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object and a
-#' list of interventions. The list should be the same size as the number of rows in the dataset, and each
-#' component indicates which column(s) in the dataset is (are) under intervention. If an observation has no
-#' interventions, then the corresponding component is \code{NULL}. If this list only contains \code{NULL} values,
-#' then the data is purely observational.
+#' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
+#' a type identifier (i.e. discrete or continuous), and a list of interventions. The list should be the
+#' same size as the number of rows in the dataset, and each component indicates which column(s) in the
+#' dataset is (are) under intervention. If an observation has no interventions, then the corresponding
+#' component is \code{NULL}. Thus, if the data is purely observational, this list should contain only
+#' \code{NULL} values.
 #'
 #' Also inherits from \code{\link{list}}.
 #'
 #' @section Slots:
 #' \describe{
 #' \item{\code{data}}{(data.frame) Dataset.}
-#' \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
 #' \item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
+#' \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
 #' }
 #'
 #' @section Methods:
@@ -63,6 +64,7 @@
 #' @name sparsebnData
 NULL
 
+#' @rdname sparsebnData
 #' @export
 is.sparsebnData <- function(x){
     inherits(x, "sparsebnData")
@@ -95,6 +97,7 @@ sparsebnData.list <- function(li){
 
 # sparsebnData constructor
 #  Default constructor for data.frame input
+#' @rdname sparsebnData
 #' @export
 sparsebnData.data.frame <- function(data, type, ivn){
 
@@ -129,6 +132,7 @@ sparsebnData.data.frame <- function(data, type, ivn){
 
 # sparsebnData constructor
 #  Default constructor for matrix input
+#' @rdname sparsebnData
 #' @export
 sparsebnData.matrix <- function(data, type, ivn){
     sparsebnData.data.frame(as.data.frame(data), type, ivn)
@@ -160,6 +164,7 @@ count.interventions <- function(data){
 } # END COUNT.INTERVENTIONS
 
 # Default print method
+#' @rdname sparsebnData
 #' @export
 print.sparsebnData <- function(data, n = 5L){
     # print(head(data$data, n = n), row.names = FALSE)
@@ -175,7 +180,9 @@ print.sparsebnData <- function(data, n = 5L){
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA
 
-# Convert a sparsebnData object back to a data.frame
+#' Convert a sparsebnData object back to a data.frame
+#'
+#' @export
 as.data.frame.sparsebnData <- function(x){
     data.frame(x$data)
 } # END AS.DATA.FRAME.SPARSEBNDATA

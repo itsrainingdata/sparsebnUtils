@@ -12,41 +12,69 @@
 #   CONTENTS:
 #
 
+#' Internal generics for fitted objects and data
+#'
+#' Internal methods provided by \code{sparsebnUtils} for development.
+#'
+#' @name sparsebn-classes
+#' @rdname sparsebn-classes
+NULL
+
+
 ### Generics for sparsebnData ----------------------------------------
+#' @rdname sparsebnData
 #' @export
 sparsebnData <- function(data, ...) UseMethod("sparsebnData", data)
 
+#' @rdname sparsebnData
 #' @export
 as.sparsebnData <- function(data) UseMethod("as.sparsebnData", data)
 
 ### Generics for sparsebnPath ----------------------------------------
+#' @rdname sparsebnPath
 #' @export
 sparsebnPath <- function(path) UseMethod("sparsebnPath", path)
 
+#' @rdname sparsebnPath
 #' @export
 as.sparsebnPath <- function(path) UseMethod("as.sparsebnPath", path)
 
 ### Generics for sparsebnFit ----------------------------------------
+#' @rdname sparsebnFit
 #' @export
 sparsebnFit <- function(fit) UseMethod("sparsebnFit", fit)
 
+#' @rdname sparsebnFit
 #' @export
 as.sparsebnFit <- function(fit) UseMethod("as.sparsebnFit", fit)
 
 ### Generics for sparse ---------------------------------------------
+#' @rdname sparse
 #' @export
 sparse <- function(x) UseMethod("sparse", x)
 
+#' @rdname sparse
 #' @export
 as.sparse <- function(x) UseMethod("as.sparse", x)
 
 ### Generics for edgeList ---------------------------------------------
+#' @rdname edgeList
 #' @export
 edgeList <- function(x) UseMethod("edgeList", x)
 
+#' @rdname edgeList
 #' @export
 as.edgeList <- function(x) UseMethod("as.edgeList", x) # NOTE: Right now this is extended (only) in ccdrAlgorithm,
 
+#' Conversion to edgeList object
+#'
+#' \code{to_edgeList} converts an object to an \code{\link{edgeList}} object. Works on both fitted
+#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
+#' \code{\link{edgeList}}. In the second, the conversion applies directly to the object.
+#'
+#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link[graph]{graphNEL-class}},
+#' \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
+#'
 #' @export
 to_edgeList <- function(x) UseMethod("to_edgeList", x)
 
@@ -55,6 +83,8 @@ to_edgeList <- function(x) UseMethod("to_edgeList", x)
 #' get.adjacency.matrix
 #'
 #' Extracts the adjacency matrix of the associated graph object.
+#'
+#' @param x any \code{R} object.
 #'
 #' @return
 #' \code{matrix}
@@ -66,12 +96,22 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 #'
 #' Extracts the lambda values from a \code{\link{sparsebnPath}} object.
 #'
+#' @param x a \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Vector of \code{numeric} lambda values in fitted object.
+#'
 #' @export
 lambda.grid <- function(x) UseMethod("lambda.grid", x)
 
 #' num.nodes
 #'
 #' Extracts the number of nodes of the associated graph object.
+#'
+#' @param x a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Number of nodes as \code{integer}.
 #'
 #' @export
 num.nodes <- function(x) UseMethod("num.nodes", x)
@@ -80,12 +120,22 @@ num.nodes <- function(x) UseMethod("num.nodes", x)
 #'
 #' Extracts the number of edges of the associated graph object.
 #'
+#' @param x a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Number of edges as \code{integer}.
+#'
 #' @export
 num.edges <- function(x) UseMethod("num.edges", x)
 
 #' num.samples
 #'
-#' Extracts the number of samples of the associated object.
+#' Extracts the number of samples used to estimate the associated object.
+#'
+#' @param x a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Number of samples as \code{integer}.
 #'
 #' @export
 num.samples <- function(x) UseMethod("num.samples", x)
@@ -141,9 +191,11 @@ estimate.precision <- function(x, ...) UseMethod("estimate.precision", x)
 # Internal generics
 pick_family <- function(x) UseMethod("pick_family", x)
 
+#' @rdname sparsebn-functions
 #' @export
 reIndexC <- function(x) UseMethod("reIndexC", x)
 
+#' @rdname sparsebn-functions
 #' @export
 reIndexR <- function(x) UseMethod("reIndexR", x)
 

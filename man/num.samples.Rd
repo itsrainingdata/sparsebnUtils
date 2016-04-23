@@ -15,8 +15,14 @@ num.samples(x)
 
 \method{num.samples}{sparsebnPath}(path)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
+}
+\value{
+Number of samples as \code{integer}.
+}
 \description{
-Extracts the number of samples of the associated object.
+Extracts the number of samples used to estimate the associated object.
 }
 \section{Methods (by class)}{
 \itemize{

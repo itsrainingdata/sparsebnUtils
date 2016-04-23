@@ -12,10 +12,12 @@
 
 #' Conversion to network object
 #'
-#' \code{igraph} converts an object to a \code{\link[network]{network}} object.
-#' At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{network}.
+#' \code{to_network} converts an object to a \code{\link[network]{network}} object. Works on both fitted
+#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
+#' \code{\link[network]{network}}. In the second, the conversion applies directly to the object.
 #'
-#' @param x An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.
+#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
+#' \code{\link[graph]{graphNEL-class}}, or \code{\link[igraph]{igraph}}
 #'
 #' @export
 to_network <- function(x) UseMethod("to_network", x)

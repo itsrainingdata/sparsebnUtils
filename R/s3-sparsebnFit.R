@@ -58,6 +58,7 @@
 #' @name sparsebnFit
 NULL
 
+#' @rdname sparsebnFit
 #' @export
 is.sparsebnFit <- function(x){
     inherits(x, "sparsebnFit")
@@ -117,11 +118,13 @@ sparsebnFit.list <- function(li){
     out
 } # END sparsebnFit.LIST
 
+#' @method as.list sparsebnFit
 #' @export
 as.list.sparsebnFit <- function(fit){
     list(edges = fit$edges, lambda = fit$lambda, nedge = fit$nedge, pp = fit$pp, nn = fit$nn, time = fit$time)
 } # END AS.LIST.sparsebnFit
 
+#' @method print sparsebnFit
 #' @export
 print.sparsebnFit <- function(fit){
     MAX_NODES <- 20
@@ -162,6 +165,7 @@ num.samples.sparsebnFit <- function(fit){
     fit$nn
 } # END NUM.SAMPLES.sparsebnFit
 
+#' @method plot sparsebnFit
 #' @export
 plot.sparsebnFit <- function(fit, ...){
     pkg_plot <- getPlotPackage()
@@ -181,6 +185,7 @@ plot.sparsebnFit <- function(fit, ...){
     }
 }
 
+#' @describeIn to_edgeList description
 #' @export
 to_edgeList.sparsebnFit <- function(fit){
     fit$edges <- to_edgeList(fit$edges)

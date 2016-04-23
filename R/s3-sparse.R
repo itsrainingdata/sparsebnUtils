@@ -26,9 +26,23 @@
 #
 #
 
+#' sparse class
+#'
+#' Low-level representation of sparse matrices
+#'
+#' An alternative data structure for storing sparse matrices in R using the (row, column, value)
+#' format. Internally it is stored as a list with three components, each vectors, that contain
+#' the rows / columns / values of the nonzero elements. Its main purpose is to serve as an intermediary between the standard R dense matrix class and the
+#' internal \code{\link[ccdrAlgorithm]{SparseBlockMatrixR}} class.
+#'
+#' @docType class
+#' @name sparse
+NULL
+
 #------------------------------------------------------------------------------#
 # is.sparse
 #
+#' @rdname sparse
 #' @export
 is.sparse <- function(sp){
     inherits(sp, "sparse")
@@ -38,6 +52,7 @@ is.sparse <- function(sp){
 # reIndexC.sparse
 #  Re-indexing TO C for sparse objects
 #
+# #' @describeIn reIndexC C-style re-indexing for \link{sparse} objects.
 #' @export
 reIndexC.sparse <- function(sp){
     if(sp$start == 0){
@@ -56,6 +71,7 @@ reIndexC.sparse <- function(sp){
 # reIndexR.sparse
 #  Re-indexing TO R for sparse objects
 #
+# #' @describeIn reIndexC R-style re-indexing for \link{sparse} objects.
 #' @export
 reIndexR.sparse <- function(sp){
     if(sp$start == 1){

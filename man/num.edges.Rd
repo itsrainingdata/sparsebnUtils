@@ -15,6 +15,12 @@ num.edges(x)
 
 \method{num.edges}{sparsebnPath}(path)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
+}
+\value{
+Number of edges as \code{integer}.
+}
 \description{
 Extracts the number of edges of the associated graph object.
 }

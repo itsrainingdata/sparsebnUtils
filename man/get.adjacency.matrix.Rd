@@ -15,6 +15,9 @@ get.adjacency.matrix(x)
 
 \method{get.adjacency.matrix}{sparsebnPath}(path)
 }
+\arguments{
+\item{x}{any \code{R} object.}
+}
 \value{
 \code{matrix}
 }

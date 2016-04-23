@@ -20,25 +20,38 @@
 #     cor_vector
 #
 
+#' @name sparsebn-functions
+#' @rdname sparsebn-functions
+#'
+#' @title Utility functions
+#'
+#' @description Various utility functions for packages in the \code{sparsebn} family
+#'
+NULL
+
 # Check if an object is EITHER matrix or Matrix object
+#' @rdname sparsebn-functions
 #' @export
 check_if_matrix <- function(m){
     is.matrix(m) || inherits(m, "Matrix")
 } # END .CHECK_IF_MATRIX
 
 # Check if an object is a valid dataset
+#' @rdname sparsebn-functions
 #' @export
 check_if_data_matrix <- function(df){
     is.data.frame(df) || check_if_matrix(df)
 } # END .CHECK_IF_DATA_MATRIX
 
 # Check if a dataset contains missing data
+#' @rdname sparsebn-functions
 #' @export
 check_if_complete_data <- function(df){
     (count_nas(df) == 0)
 } # END .CHECK_IF_COMPLETE_DATA
 
 # Count missing values in a matrix or data.frame
+#' @rdname sparsebn-functions
 #' @export
 count_nas <- function(df){
     if( !check_if_data_matrix(df)){
@@ -49,12 +62,14 @@ count_nas <- function(df){
 } # END .COUNT_NAS
 
 # Return the types for each element in a list
+#' @rdname sparsebn-functions
 #' @export
 list_classes <- function(li){
     unlist(lapply(li, class))
 } # END .LIST_CLASSES
 
 # Return TRUE if every element of a list inherits check.class, FALSE otherwise
+#' @rdname sparsebn-functions
 #' @export
 check_list_class <- function(li, check.class){
     if(length(li) == 0){
@@ -67,6 +82,7 @@ check_list_class <- function(li, check.class){
 } # END .CHECK_LIST_CLASS
 
 # Return TRUE if names(list) matches check.names, FALSE otherwise
+#' @rdname sparsebn-functions
 #' @export
 check_list_names <- function(li, check.names){
     if(length(li) == 0){
@@ -79,6 +95,7 @@ check_list_names <- function(li, check.names){
 } # END .CHECK_LIST_NAMES
 
 # Output the class of each column in X, return as a character vector
+#' @rdname sparsebn-functions
 #' @export
 col_classes <- function(X){
     if( !check_if_data_matrix(X)){
@@ -90,6 +107,7 @@ col_classes <- function(X){
 
 # Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
 #  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
+#' @rdname sparsebn-functions
 #' @export
 cor_vector <- function(X){
     check.numeric <- (col_classes(X) != "numeric")
@@ -110,6 +128,7 @@ cor_vector <- function(X){
 
 # Utility to capitalize the first letter in a string
 #  Borrowed verbatim from the 'Hmisc' package
+#' @rdname sparsebn-functions
 #' @export
 capitalize <- function(string) {
     capped <- grep("^[^A-Z]*$", string, perl = TRUE)

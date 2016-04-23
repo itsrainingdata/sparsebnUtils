@@ -7,10 +7,12 @@
 to_igraph(x)
 }
 \arguments{
-\item{x}{An object of type \code{\link{edgeList}}, \code{\link{sparsebnFit}}, or \code{\link{sparsebnPath}}.}
+\item{x}{An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
+\code{\link[graph]{graphNEL-class}}, or \code{\link[network]{network}}.}
 }
 \description{
-\code{igraph} converts an object to an \code{\link[igraph]{igraph}} object.
-At a basic level, simply converts all associated \code{\link{edgeList}} objects to \code{igraph}.
+\code{to_igraph} converts an object to a \code{\link[igraph]{igraph}} object. Works on both fitted
+objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
+\code{\link[igraph]{igraph}}. In the second, the conversion applies directly to the object.
 }
 

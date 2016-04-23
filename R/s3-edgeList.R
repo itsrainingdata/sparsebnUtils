@@ -45,6 +45,7 @@
 #' @name edgeList
 NULL
 
+#' @rdname sparsebn-classes
 #' @export
 is.edgeList <- function(x){
     inherits(x, "edgeList")
