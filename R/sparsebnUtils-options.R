@@ -8,13 +8,16 @@ setGraphPackage <- function(pkg, coerce = FALSE){
         setPlotPackage(pkg = pkg) # plot package must match graph package
     }
 
+    ### Must change option BEFORE attempting coercion (see pkg_change_global_coerce)
+    set_option("sparsebn.graph", pkg)
+
     if(coerce){
-        warning(sprintf("coerce set to TRUE: All fitted objects will be converted to use objects from the %s package internally.", pkg))
+        warning(global_coerce_warning(pkg))
         tryCatch({
             pkg_change_global_coerce()
         }, error = function(c){ stop(c)})
     }
-    set_option("sparsebn.graph", pkg)
+
 }
 
 #' @export
@@ -38,7 +41,7 @@ zero_threshold <- function(){
 
 set_option <- function(opt, val){
     opt_to_set <- list()
-    opt_to_set[opt] <- val
+    opt_to_set[opt] <- list(val)
     options(opt_to_set)
     invisible()
 }

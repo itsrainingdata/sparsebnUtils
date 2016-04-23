@@ -46,6 +46,16 @@ to_network.edgeList <- function(el){
 }
 
 #' @export
+to_network.graphNEL <- function(gr){
+    to_network(to_edgeList(gr))
+}
+
+#' @export
+to_network.igraph <- function(igr){
+    to_network(to_edgeList(igr))
+}
+
+#' @export
 to_network.sparsebnFit <- function(sbf){
     sbf$edges <- to_network(sbf$edges)
 

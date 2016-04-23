@@ -39,3 +39,12 @@ invalid_pkg_specification <- function(){
 pkg_not_installed <- function(pkg){
     sprintf("The %s package is required in order to use this method. Please install it first.", pkg)
 }
+
+#' @export
+global_coerce_warning <- function(pkg){
+    if(!is.null(pkg)){
+        sprintf("coerce set to TRUE: All fitted objects will be converted to use objects from the %s package internally.", pkg)
+    } else{
+        sprintf("coerce set to TRUE: All fitted objects will be reverted back to using default edgeList format.")
+    }
+}

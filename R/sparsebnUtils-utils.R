@@ -32,6 +32,9 @@ pkg_change_global_coerce <- function(from_type = c("sparsebnFit", "sparsebnPath"
         } else{
             stop(invalid_pkg_specification())
         }
+    } else{
+        ### if NULL, default back to sparsebn
+        coerce_global(to_func = "to_edgeList", from_type, envir)
     }
 }
 
