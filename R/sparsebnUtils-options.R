@@ -1,11 +1,14 @@
 #' @export
-setGraphPackage <- function(pkg, coerce = FALSE){
+setGraphPackage <- function(pkg,
+                            matchPlot = TRUE,
+                            coerce = FALSE){
     if(!is.null(pkg)){
         if (!requireNamespace(pkg, quietly = TRUE)) {
             stop(pkg_not_installed(pkg = pkg), call. = FALSE)
         }
 
-        setPlotPackage(pkg = pkg) # plot package must match graph package
+        ### Set plot package to match graph package by default
+        if(matchPlot) setPlotPackage(pkg = pkg)
     }
 
     ### Must change option BEFORE attempting coercion (see pkg_change_global_coerce)
@@ -25,11 +28,13 @@ getGraphPackage <- function(){
     get_option("sparsebn.graph")
 }
 
+#' @export
 setPlotPackage <- function(pkg){
     ### Need to add checks for packages
     set_option("sparsebn.plotting", pkg)
 }
 
+#' @export
 getPlotPackage <- function(){
     get_option("sparsebn.plotting")
 }

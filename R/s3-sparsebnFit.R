@@ -165,19 +165,8 @@ num.samples.sparsebnFit <- function(fit){
 #' @export
 plot.sparsebnFit <- function(fit, ...){
     pkg_plot <- getPlotPackage()
-    pkg_graph <- getGraphPackage()
 
-    #
-    # NOTE: Need to be careful here... what if the user has built a bunch of models
-    #   using (e.g.) sparsebn.graph = "graph", changes their mind to use
-    #   sparsebn.graph = "network" mid-workflow? Now all of their fitted objects
-    #   still have 'graph' data but moving forward everything will use network. Need
-    #   to consider this carefully.
-    #
-
-    if(!is.null(pkg_graph)){
-        plot(fit$edges)
-    } else if(!is.null(pkg_plot)){
+    if(!is.null(pkg_plot)){
         if(pkg_plot == "graph"){
             plot(to_graphNEL(fit$edges), ...)
         } else if(pkg_plot == "igraph"){
