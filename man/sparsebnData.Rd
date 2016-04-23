@@ -20,7 +20,7 @@ is.sparsebnData(x)
 
 \method{sparsebnData}{matrix}(data, type, ivn)
 
-\method{print}{sparsebnData}(data, n = 5L)
+\method{print}{sparsebnData}(x, n = 5L)
 }
 \description{
 This class stores data that may contain interventions on some or all of the observations. It also

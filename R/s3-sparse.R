@@ -44,8 +44,8 @@ NULL
 #
 #' @rdname sparse
 #' @export
-is.sparse <- function(sp){
-    inherits(sp, "sparse")
+is.sparse <- function(x){
+    inherits(x, "sparse")
 } # END IS.SPARSE
 
 #------------------------------------------------------------------------------#
@@ -54,17 +54,17 @@ is.sparse <- function(sp){
 #
 # #' @describeIn reIndexC C-style re-indexing for \link{sparse} objects.
 #' @export
-reIndexC.sparse <- function(sp){
-    if(sp$start == 0){
+reIndexC.sparse <- function(x){
+    if(x$start == 0){
         warning("This object already uses C-style indexing!")
-        return(sp)
+        return(x)
     }
 
-    sp$rows <- sp$rows - 1
-    sp$cols <- sp$cols - 1
-    sp$start <- 0
+    x$rows <- x$rows - 1
+    x$cols <- x$cols - 1
+    x$start <- 0
 
-    sp
+    x
 } # END REINDEXC.SPARSE
 
 #------------------------------------------------------------------------------#
@@ -73,17 +73,17 @@ reIndexC.sparse <- function(sp){
 #
 # #' @describeIn reIndexC R-style re-indexing for \link{sparse} objects.
 #' @export
-reIndexR.sparse <- function(sp){
-    if(sp$start == 1){
+reIndexR.sparse <- function(x){
+    if(x$start == 1){
         warning("This object already uses R-style indexing!")
-        return(sp)
+        return(x)
     }
 
-    sp$rows <- sp$rows + 1
-    sp$cols <- sp$cols + 1
-    sp$start <- 1
+    x$rows <- x$rows + 1
+    x$cols <- x$cols + 1
+    x$start <- 1
 
-    sp
+    x
 } # END REINDEXR.SPARSE
 
 #------------------------------------------------------------------------------#
@@ -180,22 +180,22 @@ as.sparse.matrix <- function(m, index = "R"){
 #  Convert FROM sparse TO matrix
 #
 #' @export
-as.matrix.sparse <- function(sp){
+as.matrix.sparse <- function(x){
 
-    if( !is.sparse(sp)){
+    if( !is.sparse(x)){
         stop("Input must be a sparse object!")
     }
 
-    if(sp$start == 0) sp <- reIndexR(sp) # if indexing starts at 0, adjust to start 1 instead
+    if(x$start == 0) x <- reIndexR(x) # if indexing starts at 0, adjust to start 1 instead
 
-    m.dim <- sp$dim
+    m.dim <- x$dim
     m <- matrix(0, nrow = m.dim[1], ncol = m.dim[2])
 
-    for(k in seq_along(sp$vals)){
-        m[sp$rows[k], sp$cols[k]] <- sp$vals[k]
+    for(k in seq_along(x$vals)){
+        m[x$rows[k], x$cols[k]] <- x$vals[k]
     }
 
-    attributes(m)$dim <- sp$dim
+    attributes(m)$dim <- x$dim
     # attributes(m)$dimnames <- list()
     rownames(m) <- as.character(1:nrow(m))
     colnames(m) <- as.character(1:ncol(m))
@@ -208,8 +208,8 @@ as.matrix.sparse <- function(sp){
 #  Convert FROM sparse TO list
 #
 #' @export
-as.list.sparse <- function(sp){
-    list(rows = sp$rows, cols = sp$cols, vals = sp$cols, dim = sp$dim, start = sp$start)
+as.list.sparse <- function(x){
+    list(rows = x$rows, cols = x$cols, vals = x$cols, dim = x$dim, start = x$start)
 } # END AS.LIST.SPARSE
 
 #------------------------------------------------------------------------------#
@@ -218,13 +218,13 @@ as.list.sparse <- function(sp){
 #  By default, format the output as a three-column matrix [cols | rows | vals] ordered by increasing columns.
 #    Optionally, set pretty = FALSE to print the sparse object as a list.
 #' @export
-print.sparse <- function(sp, pretty = TRUE){
+print.sparse <- function(x, pretty = TRUE){
     if(pretty){
-        out <- cbind(sp$cols, sp$rows, sp$vals)
+        out <- cbind(x$cols, x$rows, x$vals)
         colnames(out) <- c("cols", "rows", "vals")
         print(out)
     } else{
-        print(as.list(sp))
+        print(as.list(x))
     }
 
 } # END PRINT.SPARSE
@@ -244,11 +244,11 @@ is.zero.sparse <- function(x){
 # .num_edges.sparse
 # Internal function for returning the number of edges in a sparse object
 #
-.num_edges.sparse <- function(sp){
+.num_edges.sparse <- function(x){
     ### Testing only for now
-    if(length(which(abs(sp$vals) > zero_threshold())) != length(sp$rows)){
+    if(length(which(abs(x$vals) > zero_threshold())) != length(x$rows)){
         stop("Error in .num_edges.sparse! Please check source code.")
     }
 
-    length(which(abs(sp$vals) > zero_threshold()))
+    length(which(abs(x$vals) > zero_threshold()))
 } # END .NUM_EDGES.SPARSE

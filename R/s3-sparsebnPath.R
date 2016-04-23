@@ -72,42 +72,42 @@ sparsebnPath.list <- function(li){
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
 #' @export
-print.sparsebnPath <- function(path, verbose = FALSE){
+print.sparsebnPath <- function(x, verbose = FALSE){
     if(verbose){
-        print.default(path) # default generic reverts to list => separate calls to print.sparsebnFit for each component
+        print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
         cat("CCDr solution path\n",
-            length(path), " estimates for lambda in [", min(lambda.grid(path)), ",", max(lambda.grid(path)), "]\n",
-            "Number of edges per solution: ", paste(num.edges(path), collapse = "-"), "\n",
-            num.nodes(path), " nodes\n",
-            num.samples(path), " observations\n",
+            length(x), " estimates for lambda in [", min(lambda.grid(x)), ",", max(lambda.grid(x)), "]\n",
+            "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
+            num.nodes(x), " nodes\n",
+            num.samples(x), " observations\n",
             sep = "")
     }
 } # END PRINT.SPARSEBNPATH
 
 #' @export
-as.list.sparsebnPath <- function(path){
-    class(path) <- "list"
-    path
+as.list.sparsebnPath <- function(x){
+    class(x) <- "list"
+    x
 } # END AS.LIST.SPARSEBNPATH
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnPath} object.
 #' @export
-num.nodes.sparsebnPath <- function(path){
-    unique(unlist(lapply(path, function(x) x$pp)))
+num.nodes.sparsebnPath <- function(x){
+    unique(unlist(lapply(x, function(z) z$pp)))
 } # END NUM.NODES.SPARSEBNPATH
 
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnPath} object.
 #' @export
-num.edges.sparsebnPath <- function(path){
+num.edges.sparsebnPath <- function(x){
     ### unique(.) not needed since different estimates should have different # of edges
-    unlist(lapply(path, function(x) x$nedge))
+    unlist(lapply(x, function(z) z$nedge))
 } # END NUM.EDGES.SPARSEBNPATH
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnPath} object.
 #' @export
-num.samples.sparsebnPath <- function(path){
-    unique(unlist(lapply(path, function(x) x$nn)))
+num.samples.sparsebnPath <- function(x){
+    unique(unlist(lapply(x, function(z) z$nn)))
 } # END NUM.SAMPLES.SPARSEBNPATH
 
 #' Extract regularization path from solution path
@@ -115,8 +115,8 @@ num.samples.sparsebnPath <- function(path){
 #' Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 #'
 #' @export
-lambda.grid.sparsebnPath <- function(path){
-    lambdas <- unlist(lapply(path, function(x){ x$lambda}))
+lambda.grid.sparsebnPath <- function(x){
+    lambdas <- unlist(lapply(x, function(z){ z$lambda}))
     names(lambdas) <- NULL
 
     lambdas
@@ -124,8 +124,8 @@ lambda.grid.sparsebnPath <- function(path){
 
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
 #' @export
-get.adjacency.matrix.sparsebnPath <- function(path){
-    lapply(path, get.adjacency.matrix)
+get.adjacency.matrix.sparsebnPath <- function(x){
+    lapply(x, get.adjacency.matrix)
 } # END GET.ADJACENCY.MATRIX.sparsebnPath
 
 #' @export
@@ -135,20 +135,21 @@ get.adjacency.matrix.sparsebnPath <- function(path){
     sparsebnPath(as.list(x)[i])
 }
 
+#' @rdname plot.sparsebnFit
 #' @method plot sparsebnPath
 #' @export
-plot.sparsebnPath <- function(path, ...){
+plot.sparsebnPath <- function(x, ...){
     par.default <- par()
-    par(mfrow = n2mfrow(length(path)), # Automatically choose a sensible grid to use
+    par(mfrow = n2mfrow(length(x)), # Automatically choose a sensible grid to use
         mai=rep(0,4)                   # Need to reset margins (why??? graph packages seem to handle this oddly)
         )
 
     ### Issues when plotting null DAG, so remove it
-    path <- path[-1]
+    x <- x[-1]
 
     tryCatch({
-        # lapply(path, plot)
-        for(fit in path){
+        # lapply(x, plot)
+        for(fit in x){
             plot(fit, ...)
         }
     }, error = function(c){
@@ -160,7 +161,7 @@ plot.sparsebnPath <- function(path, ...){
 }
 
 #' @export
-to_edgeList.sparsebnPath <- function(path){
-    sparsebnPath(lapply(path, to_edgeList))
+to_edgeList.sparsebnPath <- function(x){
+    sparsebnPath(lapply(x, to_edgeList))
 }
 

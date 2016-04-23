@@ -7,13 +7,13 @@
 \alias{get.adjacency.matrix.sparsebnPath}
 \title{get.adjacency.matrix}
 \usage{
-\method{get.adjacency.matrix}{edgeList}(edgeL)
+\method{get.adjacency.matrix}{edgeList}(x)
 
 get.adjacency.matrix(x)
 
-\method{get.adjacency.matrix}{sparsebnFit}(fit)
+\method{get.adjacency.matrix}{sparsebnFit}(x)
 
-\method{get.adjacency.matrix}{sparsebnPath}(path)
+\method{get.adjacency.matrix}{sparsebnPath}(x)
 }
 \arguments{
 \item{x}{any \code{R} object.}

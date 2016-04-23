@@ -4,7 +4,7 @@
 \alias{print.sparsebnPath}
 \title{print.sparsebnPath}
 \usage{
-\method{print}{sparsebnPath}(path, verbose = FALSE)
+\method{print}{sparsebnPath}(x, verbose = FALSE)
 }
 \arguments{
 \item{verbose}{If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for

@@ -11,7 +11,7 @@ sparse(x)
 
 as.sparse(x)
 
-is.sparse(sp)
+is.sparse(x)
 }
 \description{
 Low-level representation of sparse matrices

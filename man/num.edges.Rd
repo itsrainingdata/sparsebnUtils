@@ -7,13 +7,13 @@
 \alias{num.edges.sparsebnPath}
 \title{num.edges}
 \usage{
-\method{num.edges}{edgeList}(edgeL)
+\method{num.edges}{edgeList}(x)
 
 num.edges(x)
 
-\method{num.edges}{sparsebnFit}(fit)
+\method{num.edges}{sparsebnFit}(x)
 
-\method{num.edges}{sparsebnPath}(path)
+\method{num.edges}{sparsebnPath}(x)
 }
 \arguments{
 \item{x}{a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}

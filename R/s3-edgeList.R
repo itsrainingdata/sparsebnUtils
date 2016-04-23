@@ -75,9 +75,9 @@ edgeList.list <- function(li){
 
 #' @method print edgeList
 #' @export
-print.edgeList <- function(edgeL){
-    if(num.edges(edgeL) == 0){
-        edgeL.out <- paste0("<Empty graph on ", num.nodes(edgeL), " nodes.>")
+print.edgeList <- function(x){
+    if(num.edges(x) == 0){
+        edgeL.out <- paste0("<Empty graph on ", num.nodes(x), " nodes.>")
     } else{
         ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
         ### We shouldn't be printing this when pp > 1000 anyway!
@@ -85,7 +85,7 @@ print.edgeList <- function(edgeL){
             prefix <- paste0("[", x, "]")
             prefix <- sprintf("%-5s", prefix)
             paste0(prefix, paste(sprintf("%4d", sort(y)), collapse = ""))
-        }, 1L:length(edgeL), edgeL)
+        }, 1L:length(x), x)
         edgeL.out <- unlist(edgeL.out)
         edgeL.out <- paste(edgeL.out, collapse = " \n")
     }
@@ -94,25 +94,25 @@ print.edgeList <- function(edgeL){
 }
 
 #' @export
-as.matrix.edgeList <- function(edgeL){
-    as.matrix(get.adjacency.matrix.edgeList(edgeL))
+as.matrix.edgeList <- function(x){
+    as.matrix(get.adjacency.matrix.edgeList(x))
 }
 
 #' @export
-as.list.edgeList <- function(edgeL){
-    class(edgeL) <- "list"
-    edgeL
+as.list.edgeList <- function(x){
+    class(x) <- "list"
+    x
 }
 
 #' @describeIn get.adjacency.matrix Convert internal \code{edgeList} representation to an adjacency matrix
 #' @export
-get.adjacency.matrix.edgeList <- function(edgeL){
-    numnode <- length(edgeL)
+get.adjacency.matrix.edgeList <- function(x){
+    numnode <- length(x)
     Matrix.out <- Matrix::Matrix(0, nrow = numnode, ncol = numnode)
 
     ### This loop is pretty slow!
-    for(j in seq_along(edgeL)){
-        for(i in edgeL[[j]]){
+    for(j in seq_along(x)){
+        for(i in x[[j]]){
             Matrix.out[i, j] <- 1
         }
     }
@@ -122,20 +122,20 @@ get.adjacency.matrix.edgeList <- function(edgeL){
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{edgeList} object.
 #' @export
-num.nodes.edgeList <- function(edgeL){
-    length(edgeL)
+num.nodes.edgeList <- function(x){
+    length(x)
 } # END NUM.NODES.EDGELIST
 
 #' @describeIn num.edges Extracts the number of edges of \link{edgeList} object.
 #' @export
-num.edges.edgeList <- function(edgeL){
-    sum(sapply(edgeL, length))
+num.edges.edgeList <- function(x){
+    sum(sapply(x, length))
 } # END NUM.EDGES.EDGELIST
 
 #' @describeIn is.zero Determines whether or not the object represents a null graph with no edges.
 #' @export
-is.zero.edgeList <- function(edgeL){
-    (num.edges(edgeL) == 0)
+is.zero.edgeList <- function(x){
+    (num.edges(x) == 0)
 } # END IS.ZERO.EDGELIST
 
 #' @export

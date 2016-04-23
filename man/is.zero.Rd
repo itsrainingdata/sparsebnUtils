@@ -5,7 +5,7 @@
 \alias{is.zero.edgeList}
 \title{is.zero}
 \usage{
-\method{is.zero}{edgeList}(edgeL)
+\method{is.zero}{edgeList}(x)
 
 is.zero(x)
 }

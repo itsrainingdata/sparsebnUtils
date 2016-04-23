@@ -140,8 +140,8 @@ sparsebnData.matrix <- function(data, type, ivn){
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
 #' @export
-num.samples.sparsebnData <- function(data){
-    nrow(data$data)
+num.samples.sparsebnData <- function(x){
+    nrow(x$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
 
 
@@ -166,16 +166,16 @@ count.interventions <- function(data){
 # Default print method
 #' @rdname sparsebnData
 #' @export
-print.sparsebnData <- function(data, n = 5L){
+print.sparsebnData <- function(x, n = 5L){
     # print(head(data$data, n = n), row.names = FALSE)
-    .print_data_frame(data$data, topn = n)
+    .print_data_frame(x$data, topn = n)
 
-    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(data), num.samples(data) - 2*n))
-    if(is.obs(data)){
-        cat(sprintf("Observational data with %s observations", data$type))
+    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), num.samples(x) - 2*n))
+    if(is.obs(x)){
+        cat(sprintf("Observational data with %s observations", x$type))
     } else{
 
-        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(data$type), count.interventions(data), num.samples(data)))
+        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
     }
     ### Add a message about the interventions as well / if purely obs, etc.
 } # END PRINT.SPARSEBNDATA

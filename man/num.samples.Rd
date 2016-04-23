@@ -9,11 +9,11 @@
 \usage{
 num.samples(x)
 
-\method{num.samples}{sparsebnData}(data)
+\method{num.samples}{sparsebnData}(x)
 
-\method{num.samples}{sparsebnFit}(fit)
+\method{num.samples}{sparsebnFit}(x)
 
-\method{num.samples}{sparsebnPath}(path)
+\method{num.samples}{sparsebnPath}(x)
 }
 \arguments{
 \item{x}{a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}

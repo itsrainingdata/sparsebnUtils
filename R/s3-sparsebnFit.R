@@ -120,51 +120,55 @@ sparsebnFit.list <- function(li){
 
 #' @method as.list sparsebnFit
 #' @export
-as.list.sparsebnFit <- function(fit){
-    list(edges = fit$edges, lambda = fit$lambda, nedge = fit$nedge, pp = fit$pp, nn = fit$nn, time = fit$time)
+as.list.sparsebnFit <- function(x){
+    list(edges = x$edges, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
 } # END AS.LIST.sparsebnFit
 
 #' @method print sparsebnFit
 #' @export
-print.sparsebnFit <- function(fit){
+print.sparsebnFit <- function(x){
     MAX_NODES <- 20
 
     cat("CCDr estimate\n",
-        fit$nn, " observations\n",
-        "lambda = ", fit$lambda, "\n",
+        x$nn, " observations\n",
+        "lambda = ", x$lambda, "\n",
         sep = "")
 
     cat("\nDAG: \n")
-    print(fit$edges)
-    if(fit$pp < MAX_NODES) {
-        # print(get.adjacency.matrix(fit))
+    print(x$edges)
+    if(x$pp < MAX_NODES) {
+        # print(get.adjacency.matrix(x))
     }
 } # END PRINT.sparsebnFit
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export
-get.adjacency.matrix.sparsebnFit <- function(fit){
-    get.adjacency.matrix.edgeList(fit$edges)
+get.adjacency.matrix.sparsebnFit <- function(x){
+    get.adjacency.matrix.edgeList(x$edges)
 } # END GET.ADJACENCY.MATRIX.sparsebnFit
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
 #' @export
-num.nodes.sparsebnFit <- function(fit){
-    fit$pp
+num.nodes.sparsebnFit <- function(x){
+    x$pp
 } # END NUM.NODES.sparsebnFit
 
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnFit} object.
 #' @export
-num.edges.sparsebnFit <- function(fit){
-    fit$nedge
+num.edges.sparsebnFit <- function(x){
+    x$nedge
 } # END NUM.EDGES.sparsebnFit
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnFit} object.
 #' @export
-num.samples.sparsebnFit <- function(fit){
-    fit$nn
+num.samples.sparsebnFit <- function(x){
+    x$nn
 } # END NUM.SAMPLES.sparsebnFit
 
+#' Plot a fitted Bayesian network object
+#'
+#' Plot plot plot
+#'
 #' @method plot sparsebnFit
 #' @export
 plot.sparsebnFit <- function(fit, ...){
@@ -187,10 +191,10 @@ plot.sparsebnFit <- function(fit, ...){
 
 #' @describeIn to_edgeList description
 #' @export
-to_edgeList.sparsebnFit <- function(fit){
-    fit$edges <- to_edgeList(fit$edges)
+to_edgeList.sparsebnFit <- function(x){
+    x$edges <- to_edgeList(x$edges)
 
-    fit
+    x
 }
 
 #------------------------------------------------------------------------------#

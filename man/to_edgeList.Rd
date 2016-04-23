@@ -7,7 +7,7 @@
 \usage{
 to_edgeList(x)
 
-\method{to_edgeList}{sparsebnFit}(fit)
+\method{to_edgeList}{sparsebnFit}(x)
 }
 \arguments{
 \item{x}{An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link[graph]{graphNEL-class}},
