@@ -163,7 +163,7 @@ sparse.matrix <- function(m, index = "R"){
 #  Convert FROM list TO sparse
 #
 #' @export
-as.sparse.list <- function(x){
+as.sparse.list <- function(x, ...){
     sparse.list(x)
 } # END AS.SPARSE.LIST
 
@@ -173,7 +173,7 @@ as.sparse.list <- function(x){
 #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
 #    index = "C".
 #' @export
-as.sparse.matrix <- function(x, index = "R"){
+as.sparse.matrix <- function(x, index = "R", ...){
     sparse.matrix(x, index)
 } # END AS.SPARSE.MATRIX
 

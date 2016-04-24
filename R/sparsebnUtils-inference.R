@@ -16,8 +16,8 @@
 
 ### DAG fitting --------------------------------------------------------
 #' @export
-estimate.parameters.edgeList <- function(edges, data, ...){
-    choose_fit_method(edges, data, ...)
+estimate.parameters.edgeList <- function(fit, data, ...){
+    choose_fit_method(fit, data, ...)
 }
 
 #' @export
@@ -26,8 +26,8 @@ estimate.parameters.sparsebnFit <- function(fit, data, ...){
 }
 
 #' @export
-estimate.parameters.sparsebnPath <- function(path, data, ...){
-    lapply(path, function(x){ estimate.parameters.sparsebnFit(x, data)})
+estimate.parameters.sparsebnPath <- function(fit, data, ...){
+    lapply(fit, function(x){ estimate.parameters.sparsebnFit(x, data)})
 }
 
 ### Choose which fitting method to use: Enforces use of OLS or logistic regression only

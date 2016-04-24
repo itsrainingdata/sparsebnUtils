@@ -9,7 +9,7 @@
 \usage{
 sparse(x)
 
-as.sparse(x)
+as.sparse(x, ...)
 
 is.sparse(x)
 }

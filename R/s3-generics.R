@@ -56,7 +56,7 @@ sparse <- function(x) UseMethod("sparse", x)
 
 #' @rdname sparse
 #' @export
-as.sparse <- function(x) UseMethod("as.sparse", x)
+as.sparse <- function(x, ...) UseMethod("as.sparse", x)
 
 ### Generics for edgeList ---------------------------------------------
 #' @rdname edgeList
