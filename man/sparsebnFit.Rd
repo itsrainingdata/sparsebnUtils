@@ -4,6 +4,7 @@
 \name{sparsebnFit}
 \alias{as.sparsebnFit}
 \alias{is.sparsebnFit}
+\alias{print.sparsebnFit}
 \alias{sparsebnFit}
 \title{sparsebnFit class}
 \usage{
@@ -12,6 +13,8 @@ sparsebnFit(x)
 as.sparsebnFit(x)
 
 is.sparsebnFit(x)
+
+\method{print}{sparsebnFit}(x, ...)
 }
 \arguments{
 \item{x}{Only used internally.}

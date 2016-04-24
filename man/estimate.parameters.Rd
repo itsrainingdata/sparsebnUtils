@@ -7,7 +7,7 @@
 estimate.parameters(fit, data, ...)
 }
 \arguments{
-\item{fit}{A fitted object containing the Bayesian network structure to fit.}
+\item{fit}{fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object containing the Bayesian network structure to fit.}
 
 \item{data}{Data to use for fitting.}
 

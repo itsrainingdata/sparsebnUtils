@@ -30,4 +30,7 @@ the other three options require that extra packages are installed.
 \itemize{
 \item \code{getGraphPackage}: Returns the current choice of graph package ( \code{NULL} corresponds to no selection)
 }}
+\seealso{
+\code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
+}
 

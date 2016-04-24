@@ -12,16 +12,6 @@
 #   CONTENTS:
 #
 
-### Deprecated
-# #' Internal generics for fitted objects and data
-# #'
-# #' Internal methods provided by \code{sparsebnUtils} for development.
-# #'
-# #' @name sparsebn-classes
-# #' @rdname sparsebn-classes
-# NULL
-
-
 ### Generics for sparsebnData ----------------------------------------
 #' @rdname sparsebnData
 #' @export
@@ -160,7 +150,7 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #'
 #' The low-level fitting method is \code{\link{fit_dag}}.
 #'
-#' @param fit A fitted object containing the Bayesian network structure to fit.
+#' @param fit fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object containing the Bayesian network structure to fit.
 #' @param data Data to use for fitting.
 #' @param ... (optional) additional arguments to pass to \code{\link{lm}} or \code{\link{glm}}.
 #'

@@ -24,4 +24,7 @@ Note that plotting requires that (at least one of) these extra packages are inst
 \itemize{
 \item \code{getPlotPackage}: Returns the current choice of plotting mechanism
 }}
+\seealso{
+\code{\link{setGraphPackage}}, \code{\link{getGraphPackage}}
+}
 

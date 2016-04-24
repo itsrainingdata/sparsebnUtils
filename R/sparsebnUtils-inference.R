@@ -46,7 +46,7 @@ choose_fit_method <- function(edges, data, ...){
 #' Basic computing engine called by \code{\link{estimate.parameters}} for fitting parameters
 #' in a Bayesian network. Should not be used directly unless by experienced users.
 #'
-#' Can call either \code{\link{lm.fit}} or \code{link{glm.fit}}, with any choice of family.
+#' Can call either \code{\link{lm.fit}} or \code{\link{glm.fit}}, with any choice of family.
 #'
 #' @param parents \code{\link{edgeList}} object.
 #' @param dat Data.

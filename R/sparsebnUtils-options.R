@@ -12,6 +12,8 @@
 #' @param matchPlot Force the underlying plotting mechanism to match the selected package (see \link{setPlotPackage}).
 #' @param coerce If \code{TRUE}, then all of the fitted objects in the global environment will be coerced to be compatible with the selected package. This will overwrite your existing data.
 #'
+#' @seealso \code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
+#'
 #' @export
 setGraphPackage <- function(pkg,
                             matchPlot = TRUE,
@@ -52,6 +54,8 @@ getGraphPackage <- function(){
 #' Note that plotting requires that (at least one of) these extra packages are installed.
 #'
 #' @param pkg The desired package; default value is \code{igraph}.
+#'
+#' @seealso \code{\link{setGraphPackage}}, \code{\link{getGraphPackage}}
 #'
 #' @export
 setPlotPackage <- function(pkg){
