@@ -78,7 +78,7 @@ is.sparsebnData <- function(x){
 
 # sparsebnData constructor
 #' @export
-sparsebnData.list <- function(x){
+sparsebnData.list <- function(x, ...){
 
     if( !is.list(x)){
         stop("Input must be a list!")
@@ -105,7 +105,7 @@ sparsebnData.list <- function(x){
 #  Default constructor for data.frame input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.data.frame <- function(x, type, ivn){
+sparsebnData.data.frame <- function(x, type, ivn, ...){
 
     type_list <- c("continuous", "discrete")
 
@@ -140,7 +140,7 @@ sparsebnData.data.frame <- function(x, type, ivn){
 #  Default constructor for matrix input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.matrix <- function(x, type, ivn){
+sparsebnData.matrix <- function(x, type, ivn, ...){
     sparsebnData.data.frame(as.data.frame(x), type, ivn)
 } # END SPARSEBNDATA.MATRIX
 
@@ -193,11 +193,12 @@ print.sparsebnData <- function(x, n = 5L, ...){
 #' Convert a sparsebnData object back to a data.frame
 #'
 #' @param x a \code{\link{sparsebnData}} object.
+#' @param ... (optional) additional argument to \code{as.data.frame}.
 #'
 #' @method as.data.frame sparsebnData
 #' @export
-as.data.frame.sparsebnData <- function(x){
-    data.frame(x$data)
+as.data.frame.sparsebnData <- function(x, ...){
+    data.frame(x$data, ...)
 } # END AS.DATA.FRAME.SPARSEBNDATA
 
 ### Internal method for picking the correct family for fitting parameters

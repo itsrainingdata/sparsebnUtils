@@ -90,7 +90,7 @@ print.sparsebnPath <- function(x, verbose = FALSE, ...){
 } # END PRINT.SPARSEBNPATH
 
 #' @export
-as.list.sparsebnPath <- function(x){
+as.list.sparsebnPath <- function(x, ...){
     class(x) <- "list"
     x
 } # END AS.LIST.SPARSEBNPATH

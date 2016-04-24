@@ -23,43 +23,43 @@
 to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
 
 #' @export
-to_graphNEL.graphNEL <- function(gr){
-    gr
+to_graphNEL.graphNEL <- function(x){
+    x
 }
 
 #' @export
-to_graphNEL.edgeList <- function(el){
+to_graphNEL.edgeList <- function(x){
     ### This function require the 'graph' package to be installed
     if (!requireNamespace("graph", quietly = TRUE)) {
         stop("graph package (from BioConductor) required to coerce data to 'graphNEL' type!", call. = FALSE)
     }
 
-    el.graphNEL <- edgeList_to_graphNEL_edgeL(el)
-    names.graphNEL <- as.character(1:num.nodes(el))
+    el.graphNEL <- edgeList_to_graphNEL_edgeL(x)
+    names.graphNEL <- as.character(1:num.nodes(x))
 
     graph::graphNEL(nodes = names.graphNEL, edgeL = el.graphNEL, edgemode = 'directed')
 }
 
 #' @export
-to_graphNEL.igraph <- function(igr){
-    to_graphNEL(to_edgeList(igr))
+to_graphNEL.igraph <- function(x){
+    to_graphNEL(to_edgeList(x))
 }
 
 #' @export
-to_graphNEL.network <- function(net){
-    to_graphNEL(to_edgeList(net))
+to_graphNEL.network <- function(x){
+    to_graphNEL(to_edgeList(x))
 }
 
 #' @export
-to_graphNEL.sparsebnFit <- function(sbf){
-    sbf$edges <- to_graphNEL(sbf$edges)
+to_graphNEL.sparsebnFit <- function(x){
+    x$edges <- to_graphNEL(x$edges)
 
-    sbf
+    x
 }
 
 #' @export
-to_graphNEL.sparsebnPath <- function(sbp){
-    sparsebnPath(lapply(sbp, to_graphNEL))
+to_graphNEL.sparsebnPath <- function(x){
+    sparsebnPath(lapply(x, to_graphNEL))
 }
 
 #
@@ -117,8 +117,8 @@ edgeList_to_graphNEL_edgeL <- function(el){
 }
 
 #' @export
-to_edgeList.graph <- function(gr){
-    edgeList(graphNEL_to_edgeList_list(gr))
+to_edgeList.graph <- function(x){
+    edgeList(graphNEL_to_edgeList_list(x))
 }
 
 #

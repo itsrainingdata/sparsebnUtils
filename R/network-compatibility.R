@@ -23,50 +23,50 @@
 to_network <- function(x) UseMethod("to_network", x)
 
 #' @export
-to_network.network <- function(net){
-    net
+to_network.network <- function(x){
+    x
 }
 
 #' @export
-to_network.edgeList <- function(el){
+to_network.edgeList <- function(x){
     ### This function requires the 'network' package to be installed
     if (!requireNamespace("network", quietly = TRUE)) {
         stop("network package required to coerce data to 'network' type!", call. = FALSE)
     }
 
-    if(num.edges(el) > 0){
-        el.network <- edgeList_to_network_edgelist(el)
+    if(num.edges(x) > 0){
+        el.network <- edgeList_to_network_edgelist(x)
 
         network::network(el.network, directed = TRUE)
     } else{
         #
         # Is there a way to intialize a null graph using the network constructor?
         #
-        network::network.initialize(num.nodes(el)) # hack to work around special case of null graph
+        network::network.initialize(num.nodes(x)) # hack to work around special case of null graph
     }
 
 }
 
 #' @export
-to_network.graphNEL <- function(gr){
-    to_network(to_edgeList(gr))
+to_network.graphNEL <- function(x){
+    to_network(to_edgeList(x))
 }
 
 #' @export
-to_network.igraph <- function(igr){
-    to_network(to_edgeList(igr))
+to_network.igraph <- function(x){
+    to_network(to_edgeList(x))
 }
 
 #' @export
-to_network.sparsebnFit <- function(sbf){
-    sbf$edges <- to_network(sbf$edges)
+to_network.sparsebnFit <- function(x){
+    x$edges <- to_network(x$edges)
 
-    sbf
+    x
 }
 
 #' @export
-to_network.sparsebnPath <- function(sbp){
-    sparsebnPath(lapply(sbp, to_network))
+to_network.sparsebnPath <- function(x){
+    sparsebnPath(lapply(x, to_network))
 }
 
 #
@@ -98,8 +98,8 @@ edgeList_to_network_edgelist <- function(el){
 }
 
 #' @export
-to_edgeList.network <- function(net){
-    edgeList(network_to_edgeList_list(net))
+to_edgeList.network <- function(x){
+    edgeList(network_to_edgeList_list(x))
 }
 
 #

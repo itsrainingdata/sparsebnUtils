@@ -7,7 +7,7 @@
 \alias{sparse}
 \title{sparse class}
 \usage{
-sparse(x)
+sparse(x, ...)
 
 as.sparse(x, ...)
 
@@ -15,6 +15,8 @@ is.sparse(x)
 }
 \arguments{
 \item{x}{Various \code{R} objects.}
+
+\item{...}{(optional) additional arguments.}
 }
 \description{
 Low-level representation of sparse matrices
@@ -22,7 +24,6 @@ Low-level representation of sparse matrices
 \details{
 An alternative data structure for storing sparse matrices in R using the (row, column, value)
 format. Internally it is stored as a list with three components, each vectors, that contain
-the rows / columns / values of the nonzero elements. Its main purpose is to serve as an intermediary between the standard R dense matrix class and the
-internal \code{\link[ccdrAlgorithm]{SparseBlockMatrixR}} class.
+the rows / columns / values of the nonzero elements.
 }
 

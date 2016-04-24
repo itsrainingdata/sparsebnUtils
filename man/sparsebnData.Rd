@@ -12,13 +12,13 @@
 \usage{
 sparsebnData(x, ...)
 
-as.sparsebnData(x)
+as.sparsebnData(x, ...)
 
 is.sparsebnData(x)
 
-\method{sparsebnData}{data.frame}(x, type, ivn)
+\method{sparsebnData}{data.frame}(x, type, ivn, ...)
 
-\method{sparsebnData}{matrix}(x, type, ivn)
+\method{sparsebnData}{matrix}(x, type, ivn, ...)
 
 \method{print}{sparsebnData}(x, n = 5L, ...)
 }

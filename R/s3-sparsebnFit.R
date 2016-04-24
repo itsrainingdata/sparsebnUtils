@@ -122,7 +122,7 @@ sparsebnFit.list <- function(x){
 
 #' @method as.list sparsebnFit
 #' @export
-as.list.sparsebnFit <- function(x){
+as.list.sparsebnFit <- function(x, ...){
     list(edges = x$edges, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
 } # END AS.LIST.sparsebnFit
 

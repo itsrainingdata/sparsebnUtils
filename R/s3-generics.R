@@ -29,7 +29,7 @@ sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
 #' @rdname sparsebnData
 #' @export
-as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
+as.sparsebnData <- function(x, ...) UseMethod("as.sparsebnData", x)
 
 ### Generics for sparsebnPath ----------------------------------------
 #' @rdname sparsebnPath
@@ -52,7 +52,7 @@ as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 ### Generics for sparse ---------------------------------------------
 #' @rdname sparse
 #' @export
-sparse <- function(x) UseMethod("sparse", x)
+sparse <- function(x, ...) UseMethod("sparse", x)
 
 #' @rdname sparse
 #' @export

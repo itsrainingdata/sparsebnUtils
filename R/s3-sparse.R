@@ -32,10 +32,10 @@
 #'
 #' An alternative data structure for storing sparse matrices in R using the (row, column, value)
 #' format. Internally it is stored as a list with three components, each vectors, that contain
-#' the rows / columns / values of the nonzero elements. Its main purpose is to serve as an intermediary between the standard R dense matrix class and the
-#' internal \code{\link[ccdrAlgorithm]{SparseBlockMatrixR}} class.
+#' the rows / columns / values of the nonzero elements.
 #'
 #' @param x Various \code{R} objects.
+#' @param ... (optional) additional arguments.
 #'
 #' @docType class
 #' @name sparse
@@ -93,7 +93,7 @@ reIndexR.sparse <- function(x){
 #  List constructor
 #
 #' @export
-sparse.list <- function(x){
+sparse.list <- function(x, ...){
 
     if( !is.list(x)){
         stop("Input must be a list!")
@@ -130,21 +130,21 @@ sparse.list <- function(x){
 # sparse.matrix
 #
 #' @export
-sparse.matrix <- function(m, index = "R"){
-    if( nrow(m) != ncol(m)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+sparse.matrix <- function(x, index = "R", ...){
+    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
 
     if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
 
-    pp <- nrow(m)
+    pp <- nrow(x)
 
-    nnz <- which(abs(m) > zero_threshold()) - 1
+    nnz <- which(abs(x) > zero_threshold()) - 1
     vals <- double(length(nnz))
     rows <- integer(length(nnz))
     cols <- integer(length(nnz))
     for(k in seq_along(nnz)){
         col <- trunc(nnz[k] / pp)
         row <- nnz[k] - (pp * col)
-        vals[k] <- as.vector(m)[nnz[k] + 1]
+        vals[k] <- as.vector(x)[nnz[k] + 1]
         rows[k] <- row
         cols[k] <- col
     }
@@ -182,7 +182,7 @@ as.sparse.matrix <- function(x, index = "R", ...){
 #  Convert FROM sparse TO matrix
 #
 #' @export
-as.matrix.sparse <- function(x){
+as.matrix.sparse <- function(x, ...){
 
     if( !is.sparse(x)){
         stop("Input must be a sparse object!")
@@ -210,7 +210,7 @@ as.matrix.sparse <- function(x){
 #  Convert FROM sparse TO list
 #
 #' @export
-as.list.sparse <- function(x){
+as.list.sparse <- function(x, ...){
     list(rows = x$rows, cols = x$cols, vals = x$cols, dim = x$dim, start = x$start)
 } # END AS.LIST.SPARSE
 
@@ -220,7 +220,7 @@ as.list.sparse <- function(x){
 #  By default, format the output as a three-column matrix [cols | rows | vals] ordered by increasing columns.
 #    Optionally, set pretty = FALSE to print the sparse object as a list.
 #' @export
-print.sparse <- function(x, pretty = TRUE){
+print.sparse <- function(x, pretty = TRUE, ...){
     if(pretty){
         out <- cbind(x$cols, x$rows, x$vals)
         colnames(out) <- c("cols", "rows", "vals")

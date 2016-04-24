@@ -77,7 +77,7 @@ edgeList.list <- function(x){
 
 #' @method print edgeList
 #' @export
-print.edgeList <- function(x){
+print.edgeList <- function(x, ...){
     if(num.edges(x) == 0){
         edgeL.out <- paste0("<Empty graph on ", num.nodes(x), " nodes.>")
     } else{
@@ -96,12 +96,12 @@ print.edgeList <- function(x){
 }
 
 #' @export
-as.matrix.edgeList <- function(x){
+as.matrix.edgeList <- function(x, ...){
     as.matrix(get.adjacency.matrix.edgeList(x))
 }
 
 #' @export
-as.list.edgeList <- function(x){
+as.list.edgeList <- function(x, ...){
     class(x) <- "list"
     x
 }
@@ -141,6 +141,6 @@ is.zero.edgeList <- function(x){
 } # END IS.ZERO.EDGELIST
 
 #' @export
-to_edgeList.edgeList <- function(el){
-    el
+to_edgeList.edgeList <- function(x){
+    x
 }

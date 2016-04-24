@@ -4,10 +4,12 @@
 \alias{as.data.frame.sparsebnData}
 \title{Convert a sparsebnData object back to a data.frame}
 \usage{
-\method{as.data.frame}{sparsebnData}(x)
+\method{as.data.frame}{sparsebnData}(x, ...)
 }
 \arguments{
 \item{x}{a \code{\link{sparsebnData}} object.}
+
+\item{...}{(optional) additional argument to \code{as.data.frame}.}
 }
 \description{
 Convert a sparsebnData object back to a data.frame

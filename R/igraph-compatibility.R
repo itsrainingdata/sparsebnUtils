@@ -23,46 +23,46 @@
 to_igraph <- function(x) UseMethod("to_igraph", x)
 
 #' @export
-to_igraph.igraph <- function(ig){
-    ig
+to_igraph.igraph <- function(x){
+    x
 }
 
 #' @export
-to_igraph.edgeList <- function(el){
+to_igraph.edgeList <- function(x){
     ### This function requires the 'igraph' package to be installed
     if (!requireNamespace("igraph", quietly = TRUE)) {
         stop("igraph package required to coerce data to 'igraph' type!", call. = FALSE)
     }
 
-    if(num.edges(el) > 0){
-        el.igraph <- edgeList_to_igraph_edgelist(el)
+    if(num.edges(x) > 0){
+        el.igraph <- edgeList_to_igraph_edgelist(x)
         igraph::graph_from_edgelist(el.igraph, directed = TRUE)
     } else{
         ### Special case to create empty graph
-        igraph::graph.empty(n = num.nodes(el), directed = TRUE)
+        igraph::graph.empty(n = num.nodes(x), directed = TRUE)
     }
 }
 
 #' @export
-to_igraph.graphNEL <- function(gr){
-    to_igraph(to_edgeList(gr))
+to_igraph.graphNEL <- function(x){
+    to_igraph(to_edgeList(x))
 }
 
 #' @export
-to_igraph.network <- function(net){
-    to_igraph(to_edgeList(net))
+to_igraph.network <- function(x){
+    to_igraph(to_edgeList(x))
 }
 
 #' @export
-to_igraph.sparsebnFit <- function(sbf){
-    sbf$edges <- to_igraph(sbf$edges)
+to_igraph.sparsebnFit <- function(x){
+    x$edges <- to_igraph(x$edges)
 
-    sbf
+    x
 }
 
 #' @export
-to_igraph.sparsebnPath <- function(sbp){
-    sparsebnPath(lapply(sbp, to_igraph))
+to_igraph.sparsebnPath <- function(x){
+    sparsebnPath(lapply(x, to_igraph))
 }
 
 #
@@ -122,8 +122,8 @@ edgeList_to_igraph_edgelist <- function(el){
 }
 
 #' @export
-to_edgeList.igraph <- function(igr){
-    edgeList(igraph_to_edgeList_list(igr))
+to_edgeList.igraph <- function(x){
+    edgeList(igraph_to_edgeList_list(x))
 }
 
 #
