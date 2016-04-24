@@ -15,10 +15,10 @@ test_that("sparsebnData constructor fails if type not specified or improperly sp
     expect_error(sparsebnData(x = dat, type = "dicsrt"), regexp = "Invalid \'type\'")
 
     ### Check that partial matching works OK
-    expect_that(sparsebnData(x = dat, type = "c"), not(throws_error()))
-    expect_that(sparsebnData(x = dat, type = "cont"), not(throws_error()))
-    expect_that(sparsebnData(x = dat, type = "d"), not(throws_error()))
-    expect_that(sparsebnData(x = dat, type = "disc"), not(throws_error()))
+    expect_error(sparsebnData(x = dat, type = "c"), NA)
+    expect_error(sparsebnData(x = dat, type = "cont"), NA)
+    expect_error(sparsebnData(x = dat, type = "d"), NA)
+    expect_error(sparsebnData(x = dat, type = "disc"), NA)
 })
 
 test_that("sparsebnData constructor issues a warning if data has missing values, but does not fail", {

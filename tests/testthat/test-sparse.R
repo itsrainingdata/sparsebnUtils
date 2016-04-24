@@ -39,7 +39,7 @@ test_that("checks that start is properly set", {
 test_that("checks that consistency of rows / cols / vals is properly set", {
     ### Accepts empty input for rows, cols, vals as long as dim & start are properly set
     li <- list(rows = integer(0), cols = integer(0), vals = numeric(0), dim = c(1,1), start = 1)
-    expect_error(not(sparse.list(li)))
+    expect_error(sparse.list(li), NA)
 
     ### Throws error when any of rows / cols / vals have unequal length
     li <- list(rows = c(0L), cols = integer(0), vals = numeric(0), dim = c(1,1), start = 0)
@@ -57,7 +57,7 @@ test_that("checks that consistency of rows / cols / vals is properly set", {
 
     ### Accepts input with equal lengths
     li <- list(rows = c(0L), cols = c(0L), vals = c(0), dim = c(1,1), start = 0)
-    expect_error(not(sparse.list(li)))
+    expect_error(sparse.list(li), NA)
 })
 
 test_that("checks types for rows / cols / vals", {

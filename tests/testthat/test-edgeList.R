@@ -5,7 +5,7 @@ test_that("edgeList constructor fails for graphs with no nodes", {
 })
 
 test_that("edgeList constructor does NOT fail for empty graphs with >0 nodes", {
-    expect_that(edgeList(list(integer(0), integer(0))), not(throws_error()))
+    expect_error(edgeList(list(integer(0), integer(0))), NA)
 })
 
 test_that("edgeList constructor checks for inconsistent indices", {

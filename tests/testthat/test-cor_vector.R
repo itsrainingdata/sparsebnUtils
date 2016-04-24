@@ -5,7 +5,7 @@ test_that("cor_vector only accepts numeric values", {
     expect_error(cor_vector(m), "must be numeric")
 
     m <- matrix(c(1, 2, 3, 5), ncol = 2)
-    expect_error(not(cor_vector(m)))
+    expect_error(cor_vector(m), NA)
 })
 
 test_that("check case when all cors = 1", {
