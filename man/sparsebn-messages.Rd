@@ -22,6 +22,13 @@ pkg_not_installed(pkg)
 
 global_coerce_warning(pkg)
 }
+\arguments{
+\item{data}{data object.}
+
+\item{count}{number of missing values.}
+
+\item{pkg}{package name.}
+}
 \description{
 Warning and error messages for use in the \code{sparsebn} family
 }

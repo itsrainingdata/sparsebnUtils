@@ -46,6 +46,12 @@
 #'
 #' Also inherits from \code{\link{list}}.
 #'
+#' @param x a \code{\link{data.frame}} or \code{\link{matrix}} object.
+#' @param type either '\code{discrete}' or '\code{continuous}'.
+#' @param ivn (optional) list of of interventions for each node.
+#' @param n (optional) number of rows from data matrix to print.
+#' @param ... (optional) additional arguments.
+#'
 #' @section Slots:
 #' \describe{
 #' \item{\code{data}}{(data.frame) Dataset.}
@@ -72,41 +78,41 @@ is.sparsebnData <- function(x){
 
 # sparsebnData constructor
 #' @export
-sparsebnData.list <- function(li){
+sparsebnData.list <- function(x){
 
-    if( !is.list(li)){
+    if( !is.list(x)){
         stop("Input must be a list!")
-    } else if( length(li) != 3 || !setequal(names(li), c("data", "ivn", "type"))){
+    } else if( length(x) != 3 || !setequal(names(x), c("data", "ivn", "type"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), ivn (list)")
-    } else if( !check_if_data_matrix(li$data)){
-        stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(li$data)))
-    } else if(nrow(li$data) != length(li$ivn)){
+    } else if( !check_if_data_matrix(x$data)){
+        stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(x$data)))
+    } else if(nrow(x$data) != length(x$ivn)){
         stop("The length of the ivn list must equal the number of rows in the data!")
-    } else if(!(li$type %in% c("continuous", "discrete", "mixed"))){
+    } else if(!(x$type %in% c("continuous", "discrete", "mixed"))){
         stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
     }
 
-    num_missing <- count_nas(li$data)
+    num_missing <- count_nas(x$data)
     if(num_missing > 0){
         warning(has_missing_values(num_missing))
     }
 
     ### Final output
-    structure(li, class = "sparsebnData")
+    structure(x, class = "sparsebnData")
 } # END SPARSEBNDATA.LIST
 
 # sparsebnData constructor
 #  Default constructor for data.frame input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.data.frame <- function(data, type, ivn){
+sparsebnData.data.frame <- function(x, type, ivn){
 
     type_list <- c("continuous", "discrete")
 
     ### User must specify type
     if(missing(type)){
         stop("The data type (continuous or discrete?) was not specified: Must choose type = 'continuous' or type = 'discrete'.")
-        ivn <- vector("list", length = nrow(data))
+        ivn <- vector("list", length = nrow(x))
     } else{
         match_string <- pmatch(type, type_list) # use partial matching to select type
         if(is.na(match_string)){ # if there was no match, error
@@ -123,19 +129,19 @@ sparsebnData.data.frame <- function(data, type, ivn){
 
     if(missing(ivn)){
         message("A list of interventions was not specified: Assuming data is purely observational.")
-        ivn <- vector("list", length = nrow(data))
+        ivn <- vector("list", length = nrow(x))
     }
 
     ### Final output
-    sparsebnData.list(list(data = data, type = type, ivn = ivn))
+    sparsebnData.list(list(data = x, type = type, ivn = ivn))
 } # END SPARSEBNDATA.DATA.FRAME
 
 # sparsebnData constructor
 #  Default constructor for matrix input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.matrix <- function(data, type, ivn){
-    sparsebnData.data.frame(as.data.frame(data), type, ivn)
+sparsebnData.matrix <- function(x, type, ivn){
+    sparsebnData.data.frame(as.data.frame(x), type, ivn)
 } # END SPARSEBNDATA.MATRIX
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
@@ -149,6 +155,8 @@ num.samples.sparsebnData <- function(x){
 #'
 #' Returns TRUE if the data contains no interventions, i.e. is purely observational
 #'
+#' @param data a \code{\link{sparsebnData}} object.
+#'
 #' @export
 is.obs <- function(data){
     all(unlist(lapply(data$ivn, is.null)))
@@ -158,6 +166,8 @@ is.obs <- function(data){
 #'
 #' Returns the number of rows with at least one intervention
 #'
+#' @param data a \code{\link{sparsebnData}} object.
+#'
 #' @export
 count.interventions <- function(data){
     sum(unlist(lapply(data$ivn, function(x) !is.null(x))))
@@ -166,7 +176,7 @@ count.interventions <- function(data){
 # Default print method
 #' @rdname sparsebnData
 #' @export
-print.sparsebnData <- function(x, n = 5L){
+print.sparsebnData <- function(x, n = 5L, ...){
     # print(head(data$data, n = n), row.names = FALSE)
     .print_data_frame(x$data, topn = n)
 
@@ -182,6 +192,9 @@ print.sparsebnData <- function(x, n = 5L){
 
 #' Convert a sparsebnData object back to a data.frame
 #'
+#' @param x a \code{\link{sparsebnData}} object.
+#'
+#' @method as.data.frame sparsebnData
 #' @export
 as.data.frame.sparsebnData <- function(x){
     data.frame(x$data)

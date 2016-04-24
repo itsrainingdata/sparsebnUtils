@@ -43,6 +43,23 @@ capitalize(string)
 
 zero_threshold()
 }
+\arguments{
+\item{x}{a compatible object.}
+
+\item{m}{a \code{matrix}.}
+
+\item{df}{a \code{data.frame}.}
+
+\item{li}{a \code{list}.}
+
+\item{check.class}{\code{character} class name to compare against.}
+
+\item{check.names}{\code{character} names to compare against.}
+
+\item{X}{a matrix.}
+
+\item{string}{a \code{character} string.}
+}
 \description{
 Various utility functions for packages in the \code{sparsebn} family
 }

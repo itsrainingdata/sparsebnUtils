@@ -6,6 +6,9 @@
 \usage{
 \method{as.data.frame}{sparsebnData}(x)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnData}} object.}
+}
 \description{
 Convert a sparsebnData object back to a data.frame
 }

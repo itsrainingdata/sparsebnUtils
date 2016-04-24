@@ -9,6 +9,12 @@
 
 is.zero(x)
 }
+\arguments{
+\item{x}{a fitted object.}
+}
+\value{
+\code{TRUE} or \code{FALSE}.
+}
 \description{
 Determines whether or not the object is the same as the null or zero object from its class.
 }

@@ -23,6 +23,15 @@
 #' @name sparsebn-functions
 #' @rdname sparsebn-functions
 #'
+#' @param x a compatible object.
+#' @param m a \code{matrix}.
+#' @param df a \code{data.frame}.
+#' @param li a \code{list}.
+#' @param check.class \code{character} class name to compare against.
+#' @param check.names \code{character} names to compare against.
+#' @param X a matrix.
+#' @param string a \code{character} string.
+#'
 #' @title Utility functions
 #'
 #' @description Various utility functions for packages in the \code{sparsebn} family

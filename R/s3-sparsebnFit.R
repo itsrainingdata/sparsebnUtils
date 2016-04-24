@@ -39,6 +39,9 @@
 #' Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath}} object, but
 #' can be handled separately if desired (be careful!).
 #'
+#' @param x Only used internally.
+#' @param ... (optional) additional arguments.
+#'
 #' @section Slots:
 #' \describe{
 #' \item{\code{edges}}{(edgeList) Edge list of estimated DAG (see \code{\link{edgeList}}).}
@@ -48,7 +51,6 @@
 #' \item{\code{nn}}{(integer) Number of observations this estimate was based on.}
 #' \item{\code{time}}{(numeric) Time in seconds to generate this estimate.}
 #' }
-#'
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}}
@@ -67,7 +69,7 @@ is.sparsebnFit <- function(x){
 # sparsebnFit constructor
 #' @method sparsebnFit list
 #' @export
-sparsebnFit.list <- function(li){
+sparsebnFit.list <- function(x){
 
     #
     # Need to be careful when using this constructor directly since it allows the nedge
@@ -77,29 +79,29 @@ sparsebnFit.list <- function(li){
     # UPDATE: An explicit check has been added for now.
     #
 
-    if( !is.list(li)){
+    if( !is.list(x)){
         stop("Input must be a list!")
-    } else if( length(li) != 6 || !setequal(names(li), c("edges", "lambda", "nedge", "pp", "nn", "time"))){
+    } else if( length(x) != 6 || !setequal(names(x), c("edges", "lambda", "nedge", "pp", "nn", "time"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: edges (edgeList), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
-    } else if( !is.edgeList(li$edges)){
+    } else if( !is.edgeList(x$edges)){
         stop("'edges' component must be a valid edgeList object!")
-    } else if(num.edges(li$edges) != li$nedge){
+    } else if(num.edges(x$edges) != x$nedge){
         stop("Attempting to set nedge to an improper value: Must be equal to the number of nonzero values in edges.")
     }
 
     ### Update values to be consistent with edgeList
-    if(li$pp != num.nodes(li$edges)){
-        stop("Attempting to create sparsebnFit object with inconsistent number of nodes! input = ", li$pp, " != output = ", num.nodes(li$edges))
+    if(x$pp != num.nodes(x$edges)){
+        stop("Attempting to create sparsebnFit object with inconsistent number of nodes! input = ", x$pp, " != output = ", num.nodes(x$edges))
     }
-    li$pp <- num.nodes(li$edges)
+    x$pp <- num.nodes(x$edges)
 
-    if(li$nedge != num.edges(li$edges)){
-        stop("Attempting to create sparsebnFit object with inconsistent number of edges! input = ", li$nedge, " != output = ", num.edges(li$edges))
+    if(x$nedge != num.edges(x$edges)){
+        stop("Attempting to create sparsebnFit object with inconsistent number of edges! input = ", x$nedge, " != output = ", num.edges(x$edges))
     }
-    li$nedge <- num.edges(li$edges)
+    x$nedge <- num.edges(x$edges)
 
     ### Output with DAG as edgeList
-    out <- structure(li, class = "sparsebnFit")
+    out <- structure(x, class = "sparsebnFit")
 
     ### Coerce to user's desired data structure
     pkg_graph <- getGraphPackage()
@@ -126,7 +128,7 @@ as.list.sparsebnFit <- function(x){
 
 #' @method print sparsebnFit
 #' @export
-print.sparsebnFit <- function(x){
+print.sparsebnFit <- function(x, ...){
     MAX_NODES <- 20
 
     cat("CCDr estimate\n",
@@ -169,18 +171,21 @@ num.samples.sparsebnFit <- function(x){
 #'
 #' Plot plot plot
 #'
+#' @param x fitted object (\code{\link{sparsebnFit}} or \code{\link{sparsebnPath}}) to plot.
+#' @param ... (optional) additional arguments to plotting mechanism.
+#'
 #' @method plot sparsebnFit
 #' @export
-plot.sparsebnFit <- function(fit, ...){
+plot.sparsebnFit <- function(x, ...){
     pkg_plot <- getPlotPackage()
 
     if(!is.null(pkg_plot)){
         if(pkg_plot == "graph"){
-            plot(to_graphNEL(fit$edges), ...)
+            plot(to_graphNEL(x$edges), ...)
         } else if(pkg_plot == "igraph"){
-            plot(to_igraph(fit$edges), ...)
+            plot(to_igraph(x$edges), ...)
         } else if(pkg_plot == "network"){
-            plot(to_network(fit$edges), ...)
+            plot(to_network(x$edges), ...)
         } else{
             stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
         }

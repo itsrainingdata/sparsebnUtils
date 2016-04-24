@@ -94,34 +94,55 @@ fit_dag <- function(parents,
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
 }
 
+#' Estimating undirected graphs
+#'
+#' Methods for inferring (i) Covariance matrices and (ii) Precision matrices,
+#' the latter of which correspond to an undirected graphical model for the underlying
+#' distribution.
+#'
+#' See Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
+#'
+#' @param coefs coefficients of DAG.
+#' @param vars conditional variances of DAG.
+#' @param fit fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#' @param data data as \code{\link{sparsebnData}} object.
+#' @param ... (optional) additional parameters
+#'
+#' @return
+#' Covariance or precision (inverse covariance) matrix as \code{\link[Matrix]{Matrix}}.
+#'
+#' @name estimate.covariance
+#' @rdname estimate.covariance
+NULL
+
 ### Covariance fitting --------------------------------------------------------
 #' @export
-get.covariance.matrix <- function(coefs, vars, ...){
+get.covariance.matrix <- function(coefs, vars){
     get.covariance.Matrix(Matrix::Matrix(coefs), Matrix::Matrix(vars))
 }
 
 #' @export
-get.covariance.Matrix <- function(coefs, vars, ...){
+get.covariance.Matrix <- function(coefs, vars){
     if(missing(vars)) stop("Must specify variance matrix!")
 
     cov_mat(coefs, vars)
 }
 
-#' @export
-get.covariance.list <- function(li, ...){
+### Internal method, not exported
+get.covariance.list <- function(li){
     stopifnot(check_list_names(li, c("coefs", "vars")))
     get.covariance(li$coefs, li$vars)
 }
 
 #' @export
-estimate.covariance.sparsebnFit <- function(fit, data, ...){
+estimate.covariance.sparsebnFit <- function(fit, data){
     fitted.dag <- estimate.parameters(fit, data)
     get.covariance(fitted.dag$coefs, fitted.dag$vars)
 }
 
 #' @export
-estimate.covariance.sparsebnPath <- function(path, data, ...){
-    lapply(path, function(x) estimate.covariance.sparsebnFit(x, data, ...))
+estimate.covariance.sparsebnPath <- function(fit, data){
+    lapply(fit, function(x) estimate.covariance.sparsebnFit(x, data))
 }
 
 cov_mat <- function(coefs, vars){
@@ -145,7 +166,7 @@ get.precision.Matrix <- function(coefs, vars, ...){
     inv_cov_mat(coefs, vars)
 }
 
-#' @export
+### Internal method, not exported
 get.precision.list <- function(li, ...){
     stopifnot(check_list_names(li, c("coefs", "vars")))
     get.precision(li$coefs, li$vars)
@@ -158,8 +179,8 @@ estimate.precision.sparsebnFit <- function(fit, data, ...){
 }
 
 #' @export
-estimate.precision.sparsebnPath <- function(path, data, ...){
-    lapply(path, function(x) estimate.precision.sparsebnFit(x, data, ...))
+estimate.precision.sparsebnPath <- function(fit, data, ...){
+    lapply(fit, function(x) estimate.precision.sparsebnFit(x, data, ...))
 }
 
 inv_cov_mat <- function(coefs, vars){

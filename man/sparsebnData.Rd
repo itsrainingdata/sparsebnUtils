@@ -10,17 +10,28 @@
 \alias{sparsebnData.matrix}
 \title{sparsebnData class}
 \usage{
-sparsebnData(data, ...)
+sparsebnData(x, ...)
 
-as.sparsebnData(data)
+as.sparsebnData(x)
 
 is.sparsebnData(x)
 
-\method{sparsebnData}{data.frame}(data, type, ivn)
+\method{sparsebnData}{data.frame}(x, type, ivn)
 
-\method{sparsebnData}{matrix}(data, type, ivn)
+\method{sparsebnData}{matrix}(x, type, ivn)
 
-\method{print}{sparsebnData}(x, n = 5L)
+\method{print}{sparsebnData}(x, n = 5L, ...)
+}
+\arguments{
+\item{x}{a \code{\link{data.frame}} or \code{\link{matrix}} object.}
+
+\item{...}{(optional) additional arguments.}
+
+\item{type}{either '\code{discrete}' or '\code{continuous}'.}
+
+\item{ivn}{(optional) list of of interventions for each node.}
+
+\item{n}{(optional) number of rows from data matrix to print.}
 }
 \description{
 This class stores data that may contain interventions on some or all of the observations. It also

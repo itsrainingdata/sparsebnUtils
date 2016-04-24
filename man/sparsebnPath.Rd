@@ -3,17 +3,33 @@
 \docType{class}
 \name{sparsebnPath}
 \alias{as.sparsebnPath}
+\alias{is.sparsebnPath}
+\alias{print.sparsebnPath}
 \alias{sparsebnPath}
 \title{sparsebnPath class}
 \usage{
-sparsebnPath(path)
+sparsebnPath(x)
 
-as.sparsebnPath(path)
+as.sparsebnPath(x)
+
+is.sparsebnPath(x)
+
+\method{print}{sparsebnPath}(x, verbose = FALSE, ...)
+}
+\arguments{
+\item{x}{Only used internally.}
+
+\item{verbose}{If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
+large graphs or large solution paths. (default = \code{FALSE})}
+
+\item{...}{(optional) additional arguments.}
 }
 \description{
 Convenience wrapper class for output of CCDr algorithm: Represents the entire solution path
 of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
 from \code{\link{list}}.
+
+Prints the contents of a \code{\link{sparsebnPath}} object neatly.
 }
 \details{
 Each value of lambda in the (discrete) solution path corresponds to a single DAG estimate, which

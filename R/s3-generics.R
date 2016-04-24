@@ -12,41 +12,42 @@
 #   CONTENTS:
 #
 
-#' Internal generics for fitted objects and data
-#'
-#' Internal methods provided by \code{sparsebnUtils} for development.
-#'
-#' @name sparsebn-classes
-#' @rdname sparsebn-classes
-NULL
+### Deprecated
+# #' Internal generics for fitted objects and data
+# #'
+# #' Internal methods provided by \code{sparsebnUtils} for development.
+# #'
+# #' @name sparsebn-classes
+# #' @rdname sparsebn-classes
+# NULL
 
 
 ### Generics for sparsebnData ----------------------------------------
 #' @rdname sparsebnData
 #' @export
-sparsebnData <- function(data, ...) UseMethod("sparsebnData", data)
+sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
 #' @rdname sparsebnData
 #' @export
-as.sparsebnData <- function(data) UseMethod("as.sparsebnData", data)
+as.sparsebnData <- function(x) UseMethod("as.sparsebnData", x)
 
 ### Generics for sparsebnPath ----------------------------------------
 #' @rdname sparsebnPath
 #' @export
-sparsebnPath <- function(path) UseMethod("sparsebnPath", path)
+sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
 
 #' @rdname sparsebnPath
 #' @export
-as.sparsebnPath <- function(path) UseMethod("as.sparsebnPath", path)
+as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
 
 ### Generics for sparsebnFit ----------------------------------------
 #' @rdname sparsebnFit
 #' @export
-sparsebnFit <- function(fit) UseMethod("sparsebnFit", fit)
+sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
 
 #' @rdname sparsebnFit
 #' @export
-as.sparsebnFit <- function(fit) UseMethod("as.sparsebnFit", fit)
+as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
 
 ### Generics for sparse ---------------------------------------------
 #' @rdname sparse
@@ -144,6 +145,11 @@ num.samples <- function(x) UseMethod("num.samples", x)
 #'
 #' Determines whether or not the object is the same as the null or zero object from its class.
 #'
+#' @param x a fitted object.
+#'
+#' @return
+#' \code{TRUE} or \code{FALSE}.
+#'
 #' @export
 is.zero <- function(x) UseMethod("is.zero", x)
 
@@ -156,37 +162,26 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #'
 #' @param fit A fitted object containing the Bayesian network structure to fit.
 #' @param data Data to use for fitting.
+#' @param ... (optional) additional arguments to pass to \code{\link{lm}} or \code{\link{glm}}.
 #'
 #' @export
 estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
 
-#' get.covariance
-#'
-#' Computes the implied covariance (or concentration) matrix of the associated graph object.
-#'
-#' @return
-#' \code{matrix}
-#'
+#' @rdname estimate.covariance
 #' @export
-get.covariance <- function(x, ...) UseMethod("get.covariance", x)
-
-#' @rdname get.covariance
-#' @export
-get.precision <- function(x, ...) UseMethod("get.precision", x)
-
-#' estimate.covariance
-#'
-#' Estimates the covariance (or concentration) matrix implied by the associated graph object.
-#'
-#' @return
-#' \code{matrix}
-#'
-#' @export
-estimate.covariance <- function(fit, data, ...) UseMethod("estimate.covariance", fit)
+estimate.covariance <- function(fit, data) UseMethod("estimate.covariance", fit)
 
 #' @rdname estimate.covariance
 #' @export
-estimate.precision <- function(x, ...) UseMethod("estimate.precision", x)
+estimate.precision <- function(fit, data) UseMethod("estimate.precision", fit)
+
+#' @rdname estimate.covariance
+#' @export
+get.covariance <- function(coefs, vars) UseMethod("get.covariance", coefs)
+
+#' @rdname estimate.covariance
+#' @export
+get.precision <- function(coefs, vars) UseMethod("get.precision", coefs)
 
 # Internal generics
 pick_family <- function(x) UseMethod("pick_family", x)

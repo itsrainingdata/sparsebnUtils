@@ -5,9 +5,14 @@
 \alias{plot.sparsebnPath}
 \title{Plot a fitted Bayesian network object}
 \usage{
-\method{plot}{sparsebnFit}(fit, ...)
+\method{plot}{sparsebnFit}(x, ...)
 
 \method{plot}{sparsebnPath}(x, ...)
+}
+\arguments{
+\item{x}{fitted object (\code{\link{sparsebnFit}} or \code{\link{sparsebnPath}}) to plot.}
+
+\item{...}{(optional) additional arguments to plotting mechanism.}
 }
 \description{
 Plot plot plot

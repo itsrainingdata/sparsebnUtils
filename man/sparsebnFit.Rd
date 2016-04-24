@@ -7,11 +7,16 @@
 \alias{sparsebnFit}
 \title{sparsebnFit class}
 \usage{
-sparsebnFit(fit)
+sparsebnFit(x)
 
-as.sparsebnFit(fit)
+as.sparsebnFit(x)
 
 is.sparsebnFit(x)
+}
+\arguments{
+\item{x}{Only used internally.}
+
+\item{...}{(optional) additional arguments.}
 }
 \description{
 Main class for representing DAG estimates: Represents a single DAG estimate in the solution path.

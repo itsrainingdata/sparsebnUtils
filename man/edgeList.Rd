@@ -4,11 +4,18 @@
 \name{edgeList}
 \alias{as.edgeList}
 \alias{edgeList}
+\alias{is.edgeList}
 \title{edgeList class}
 \usage{
+is.edgeList(x)
+
 edgeList(x)
 
 as.edgeList(x)
+}
+\arguments{
+\item{x}{A list containing parents for each node in a graph. The length of this list
+should be the same as the number of nodes in the graph.}
 }
 \description{
 Convenience wrapper class for a (column-major) edge list. Each component of the list

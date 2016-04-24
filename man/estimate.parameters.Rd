@@ -10,6 +10,8 @@ estimate.parameters(fit, data, ...)
 \item{fit}{A fitted object containing the Bayesian network structure to fit.}
 
 \item{data}{Data to use for fitting.}
+
+\item{...}{(optional) additional arguments to pass to \code{\link{lm}} or \code{\link{glm}}.}
 }
 \description{
 Given the structure of a Bayesian network, estimate the parameters (weights) using ordinary least

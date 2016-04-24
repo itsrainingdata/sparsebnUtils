@@ -6,6 +6,9 @@
 \usage{
 is.obs(data)
 }
+\arguments{
+\item{data}{a \code{\link{sparsebnData}} object.}
+}
 \description{
 Returns TRUE if the data contains no interventions, i.e. is purely observational
 }

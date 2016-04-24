@@ -10,22 +10,22 @@ test_that("sparsebnData constructor fails if input not a list, data.frame, or ma
 })
 
 test_that("sparsebnData constructor fails if type not specified or improperly specified", {
-    expect_error(sparsebnData(data = dat), regexp = "type")
-    expect_error(sparsebnData(data = dat, type = "contns"), regexp = "Invalid \'type\'")
-    expect_error(sparsebnData(data = dat, type = "dicsrt"), regexp = "Invalid \'type\'")
+    expect_error(sparsebnData(x = dat), regexp = "type")
+    expect_error(sparsebnData(x = dat, type = "contns"), regexp = "Invalid \'type\'")
+    expect_error(sparsebnData(x = dat, type = "dicsrt"), regexp = "Invalid \'type\'")
 
     ### Check that partial matching works OK
-    expect_that(sparsebnData(data = dat, type = "c"), not(throws_error()))
-    expect_that(sparsebnData(data = dat, type = "cont"), not(throws_error()))
-    expect_that(sparsebnData(data = dat, type = "d"), not(throws_error()))
-    expect_that(sparsebnData(data = dat, type = "disc"), not(throws_error()))
+    expect_that(sparsebnData(x = dat, type = "c"), not(throws_error()))
+    expect_that(sparsebnData(x = dat, type = "cont"), not(throws_error()))
+    expect_that(sparsebnData(x = dat, type = "d"), not(throws_error()))
+    expect_that(sparsebnData(x = dat, type = "disc"), not(throws_error()))
 })
 
 test_that("sparsebnData constructor issues a warning if data has missing values, but does not fail", {
-    expect_warning(sparsebnData(data = dat_na, type = "continuous"), regexp = "Data contains [0-9]+")
+    expect_warning(sparsebnData(x = dat_na, type = "continuous"), regexp = "Data contains [0-9]+")
 })
 
 test_that("print.sparsebnData functions properly", {
-    expect_output(print(sparsebnData(data = dat, type = "continuous")), regexp = "5 total rows")
-    expect_output(print(sparsebnData(data = dat, type = "continuous")), regexp = "Observational")
+    expect_output(print(sparsebnData(x = dat, type = "continuous")), regexp = "5 total rows")
+    expect_output(print(sparsebnData(x = dat, type = "continuous")), regexp = "Observational")
 })

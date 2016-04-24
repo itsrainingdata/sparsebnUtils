@@ -39,6 +39,9 @@
 #' Internally, this estimate is represented by a \code{\link{sparsebnFit}} object. The full solution
 #' path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit}} objects: This class is essentially a wrapper for this list.
 #'
+#' @param x Only used internally.
+#' @param ... (optional) additional arguments.
+#'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}}, \code{\link{lambda.grid}},
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
@@ -47,7 +50,7 @@
 #' @name sparsebnPath
 NULL
 
-#' @rdname sparsebn-classes
+#' @rdname sparsebnPath
 #' @export
 is.sparsebnPath <- function(x){
     inherits(x, "sparsebnPath")
@@ -55,13 +58,13 @@ is.sparsebnPath <- function(x){
 
 # sparsebnPath constructor
 #' @export
-sparsebnPath.list <- function(li){
-    if(!check_list_class(li, "sparsebnFit")){
+sparsebnPath.list <- function(x){
+    if(!check_list_class(x, "sparsebnFit")){
         stop("Some component is not of type sparsebnPath -- sparsebnPath objects must consist of sparsebnFit components only.")
     }
 
     ### Note that we still allow these objects to inherit from the base list class
-    structure(li, class = c("sparsebnPath", "list"))
+    structure(x, class = c("sparsebnPath", "list"))
 } # END sparsebnPath.LIST
 
 #' print.sparsebnPath
@@ -71,8 +74,9 @@ sparsebnPath.list <- function(li){
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
+#' @rdname sparsebnPath
 #' @export
-print.sparsebnPath <- function(x, verbose = FALSE){
+print.sparsebnPath <- function(x, verbose = FALSE, ...){
     if(verbose){
         print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
@@ -112,8 +116,7 @@ num.samples.sparsebnPath <- function(x){
 
 #' Extract regularization path from solution path
 #'
-#' Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
-#'
+#' @describeIn lambda.grid Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 #' @export
 lambda.grid.sparsebnPath <- function(x){
     lambdas <- unlist(lapply(x, function(z){ z$lambda}))

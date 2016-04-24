@@ -6,6 +6,9 @@
 \usage{
 count.interventions(data)
 }
+\arguments{
+\item{data}{a \code{\link{sparsebnData}} object.}
+}
 \description{
 Returns the number of rows with at least one intervention
 }

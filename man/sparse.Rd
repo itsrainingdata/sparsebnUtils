@@ -13,6 +13,9 @@ as.sparse(x)
 
 is.sparse(x)
 }
+\arguments{
+\item{x}{Various \code{R} objects.}
+}
 \description{
 Low-level representation of sparse matrices
 }

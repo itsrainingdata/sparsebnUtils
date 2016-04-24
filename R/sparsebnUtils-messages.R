@@ -22,6 +22,10 @@
 #'
 #' @description Warning and error messages for use in the \code{sparsebn} family
 #'
+#' @param data data object.
+#' @param count number of missing values.
+#' @param pkg package name.
+#'
 NULL
 
 ### User inputs invalid data object

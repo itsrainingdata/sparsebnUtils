@@ -36,6 +36,8 @@
 #'
 #' Also inherits from \code{\link{list}}.
 #'
+#' @param x A list containing parents for each node in a graph. The length of this list
+#'          should be the same as the number of nodes in the graph.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}},
@@ -45,32 +47,32 @@
 #' @name edgeList
 NULL
 
-#' @rdname sparsebn-classes
+#' @rdname edgeList
 #' @export
 is.edgeList <- function(x){
     inherits(x, "edgeList")
 } # END IS.EDGELIST
 
 #' @export
-edgeList.list <- function(li){
-    if(!is.list(li)){
+edgeList.list <- function(x){
+    if(!is.list(x)){
         stop("Input must be a list!")
     }
 
     ### Don't allow length zero lists: What would that represent anyway?
-    if(length(li) == 0){
+    if(length(x) == 0){
         stop("Input must have at least one component!")
     }
 
     ### Cannot assign a parent larger than total number of nodes, or < 1
-    max.node.index <- suppressWarnings(max(unlist(li))) # Ignore warning if graph is empty
-    min.node.index <- suppressWarnings(min(unlist(li))) #
-    if(max.node.index > length(li) || min.node.index < 1){
+    max.node.index <- suppressWarnings(max(unlist(x))) # Ignore warning if graph is empty
+    min.node.index <- suppressWarnings(min(unlist(x))) #
+    if(max.node.index > length(x) || min.node.index < 1){
         stop(sprintf("The indices of the parents must be between 1 and number of nodes (= length of list)!
                       Currently between %d and %d.", min.node.index, max.node.index))
     }
 
-    structure(li, class = c("edgeList", "list"))
+    structure(x, class = c("edgeList", "list"))
 } # END EDGELIST.LIST
 
 #' @method print edgeList

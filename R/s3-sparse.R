@@ -35,6 +35,8 @@
 #' the rows / columns / values of the nonzero elements. Its main purpose is to serve as an intermediary between the standard R dense matrix class and the
 #' internal \code{\link[ccdrAlgorithm]{SparseBlockMatrixR}} class.
 #'
+#' @param x Various \code{R} objects.
+#'
 #' @docType class
 #' @name sparse
 NULL
@@ -91,37 +93,37 @@ reIndexR.sparse <- function(x){
 #  List constructor
 #
 #' @export
-sparse.list <- function(li){
+sparse.list <- function(x){
 
-    if( !is.list(li)){
+    if( !is.list(x)){
         stop("Input must be a list!")
     }
 
-    if( length(li) != 5 || names(li) != c("rows", "cols", "vals", "dim", "start") || is.null(names(li))){
+    if( length(x) != 5 || names(x) != c("rows", "cols", "vals", "dim", "start") || is.null(names(x))){
         stop("Input is not coercable to an object of type sparse, check list for the following (named) elements: rows, cols, vals, dim, start")
     }
 
-    if( length(unique(lapply(li[1:3], length))) > 1){
+    if( length(unique(lapply(x[1:3], length))) > 1){
         stop("rows / cols / vals elements have different sizes; should all have the same length (pp)!!")
     }
 
-    if(length(li$dim) != 2){
+    if(length(x$dim) != 2){
         stop("dim attribute must have length 2!")
     }
 
-    if(li$start != 0 && li$start != 1){
+    if(x$start != 0 && x$start != 1){
         stop("start attribute must be 0 (C-style) or 1 (R-style)!")
     }
 
-    if(!is.integer(li$rows) || !is.integer(li$cols)){
+    if(!is.integer(x$rows) || !is.integer(x$cols)){
         stop("rows / cols must both be integers!")
     }
 
-    if(!is.numeric(li$vals)){
+    if(!is.numeric(x$vals)){
         stop("vals must be numeric!")
     }
 
-    structure(li, class = "sparse")
+    structure(x, class = "sparse")
 } # END SPARSE.LIST
 
 #------------------------------------------------------------------------------#
@@ -161,8 +163,8 @@ sparse.matrix <- function(m, index = "R"){
 #  Convert FROM list TO sparse
 #
 #' @export
-as.sparse.list <- function(li){
-    sparse.list(li)
+as.sparse.list <- function(x){
+    sparse.list(x)
 } # END AS.SPARSE.LIST
 
 #------------------------------------------------------------------------------#
@@ -171,8 +173,8 @@ as.sparse.list <- function(li){
 #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
 #    index = "C".
 #' @export
-as.sparse.matrix <- function(m, index = "R"){
-    sparse.matrix(m, index)
+as.sparse.matrix <- function(x, index = "R"){
+    sparse.matrix(x, index)
 } # END AS.SPARSE.MATRIX
 
 #------------------------------------------------------------------------------#
