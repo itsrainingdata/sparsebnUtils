@@ -20,7 +20,14 @@
 #' \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
 #'
 #' @export
-to_graphNEL <- function(x) UseMethod("to_graphNEL", x)
+to_graphNEL <- function(x){
+    ### This function require the 'graph' package to be installed
+    if (!requireNamespace("graph", quietly = TRUE)) {
+        stop("graph package (from BioConductor) required to coerce data to 'graphNEL' type!", call. = FALSE)
+    }
+
+    UseMethod("to_graphNEL", x)
+}
 
 #' @export
 to_graphNEL.graphNEL <- function(x){
@@ -29,11 +36,6 @@ to_graphNEL.graphNEL <- function(x){
 
 #' @export
 to_graphNEL.edgeList <- function(x){
-    ### This function require the 'graph' package to be installed
-    if (!requireNamespace("graph", quietly = TRUE)) {
-        stop("graph package (from BioConductor) required to coerce data to 'graphNEL' type!", call. = FALSE)
-    }
-
     el.graphNEL <- edgeList_to_graphNEL_edgeL(x)
     names.graphNEL <- as.character(1:num.nodes(x))
 

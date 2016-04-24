@@ -20,7 +20,14 @@
 #' \code{\link[graph]{graphNEL-class}}, or \code{\link[network]{network}}.
 #'
 #' @export
-to_igraph <- function(x) UseMethod("to_igraph", x)
+to_igraph <- function(x){
+    ### This function requires the 'igraph' package to be installed
+    if (!requireNamespace("igraph", quietly = TRUE)) {
+        stop("igraph package required to coerce data to 'igraph' type!", call. = FALSE)
+    }
+
+    UseMethod("to_igraph", x)
+}
 
 #' @export
 to_igraph.igraph <- function(x){
@@ -29,11 +36,6 @@ to_igraph.igraph <- function(x){
 
 #' @export
 to_igraph.edgeList <- function(x){
-    ### This function requires the 'igraph' package to be installed
-    if (!requireNamespace("igraph", quietly = TRUE)) {
-        stop("igraph package required to coerce data to 'igraph' type!", call. = FALSE)
-    }
-
     if(num.edges(x) > 0){
         el.igraph <- edgeList_to_igraph_edgelist(x)
         igraph::graph_from_edgelist(el.igraph, directed = TRUE)
