@@ -56,6 +56,11 @@ to_igraph.network <- function(x){
 }
 
 #' @export
+to_igraph.bn <- function(x){
+    to_igraph(to_edgeList(x))
+}
+
+#' @export
 to_igraph.sparsebnFit <- function(x){
     x$edges <- to_igraph(x$edges)
 

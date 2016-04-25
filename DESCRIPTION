@@ -12,6 +12,7 @@ Imports:
     stats,
     utils
 Suggests:
+    bnlearn,
     graph,
     igraph,
     network,

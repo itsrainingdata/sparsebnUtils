@@ -53,6 +53,12 @@ to_graphNEL.network <- function(x){
 }
 
 #' @export
+to_graphNEL.bn <- function(x){
+    # to_graphNEL(to_edgeList(x))
+    bnlearn::as.graphNEL(x) # use internal bnlearn method instead for compatibility
+}
+
+#' @export
 to_graphNEL.sparsebnFit <- function(x){
     x$edges <- to_graphNEL(x$edges)
 
