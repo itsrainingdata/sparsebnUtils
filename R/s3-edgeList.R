@@ -144,3 +144,20 @@ is.zero.edgeList <- function(x){
 to_edgeList.edgeList <- function(x){
     x
 }
+
+#
+# Convert a standard two-column edge list to an edgeList compatible list
+#
+edgelist_mat_to_edgeList_list <- function(x, numnode){
+
+    edgeL <- lapply(vector("list", length = numnode), as.integer)
+    if(nrow(x) > 0){ # If no edges, simply return list full of integer(0)'s
+        for(j in 1:nrow(x)){
+            ### NOTE: Fix this to be memory-efficient for large graphs
+            edgeL[[x[j, 2]]] <- c(edgeL[[x[j, 2]]], x[j, 1])
+        }
+    }
+
+    edgeL
+}
+

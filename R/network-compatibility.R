@@ -111,14 +111,15 @@ network_to_edgeList_list <- function(net){
     net.edgelist <- network::as.edgelist(net)
     numnode <- network::network.size(net)
 
-    net.edgeL <- lapply(vector("list", length = numnode), as.integer)
-    if(network::network.edgecount(net) > 0){ # If no edges, simply return list full of integer(0)'s
-        for(j in 1:nrow(net.edgelist)){
-            ### NOTE: Fix this to be memory-efficient for large graphs
-            net.edgeL[[net.edgelist[j, 2]]] <- c(net.edgeL[[net.edgelist[j, 2]]], net.edgelist[j, 1])
-        }
-    }
-
-    net.edgeL
+    edgelist_mat_to_edgeList_list(net.edgelist, numnode)
+### Deprecated in favour of edgelist_mat_to_edgeList_list
+#     net.edgeL <- lapply(vector("list", length = numnode), as.integer)
+#     if(network::network.edgecount(net) > 0){ # If no edges, simply return list full of integer(0)'s
+#         for(j in 1:nrow(net.edgelist)){
+#             ### NOTE: Fix this to be memory-efficient for large graphs
+#             net.edgeL[[net.edgelist[j, 2]]] <- c(net.edgeL[[net.edgelist[j, 2]]], net.edgelist[j, 1])
+#         }
+#     }
+#
+#     net.edgeL
 }
-
