@@ -137,12 +137,22 @@ get.covariance.list <- function(li){
 #' @export
 estimate.covariance.sparsebnFit <- function(fit, data){
     fitted.dag <- estimate.parameters(fit, data)
-    get.covariance(fitted.dag$coefs, fitted.dag$vars)
+
+    ### Why do we need to explicitly delegate to 'Matrix' here?
+    #   Sometimes results in the following runtime error:
+    #
+    #     Error in UseMethod("get.covariance", coefs) :
+    #       no applicable method for 'get.covariance' applied to an object of class "ddiMatrix"
+    #     Calls: estimate.covariance ... estimate.covariance -> estimate.covariance.sparsebnFit -> get.covariance
+    #     Execution halted
+    # get.covariance(fitted.dag$coefs, fitted.dag$vars)
+    get.covariance.Matrix(fitted.dag$coefs, fitted.dag$vars) # Need explicit .Matrix
+
 }
 
 #' @export
 estimate.covariance.sparsebnPath <- function(fit, data){
-    lapply(fit, function(x) estimate.covariance.sparsebnFit(x, data))
+    lapply(fit, function(x) estimate.covariance(x, data))
 }
 
 cov_mat <- function(coefs, vars){
@@ -175,7 +185,15 @@ get.precision.list <- function(li, ...){
 #' @export
 estimate.precision.sparsebnFit <- function(fit, data, ...){
     fitted.dag <- estimate.parameters(fit, data)
-    get.precision(fitted.dag$coefs, fitted.dag$vars)
+    ### Why do we need to explicitly delegate to 'Matrix' here?
+    #   Sometimes results in the following runtime error:
+    #
+    #     Error in UseMethod("get.precision", coefs) :
+    #       no applicable method for 'get.precision' applied to an object of class "ddiMatrix"
+    #     Calls: estimate.precision ... estimate.precision -> estimate.precision.sparsebnFit -> get.precision
+    #     Execution halted
+    # get.precision(fitted.dag$coefs, fitted.dag$vars)
+    get.precision.Matrix(fitted.dag$coefs, fitted.dag$vars)
 }
 
 #' @export
