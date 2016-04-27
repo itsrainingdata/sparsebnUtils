@@ -9,6 +9,9 @@
 # Export everything in this package so the other packages can use all of the methods
 # #' @exportPattern ^[^\\.] <--- DON'T USE THIS!
 
+#' @importFrom grDevices dev.off n2mfrow
+#' @importFrom graphics par plot
+
 .onAttach <- function(libname, pkgname){
     ### Only sparsebn needs a package startup message
     # packageStartupMessage("NOTE: This package is currently in a development state and may be unstable.\n Please report any bugs at https://github.com/itsrainingdata/sparsebnUtils/issues.")

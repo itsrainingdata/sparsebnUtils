@@ -37,7 +37,7 @@ choose_fit_method <- function(edges, data, ...){
     if(family == "gaussian"){
         fit_dag(edges, data$data, call = "lm.fit", ...)
     } else if(family == "binomial"){
-        fit_dag(edges, data$data, call = "glm.fit", family = binomial(), ...)
+        fit_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
     }
 }
 
@@ -88,7 +88,7 @@ fit_dag <- function(parents,
 
         coefs[select.vars, j] <- dag.fit$coefficients
 
-        vars[j] <- var(dag.fit$residuals)
+        vars[j] <- stats::var(dag.fit$residuals)
     }
 
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
