@@ -15,13 +15,18 @@
 #
 # Data
 # * data.frame data     // data
-# * list ivn            // list of nodes under intervention for each row (observation)
 # * character type      // either "continuous", "discrete", or "mixed"
+# * list ivn            // list of nodes under intervention for each row (observation)
+# * list levels         // names of levels for each variable
 #
 
 #
-# A convenience class for keeping track of which nodes are under intervention in a dataset. Each
-#  component of the list 'ivn' is an integer vector indicating which nodes (columns) were under
+# A convenience class for storing metadata associated with discrete and continuous data. In addition
+#  to the data.frame containing all of the data, this class keeps track of the data type, number
+#  of levels in each variable (discrete data only), and possible interventions on the observations.
+#
+# ivn:
+#  Each component of the list 'ivn' is an integer vector indicating which nodes (columns) were under
 #  intervention for the corresponding row. Note that 'ivn' must be a list in order to accommodate
 #  the possibility that multiple nodes are under intervention, and different nodes may have
 #  different treatments (i.e. number and/or identity of manipulated nodes).
@@ -31,6 +36,14 @@
 #  2) data$ivn[10] = c(1): The first node was under intervention for the tenth observation
 #  3) data$ivn[120] = c(1,5,500): The 1st, 5th, and 500th nodes were under intervention for the 120th observation
 #
+# levels:
+#  This is a list containing the different levels for each node / variable in the dataset.
+#
+# Examples:
+#  1) data$levels = NULL: There are no levels - data is continuous.
+#  2) data$levels[1] = c(1, 2, 3): The first node has three possible levels, 1, 2, or 3.
+#  3) data$levels[50] = c("A", "B"): The 50th node has two possible levels, "A" or "B.
+#
 
 #' sparsebnData class
 #'
@@ -38,17 +51,19 @@
 #' allows for the degenerate case with no interventions, i.e. purely observational data.
 #'
 #' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
-#' a type identifier (i.e. discrete or continuous), and a list of interventions. The list should be the
-#' same size as the number of rows in the dataset, and each component indicates which column(s) in the
-#' dataset is (are) under intervention. If an observation has no interventions, then the corresponding
-#' component is \code{NULL}. Thus, if the data is purely observational, this list should contain only
-#' \code{NULL} values.
+#' a type identifier (i.e. discrete or continuous), a list of factor levels, and a list of interventions.
+#' The 'levels' list should be the same size as the number of nodes and consist of names of the different
+#' levels for each node. The 'ivn' list should be the same size as the number of rows in the dataset,
+#' and each component indicates which column(s) in the dataset is (are) under intervention. If an
+#' observation has no interventions, then the corresponding component is \code{NULL}. Thus, if the data is
+#' purely observational, this list should contain only \code{NULL} values.
 #'
 #' Also inherits from \code{\link{list}}.
 #'
 #' @param x a \code{\link{data.frame}} or \code{\link{matrix}} object.
 #' @param type either '\code{discrete}' or '\code{continuous}'.
-#' @param ivn (optional) list of of interventions for each node.
+#' @param levels (optional) list of level for each node.
+#' @param ivn (optional) list of interventions for each observation.
 #' @param n (optional) number of rows from data matrix to print.
 #' @param ... (optional) additional arguments.
 #'
@@ -56,6 +71,7 @@
 #' \describe{
 #' \item{\code{data}}{(data.frame) Dataset.}
 #' \item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
+#' \item{\code{levels}}{(list) List of levels for each column in \code{data}.}
 #' \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
 #' }
 #'
@@ -63,6 +79,7 @@
 #' \code{\link{print}}
 #' \code{\link{num.samples}}
 #' \code{\link{is.obs}}
+#' \code{\link{count.levels}}
 #' \code{\link{count.interventions}}
 #' \code{\link{as.data.frame}}
 #'
@@ -82,14 +99,18 @@ sparsebnData.list <- function(x, ...){
 
     if( !is.list(x)){
         stop("Input must be a list!")
-    } else if( length(x) != 3 || !setequal(names(x), c("data", "ivn", "type"))){
-        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), ivn (list)")
+    } else if( length(x) != 4 || !setequal(names(x), c("data", "type", "levels", "ivn"))){
+        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
     } else if( !check_if_data_matrix(x$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(x$data)))
-    } else if(nrow(x$data) != length(x$ivn)){
-        stop("The length of the ivn list must equal the number of rows in the data!")
     } else if(!(x$type %in% c("continuous", "discrete", "mixed"))){
         stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
+    } else if(!is.null(x$levels)){
+        if(ncol(x$data) != length(x$levels)){
+            stop("The length of the levels list must equal the number of columns in the data!")
+        }
+    } else if(nrow(x$data) != length(x$ivn)){
+        stop("The length of the ivn list must equal the number of rows in the data!")
     }
 
     num_missing <- count_nas(x$data)
@@ -105,7 +126,7 @@ sparsebnData.list <- function(x, ...){
 #  Default constructor for data.frame input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.data.frame <- function(x, type, ivn, ...){
+sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
 
     type_list <- c("continuous", "discrete")
 
@@ -126,22 +147,33 @@ sparsebnData.data.frame <- function(x, type, ivn, ...){
     # If the user fails to specify a list of interventions, ASSUME all rows are observational. If the data
     #  is experimental, the user needs to specify this by passing in 'ivn' (see also sparsebnData.list).
     #
-
     if(missing(ivn)){
         message("A list of interventions was not specified: Assuming data is purely observational.")
         ivn <- vector("list", length = nrow(x))
     }
 
+    #
+    # If the user fails to specify a list of levels, attempt to infer them automatically.
+    #
+    if(missing(levels)){
+        # message("A list of levels was not specified: Assuming data is continuous.")
+        if(type == "continuous"){
+            levels <- NULL
+        } else{
+            levels <- auto_count_levels(x)
+        }
+    }
+
     ### Final output
-    sparsebnData.list(list(data = x, type = type, ivn = ivn))
+    sparsebnData.list(list(data = x, type = type, levels = levels, ivn = ivn))
 } # END SPARSEBNDATA.DATA.FRAME
 
 # sparsebnData constructor
 #  Default constructor for matrix input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.matrix <- function(x, type, ivn, ...){
-    sparsebnData.data.frame(as.data.frame(x), type, ivn)
+sparsebnData.matrix <- function(x, type, levels, ivn, ...){
+    sparsebnData.data.frame(as.data.frame(x), type, levels, ivn)
 } # END SPARSEBNDATA.MATRIX
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
@@ -149,7 +181,6 @@ sparsebnData.matrix <- function(x, type, ivn, ...){
 num.samples.sparsebnData <- function(x){
     nrow(x$data)
 } # END NUM.SAMPLES.SPARSEBNDATA
-
 
 #' Check if data is observational
 #'
@@ -173,11 +204,22 @@ count.interventions <- function(data){
     sum(unlist(lapply(data$ivn, function(x) !is.null(x))))
 } # END COUNT.INTERVENTIONS
 
+#' Count the number of levels per variable
+#'
+#' Returns the number of levels per variable as an ordered vector.
+#'
+#' @param data a \code{\link{sparsebnData}} object.
+#'
+#' @export
+count.levels <- function(data){
+    unlist(lapply(data$levels, length))
+} # END COUNT.LEVELS
+
 # Default print method
 #' @rdname sparsebnData
 #' @export
 print.sparsebnData <- function(x, n = 5L, ...){
-    # print(head(data$data, n = n), row.names = FALSE)
+    # print(utils::head(data$data, n = n), row.names = FALSE)
     .print_data_frame(x$data, topn = n)
 
     cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), num.samples(x) - 2*n))
@@ -228,11 +270,11 @@ pick_family.sparsebnData <- function(data){
         if (length(x)==0L)
            cat("Null data.table (0 rows and 0 cols)\n")  # See FAQ 2.5 and NEWS item in v1.8.9
         else
-           cat("Empty data.table (0 rows) of ",length(x)," col",if(length(x)>1L)"s",": ",paste(head(names(x),6),collapse=","),if(ncol(x)>6)"...","\n",sep="")
+           cat("Empty data.table (0 rows) of ",length(x)," col",if(length(x)>1L)"s",": ",paste(utils::head(names(x),6),collapse=","),if(ncol(x)>6)"...","\n",sep="")
         return()
     }
     if (topn*2<nrow(x) && (nrow(x)>nrows || !topnmiss)) {
-        toprint = rbind(head(x, topn), tail(x, topn))
+        toprint = rbind(utils::head(x, topn), utils::tail(x, topn))
         rn = c(seq_len(topn), seq.int(to=nrow(x), length.out=topn))
         printdots = TRUE
     } else {
@@ -245,7 +287,7 @@ pick_family.sparsebnData <- function(data){
     if (isTRUE(row.names)) rownames(toprint)=paste(format(rn,right=TRUE),":",sep="") else rownames(toprint)=rep.int("", nrow(x))
     if (is.null(names(x))) colnames(toprint)=rep("NA", ncol(toprint)) # fixes bug #4934
     if (printdots) {
-        toprint = rbind(head(toprint,topn),"---"="",tail(toprint,topn))
+        toprint = rbind(utils::head(toprint,topn),"---"="",utils::tail(toprint,topn))
         rownames(toprint) = format(rownames(toprint),justify="right")
         print(toprint,right=TRUE,quote=FALSE)
         return(invisible())

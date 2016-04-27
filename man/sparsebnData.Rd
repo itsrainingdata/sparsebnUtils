@@ -16,9 +16,9 @@ as.sparsebnData(x, ...)
 
 is.sparsebnData(x)
 
-\method{sparsebnData}{data.frame}(x, type, ivn, ...)
+\method{sparsebnData}{data.frame}(x, type, levels, ivn, ...)
 
-\method{sparsebnData}{matrix}(x, type, ivn, ...)
+\method{sparsebnData}{matrix}(x, type, levels, ivn, ...)
 
 \method{print}{sparsebnData}(x, n = 5L, ...)
 }
@@ -29,7 +29,9 @@ is.sparsebnData(x)
 
 \item{type}{either '\code{discrete}' or '\code{continuous}'.}
 
-\item{ivn}{(optional) list of of interventions for each node.}
+\item{levels}{(optional) list of level for each node.}
+
+\item{ivn}{(optional) list of interventions for each observation.}
 
 \item{n}{(optional) number of rows from data matrix to print.}
 }
@@ -39,11 +41,12 @@ allows for the degenerate case with no interventions, i.e. purely observational 
 }
 \details{
 The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
-a type identifier (i.e. discrete or continuous), and a list of interventions. The list should be the
-same size as the number of rows in the dataset, and each component indicates which column(s) in the
-dataset is (are) under intervention. If an observation has no interventions, then the corresponding
-component is \code{NULL}. Thus, if the data is purely observational, this list should contain only
-\code{NULL} values.
+a type identifier (i.e. discrete or continuous), a list of factor levels, and a list of interventions.
+The 'levels' list should be the same size as the number of nodes and consist of names of the different
+levels for each node. The 'ivn' list should be the same size as the number of rows in the dataset,
+and each component indicates which column(s) in the dataset is (are) under intervention. If an
+observation has no interventions, then the corresponding component is \code{NULL}. Thus, if the data is
+purely observational, this list should contain only \code{NULL} values.
 
 Also inherits from \code{\link{list}}.
 }
@@ -52,6 +55,7 @@ Also inherits from \code{\link{list}}.
 \describe{
 \item{\code{data}}{(data.frame) Dataset.}
 \item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
+\item{\code{levels}}{(list) List of levels for each column in \code{data}.}
 \item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
 }
 }
@@ -61,6 +65,7 @@ Also inherits from \code{\link{list}}.
 \code{\link{print}}
 \code{\link{num.samples}}
 \code{\link{is.obs}}
+\code{\link{count.levels}}
 \code{\link{count.interventions}}
 \code{\link{as.data.frame}}
 }

@@ -77,6 +77,18 @@ list_classes <- function(li){
     unlist(lapply(li, class))
 } # END .LIST_CLASSES
 
+# Return the number of levels for each column in a data.frame
+#' @rdname sparsebn-functions
+#' @export
+auto_count_levels <- function(df){
+    if( !check_if_data_matrix(df)){
+        stop("Input must be a data.frame or a matrix!")
+    }
+
+    if(!is.data.frame(df)) df <- data.frame(df)
+    lapply(df, function(x) length(unique(x)))
+} # END .COUNT_NAS
+
 # Return TRUE if every element of a list inherits check.class, FALSE otherwise
 #' @rdname sparsebn-functions
 #' @export
@@ -129,7 +141,7 @@ cor_vector <- function(X){
         stop("Input must have at least 2 rows and columns!") # 2-8-15: Why do we check this here?
     }
 
-    cors <- cor(X)
+    cors <- stats::cor(X)
     cors <- cors[upper.tri(cors, diag = TRUE)]
 
     cors
