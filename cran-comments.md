@@ -7,7 +7,7 @@
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-There were 2 NOTEs:
+There was 1 NOTE:
 
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Bryon Aragam <sparsebn@gmail.com>'
@@ -15,9 +15,3 @@ Maintainer: 'Bryon Aragam <sparsebn@gmail.com>'
 New submission
   
   This is my first package submission.
-  
-* checking top-level files ... NOTE
-Non-standard files/directories found at top level:
-  'README.Rmd' 'cran-comments.md' 'sparsebnUtils.Rproj'
-
-  These files will not be included in the final build (see .Rbuildignore).
