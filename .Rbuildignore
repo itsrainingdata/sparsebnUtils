@@ -1,7 +1,4 @@
-### Hadley's suggestions from http://r-pkgs.had.co.nz/package.html
-^.*\.Rproj$         # Automatically added by RStudio,
-^\.Rproj\.user$     # used for temporary files. 
-^README\.Rmd$       # An Rmarkdown file used to generate README.md
-^cran-comments\.md$ # Comments for CRAN submission
-^NEWS\.md$          # A news file written in Markdown
-^\.travis\.yml$     # Used for continuous integration testing with travis
+### For some reason Hadley's regex's from http://r-pkgs.had.co.nz/package.html are being ignored, so do this manually
+^cran-comments\.md$
+^README\.Rmd$
+^sparsebnUtils\.Rproj$
