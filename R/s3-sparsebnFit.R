@@ -181,7 +181,7 @@ plot.sparsebnFit <- function(x, ...){
 
     if(!is.null(pkg_plot)){
         if(pkg_plot == "graph"){
-            plot(to_graphNEL(x$edges), ...)
+            graph::plot(to_graphNEL(x$edges), ...)
         } else if(pkg_plot == "igraph"){
             plot(to_igraph(x$edges), ...)
         } else if(pkg_plot == "network"){
