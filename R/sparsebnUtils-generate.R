@@ -38,7 +38,7 @@ random.dag <- function(nnode, nedge, call = NULL){
 
     ### randomly sample values for nonzero coefs
     if(is.null(call)){
-        coefs <- runif(nedge)
+        coefs <- stats::runif(nedge)
     } else{
         coefs <- replicate(nedge, call())
     }
@@ -68,14 +68,14 @@ random.psd <- function(nnode,
                        num.ortho = 10){
     ortho_matrices <- lapply(1:num.ortho, function(x) random_householder(nnode))
     Q <- Reduce("%*%", ortho_matrices)
-    if(is.null(eigenvalues)) eigenvalues <- runif(nnode)
+    if(is.null(eigenvalues)) eigenvalues <- stats::runif(nnode)
     m <- Q %*% diag(eigenvalues) %*% t(Q)
 
     m
 }
 
 random_householder <- function(nnode){
-    v <- rnorm(nnode)
+    v <- stats::rnorm(nnode)
     v <- v / sqrt(sum(v^2))
     householder <- diag(rep(1, nnode)) - 2 * v %*% t(v)
     householder
