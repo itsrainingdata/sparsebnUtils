@@ -73,3 +73,10 @@ global_coerce_warning <- function(pkg){
         sprintf("coerce set to TRUE: All fitted objects will be reverted back to using default edgeList format.")
     }
 }
+
+### Warning about feature that is not supported yet, but will be soon
+#' @rdname sparsebn-messages
+#' @export
+feature_not_supported <- function(feature){
+    sprintf("%s is not yet available, but may be supported in a future version of this package. Stay tuned!", feature)
+}

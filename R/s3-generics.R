@@ -164,6 +164,10 @@ estimate.parameters <- function(fit, data, ...){
 #' @export
 estimate.covariance <- function(fit, data){
     stopifnot(is.sparsebnData(data))
+    if(data$type != "continuous"){
+        stop(feature_not_supported("Covariance estimation for discrete models"))
+    }
+
     UseMethod("estimate.covariance", fit)
 }
 
@@ -171,6 +175,10 @@ estimate.covariance <- function(fit, data){
 #' @export
 estimate.precision <- function(fit, data){
     stopifnot(is.sparsebnData(data))
+    if(data$type != "continuous"){
+        stop(feature_not_supported("Precision matrix estimation for discrete models"))
+    }
+
     UseMethod("estimate.precision", fit)
 }
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/sparsebnUtils-messages.R
 \name{sparsebn-messages}
 \alias{alg_input_data_frame}
+\alias{feature_not_supported}
 \alias{global_coerce_warning}
 \alias{has_missing_values}
 \alias{input_not_sparsebnData}
@@ -21,6 +22,8 @@ invalid_pkg_specification()
 pkg_not_installed(pkg)
 
 global_coerce_warning(pkg)
+
+feature_not_supported(feature)
 }
 \arguments{
 \item{data}{data object.}
