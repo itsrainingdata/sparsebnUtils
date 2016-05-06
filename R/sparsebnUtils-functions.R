@@ -77,16 +77,26 @@ list_classes <- function(li){
     unlist(lapply(li, class))
 } # END .LIST_CLASSES
 
-# Return the number of levels for each column in a data.frame
+# Return the different levels for each column in a data.frame, compatible
+# with the 'levels' component of sparsebnData
 #' @rdname sparsebn-functions
 #' @export
-auto_count_levels <- function(df){
+auto_generate_levels <- function(df){
     if( !check_if_data_matrix(df)){
         stop("Input must be a data.frame or a matrix!")
     }
 
     if(!is.data.frame(df)) df <- data.frame(df)
-    lapply(df, function(x) length(unique(x)))
+    out <- lapply(df, function(x) sort(unique(x)))
+
+    out
+} # END AUTO_GENERATE_LEVELS
+
+# Return the number of levels for each column in a data.frame
+#' @rdname sparsebn-functions
+#' @export
+auto_count_levels <- function(df){
+    lapply(auto_generate_levels(df), length)
 } # END .COUNT_NAS
 
 # Return TRUE if every element of a list inherits check.class, FALSE otherwise

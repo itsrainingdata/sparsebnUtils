@@ -2,6 +2,7 @@
 % Please edit documentation in R/s3-generics.R, R/sparsebnUtils-functions.R, R/sparsebnUtils-options.R
 \name{reIndexC}
 \alias{auto_count_levels}
+\alias{auto_generate_levels}
 \alias{capitalize}
 \alias{check_if_complete_data}
 \alias{check_if_data_matrix}
@@ -31,6 +32,8 @@ check_if_complete_data(df)
 count_nas(df)
 
 list_classes(li)
+
+auto_generate_levels(df)
 
 auto_count_levels(df)
 

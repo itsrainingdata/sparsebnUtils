@@ -155,15 +155,24 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #' @param ... (optional) additional arguments to pass to \code{\link{lm}} or \code{\link{glm}}.
 #'
 #' @export
-estimate.parameters <- function(fit, data, ...) UseMethod("estimate.parameters", fit)
+estimate.parameters <- function(fit, data, ...){
+    stopifnot(is.sparsebnData(data))
+    UseMethod("estimate.parameters", fit)
+}
 
 #' @rdname estimate.covariance
 #' @export
-estimate.covariance <- function(fit, data) UseMethod("estimate.covariance", fit)
+estimate.covariance <- function(fit, data){
+    stopifnot(is.sparsebnData(data))
+    UseMethod("estimate.covariance", fit)
+}
 
 #' @rdname estimate.covariance
 #' @export
-estimate.precision <- function(fit, data) UseMethod("estimate.precision", fit)
+estimate.precision <- function(fit, data){
+    stopifnot(is.sparsebnData(data))
+    UseMethod("estimate.precision", fit)
+}
 
 #' @rdname estimate.covariance
 #' @export

@@ -160,7 +160,7 @@ sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
         if(type == "continuous"){
             levels <- NULL
         } else{
-            levels <- auto_count_levels(x)
+            levels <- auto_generate_levels(x)
         }
     }
 
@@ -243,14 +243,25 @@ as.data.frame.sparsebnData <- function(x, ...){
     data.frame(x$data, ...)
 } # END AS.DATA.FRAME.SPARSEBNDATA
 
+### Check if discrete data corresponds to binary data or not
+is_binary <- function(x){
+    stopifnot(is.sparsebnData(x))
+    count_levels <- unique(count.levels(x))
+    length(count_levels) == 1 && count_levels == 2 # TRUE if exactly two levels per variable
+}
+
 ### Internal method for picking the correct family for fitting parameters
-pick_family.sparsebnData <- function(data){
-    if(data$type == "continuous"){
+pick_family.sparsebnData <- function(x){
+    if(x$type == "continuous"){
         return("gaussian")
-    } else if(data$type == "discrete"){
-        return("binomial")
+    } else if(x$type == "discrete"){
+        if(is_binary(x)){
+            return("binomial")
+        } else{
+            stop("Discrete data with more than 2 levels is not yet supported! Please check for future updates.")
+        }
     } else{
-        stop("'mixed' type not supported for inference yet!")
+        stop("Incompatible data found! Note that mixed data is not supported for inference yet!")
     }
 }
 
