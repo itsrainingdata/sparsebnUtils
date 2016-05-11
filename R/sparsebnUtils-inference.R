@@ -11,7 +11,14 @@
 #
 #   CONTENTS:
 #       estimate.parameters
+#       choose_fit_method
 #       fit_ols_dag
+#       get.covariance
+#       estimate.covariance
+#       cov_mat
+#       get.precision
+#       estimate.precision
+#       inv_cov_mat
 #
 
 ### DAG fitting --------------------------------------------------------
@@ -94,13 +101,14 @@ fit_dag <- function(parents,
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
 }
 
-#' Estimating undirected graphs
+#' Covariance estimation
 #'
-#' Methods for inferring (i) Covariance matrices and (ii) Precision matrices,
-#' the latter of which correspond to an undirected graphical model for the underlying
-#' distribution.
+#' Methods for inferring (i) Covariance matrices and (ii) Precision matrices for continuous,
+#' Gaussian data.
 #'
-#' See Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
+#' For Gaussian data, the precision matrix corresponds to an undirected graphical model for the
+#' distribution. This undirected graph can be tied to the corresponding directed graphical model;
+#' see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
 #'
 #' @param coefs coefficients of DAG.
 #' @param vars conditional variances of DAG.

@@ -5,7 +5,7 @@
 \alias{estimate.precision}
 \alias{get.covariance}
 \alias{get.precision}
-\title{Estimating undirected graphs}
+\title{Covariance estimation}
 \usage{
 estimate.covariance(fit, data)
 
@@ -30,11 +30,12 @@ get.precision(coefs, vars)
 Covariance or precision (inverse covariance) matrix as \code{\link[Matrix]{Matrix}}.
 }
 \description{
-Methods for inferring (i) Covariance matrices and (ii) Precision matrices,
-the latter of which correspond to an undirected graphical model for the underlying
-distribution.
+Methods for inferring (i) Covariance matrices and (ii) Precision matrices for continuous,
+Gaussian data.
 }
 \details{
-See Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
+For Gaussian data, the precision matrix corresponds to an undirected graphical model for the
+distribution. This undirected graph can be tied to the corresponding directed graphical model;
+see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
 }
 

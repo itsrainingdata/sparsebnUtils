@@ -1,3 +1,24 @@
+#
+#  sparsebnUtils-options.R
+#  sparsebnUtils
+#
+#  Created by Bryon Aragam (local) on 4/24/16.
+#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#
+
+#
+# PACKAGE SPARSEBNUTILS: Methods for getting and setting package options
+#
+#   CONTENTS:
+#       setGraphPackage
+#       getGraphPackage
+#       setPlotPackage
+#       getPlotPackage
+#       zero_threshold
+#       get_option
+#       set_option
+#
+
 #' Change data structure for representing graphs internally
 #'
 #' Changes the output of the main algorithms to be compatible with other packages in the R ecosystem.
