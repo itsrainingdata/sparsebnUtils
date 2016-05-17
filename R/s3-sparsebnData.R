@@ -258,6 +258,7 @@ pick_family.sparsebnData <- function(x){
         if(is_binary(x)){
             return("binomial")
         } else{
+            # return("multinomial")
             stop("Discrete data with more than 2 levels is not yet supported! Please check for future updates.")
         }
     } else{
