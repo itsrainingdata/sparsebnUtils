@@ -86,7 +86,7 @@ bn_to_edgeList_list <- function(bn){
     #  of as.edgelist from the network package, so we can simply use
     #
     if(bn.nedge > 0){
-        bn.edgelist <- apply(bn$arcs, 1, as.integer) # convert char to int
+        bn.edgelist <- apply(bn$arcs, 2, as.integer) # convert char to int
         edgelist_mat_to_edgeList_list(bn.edgelist, bn.numnode)
     } else{
         ### Need a special case for nedge == 0 since otherwise R coerces the output of apply to an empty vector
