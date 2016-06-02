@@ -12,7 +12,7 @@
 #   CONTENTS:
 #       estimate.parameters
 #       choose_fit_method
-#       fit_ols_dag
+#       fit_dag
 #       get.covariance
 #       estimate.covariance
 #       cov_mat
@@ -45,6 +45,8 @@ choose_fit_method <- function(edges, data, ...){
         fit_dag(edges, data$data, call = "lm.fit", ...)
     } else if(family == "binomial"){
         fit_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
+    } else if(family == "multinomial"){
+        # fit_multinom_dag(edges, data$data, n_levels = ???, ...)
     }
 }
 
