@@ -76,11 +76,11 @@ print.sparsebnPath <- function(x, verbose = FALSE, ...){
     if(verbose){
         print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
-        cat("CCDr solution path\n",
-            length(x), " estimates for lambda in [", min(lambda.grid(x)), ",", max(lambda.grid(x)), "]\n",
-            "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
-            num.nodes(x), " nodes\n",
-            num.samples(x), " observations\n",
+        cat("sparsebn Solution Path\n",
+            " ", length(x), " estimates for lambda in [", min(lambda.grid(x)), ",", max(lambda.grid(x)), "]\n",
+            " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
+            " ", num.nodes(x), " nodes\n",
+            " ", num.samples(x), " observations\n",
             sep = "")
     }
 } # END PRINT.SPARSEBNPATH
