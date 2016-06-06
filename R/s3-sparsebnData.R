@@ -251,15 +251,17 @@ is_binary <- function(x){
 }
 
 ### Internal method for picking the correct family for fitting parameters
+#' @export
 pick_family.sparsebnData <- function(x){
     if(x$type == "continuous"){
         return("gaussian")
     } else if(x$type == "discrete"){
         if(is_binary(x)){
             return("binomial")
-        } else{
             # return("multinomial")
-            stop("Discrete data with more than 2 levels is not yet supported! Please check for future updates.")
+        } else{
+            return("multinomial")
+            # stop("Discrete data with more than 2 levels is not yet supported! Please check for future updates.")
         }
     } else{
         stop("Incompatible data found! Note that mixed data is not supported for inference yet!")

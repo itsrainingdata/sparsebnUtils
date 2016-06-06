@@ -190,7 +190,8 @@ get.covariance <- function(coefs, vars) UseMethod("get.covariance", coefs)
 #' @export
 get.precision <- function(coefs, vars) UseMethod("get.precision", coefs)
 
-# Internal generics
+#' @rdname sparsebn-functions
+#' @export
 pick_family <- function(x) UseMethod("pick_family", x)
 
 #' @rdname sparsebn-functions
@@ -201,6 +202,7 @@ reIndexC <- function(x) UseMethod("reIndexC", x)
 #' @export
 reIndexR <- function(x) UseMethod("reIndexR", x)
 
+# Internal generics --------------------------------------
 .num_edges <- function(x) UseMethod(".num_edges", x)
 # to_B <- function(x) UseMethod("to_B", x)
 
