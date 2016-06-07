@@ -1,24 +1,28 @@
-### Generate fixed data
+### Generate fixed data -- need 5 columns to match objects below
 generate_fixed_data_frame <- function(){
     x <- rep(1L, 5)
     y <- exp(1)^(1:5)
     z <- sqrt(y)
-    data.frame(x, y, z)
+    a <- x+1L
+    b <- exp(0.5)^(1:5)
+    data.frame(x, y, z, a, b)
 }
 
 generate_fixed_discrete_data_frame <- function(){
     x <- c(0,1,0,1,0)
     y <- c(1,0,1,0,1)
     z <- c(1,2,3,2,1)
-    data.frame(x, y, z)
+    a <- c(1,1,1,0,0)
+    b <- c(0,0,1,1,1)
+    data.frame(x, y, z, a, b)
 }
 
 generate_continuous_sparsebnData <- function(){
-    sparsebnData(generate_fixed_data_frame(), type = "c")
+    suppressMessages(sparsebnData(generate_fixed_data_frame(), type = "c"))
 }
 
 generate_discrete_sparsebnData <- function(){
-    sparsebnData(generate_fixed_discrete_data_frame(), type = "d")
+    suppressMessages(sparsebnData(generate_fixed_discrete_data_frame(), type = "d"))
 }
 
 ### Generate fixed data
