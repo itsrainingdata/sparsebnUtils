@@ -3,8 +3,8 @@ generate_fixed_data_frame <- function(){
     x <- rep(1L, 5)
     y <- exp(1)^(1:5)
     z <- sqrt(y)
-    a <- x+1L
-    b <- exp(0.5)^(1:5)
+    a <- x+1:5
+    b <- log(0.5)^(1:5)
     data.frame(x, y, z, a, b)
 }
 
