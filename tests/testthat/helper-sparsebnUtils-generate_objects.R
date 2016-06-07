@@ -6,6 +6,21 @@ generate_fixed_data_frame <- function(){
     data.frame(x, y, z)
 }
 
+generate_fixed_discrete_data_frame <- function(){
+    x <- c(0,1,0,1,0)
+    y <- c(1,0,1,0,1)
+    z <- c(1,2,3,2,1)
+    data.frame(x, y, z)
+}
+
+generate_continuous_sparsebnData <- function(){
+    sparsebnData(generate_fixed_data_frame(), type = "c")
+}
+
+generate_discrete_sparsebnData <- function(){
+    sparsebnData(generate_fixed_discrete_data_frame(), type = "d")
+}
+
 ### Generate fixed data
 generate_na_data_frame <- function(){
     dat <- generate_fixed_data_frame()

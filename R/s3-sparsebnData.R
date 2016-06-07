@@ -268,7 +268,7 @@ pick_family.sparsebnData <- function(x){
     }
 }
 
-### Borrow the print.data.table method from the 'data.table' package without needing to import the entire package
+### Borrow the print.data.table method from the 'data.table' package
 ###  This is an experimental method!
 .print_data_frame <- function(x,
                               topn=5,   # (5) print the top topn and bottom topn rows with '---' inbetween
