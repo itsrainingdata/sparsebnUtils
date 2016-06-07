@@ -64,6 +64,21 @@ edgeList.list <- function(x){
         stop("Input must have at least one component!")
     }
 
+    ### Don't allow NULL components: Empty parent sets should be integer(0)
+    if(check_null(x)){
+        stop("Input cannot have any NULL values! An empty parent set should be indicated by 'integer(0)', not NULL.")
+    }
+
+    ### Don't allow missing values
+    if(check_na(x)){
+        stop("Input cannot have missing values! An empty parent set should be indicated by 'integer(0)', not NA")
+    }
+
+    ### Must only contain numbers
+    if(!check_list_class(x, "numeric") && !check_list_class(x, "integer")){
+        stop("Invalid input detected: List should contain only integer / numeric vectors with no missing or NULL values.")
+    }
+
     ### Cannot assign a parent larger than total number of nodes, or < 1
     max.node.index <- suppressWarnings(max(unlist(x))) # Ignore warning if graph is empty
     min.node.index <- suppressWarnings(min(unlist(x))) #

@@ -13,3 +13,11 @@ test_that("edgeList constructor checks for inconsistent indices", {
     expect_error(edgeList(list(1, 1, c(1, 5))))     # 5 > 3 = number of nodes
     expect_error(edgeList(list(1, 1, c(1, -1))))    # -1 is not a valid index
 })
+
+test_that("Bugfix: edgeList does not accept NULL or NA values", {
+    expect_error(edgeList(list(NULL, NULL)), "Input cannot have any NULL values!")
+    expect_error(edgeList(list(1:2, NULL, 2)), "Input cannot have any NULL values!")
+
+    expect_error(edgeList(list(NA, NA)), "Input cannot have missing values!")
+    expect_error(edgeList(list(3, NA, 2)), "Input cannot have missing values!")
+})

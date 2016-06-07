@@ -9,6 +9,8 @@
 \alias{check_if_matrix}
 \alias{check_list_class}
 \alias{check_list_names}
+\alias{check_na}
+\alias{check_null}
 \alias{col_classes}
 \alias{cor_vector}
 \alias{count_nas}
@@ -37,6 +39,10 @@ check_if_matrix(m)
 check_if_data_matrix(df)
 
 check_if_complete_data(df)
+
+check_null(x)
+
+check_na(x)
 
 count_nas(df)
 

@@ -59,6 +59,20 @@ check_if_complete_data <- function(df){
     (count_nas(df) == 0)
 } # END .CHECK_IF_COMPLETE_DATA
 
+# Check if an object contains any null values
+#' @rdname sparsebn-functions
+#' @export
+check_null <- function(x){
+    any(unlist(lapply(x, is.null)))
+} # END .CHECK_NULL
+
+# Check if an object contains any missing values
+#' @rdname sparsebn-functions
+#' @export
+check_na <- function(x){
+    suppressWarnings(any(unlist(lapply(x, is.na)))) # suppress warning about checking NULLs
+} # END .CHECK_NA
+
 # Count missing values in a matrix or data.frame
 #' @rdname sparsebn-functions
 #' @export
