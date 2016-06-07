@@ -5,9 +5,9 @@ dat_na <- generate_na_data_frame()
 dat_disc <- generate_fixed_discrete_data_frame()
 
 test_that("sparsebnData constructor fails if input not a list, data.frame, or matrix", {
-    expect_error(sparsebnData(1L), "list")
-    expect_error(sparsebnData(pi), "data.frame")
-    expect_error(sparsebnData(rep(1,5)), "numeric")
+    expect_error(sparsebnData(1L, type = "c"), "no applicable method for 'sparsebnData'")
+    expect_error(sparsebnData(pi, type = "c"), "no applicable method for 'sparsebnData'")
+    expect_error(sparsebnData(rep(1,5), type = "c"), "no applicable method for 'sparsebnData'")
 })
 
 test_that("sparsebnData constructor fails if type not specified or improperly specified", {
