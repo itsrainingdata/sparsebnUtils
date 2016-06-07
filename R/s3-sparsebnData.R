@@ -222,7 +222,7 @@ print.sparsebnData <- function(x, n = 5L, ...){
     # print(utils::head(data$data, n = n), row.names = FALSE)
     .print_data_frame(x$data, topn = n)
 
-    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), num.samples(x) - 2*n))
+    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
     if(is.obs(x)){
         cat(sprintf("Observational data with %s observations", x$type))
     } else{
