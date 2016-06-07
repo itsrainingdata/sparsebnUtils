@@ -11,7 +11,7 @@ generate_fixed_data_frame <- function(){
 generate_fixed_discrete_data_frame <- function(){
     x <- c(0,1,0,1,0)
     y <- c(1,0,1,0,1)
-    z <- c(1,2,3,2,1)
+    z <- c(0,1,2,1,0)
     a <- c(1,1,1,0,0)
     b <- c(0,0,1,1,1)
     data.frame(x, y, z, a, b)

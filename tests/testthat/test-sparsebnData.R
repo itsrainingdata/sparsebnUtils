@@ -33,7 +33,7 @@ test_that("sparsebnData constructor correctly organizes discrete data", {
     sbd_levels <- sbd$levels
     expect_equal(sbd_levels[[1]], c(0,1))
     expect_equal(sbd_levels[[2]], c(0,1))
-    expect_equal(sbd_levels[[3]], c(1,2,3))
+    expect_equal(sbd_levels[[3]], c(0,1,2))
 
     ### Check ivn slot
     sbd_ivn <- sbd$ivn
