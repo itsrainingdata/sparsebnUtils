@@ -71,8 +71,8 @@ fit_dag <- function(parents,
     dat <- as.matrix(dat) ### Only works for fully observed, numeric data
 
     pp <- num.nodes(parents)
-    if(length(parents) != pp){
-        stop(sprintf("Incompatible graph and data! Data has %d columns but graph has %d nodes.", pp, length(parents)))
+    if(ncol(dat) != pp){
+        stop(sprintf("Incompatible graph and data! Data has %d columns but graph has %d nodes.", ncol(dat), pp))
     }
     nn <- nrow(dat)
     coefs <- Matrix::Diagonal(pp, 0)
