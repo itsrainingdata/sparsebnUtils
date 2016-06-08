@@ -1,6 +1,6 @@
 ### Generate fixed data -- need 5 columns to match objects below
 generate_fixed_data_frame <- function(){
-    x <- rep(1L, 5)
+    x <- runif(5)
     y <- exp(1)^(1:5)
     z <- sqrt(y)
     a <- x+1:5
