@@ -27,14 +27,14 @@
 #' distribution. This undirected graph can be tied to the corresponding directed graphical model;
 #' see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
 #'
-#' @param coefs coefficients of DAG.
-#' @param vars conditional variances of DAG.
-#' @param fit fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
 #' @param data data as \code{\link{sparsebnData}} object.
-#' @param ... (optional) additional parameters
+#' @param x fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#' @param ... (optional) additional parameters to \code{\link{estimate.dag}}
 #'
 #' @return
-#' Covariance or precision (inverse covariance) matrix as \code{\link[Matrix]{Matrix}}.
+#' Solution path as a plain \code{\link{list}}. Each component is a \code{\link[Matrix]{Matrix}}
+#' corresponding to an estimate of the covariance or precision (inverse covariance) matrix for a
+#' given value of lambda.
 #'
 #' @name estimate.covariance
 #' @rdname estimate.covariance

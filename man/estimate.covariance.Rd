@@ -13,21 +13,19 @@ estimate.precision(data, ...)
 
 get.covariance(x, data, ...)
 
-get.precision(coefs, vars)
+get.precision(x, data, ...)
 }
 \arguments{
 \item{data}{data as \code{\link{sparsebnData}} object.}
 
-\item{...}{(optional) additional parameters}
+\item{...}{(optional) additional parameters to \code{\link{estimate.dag}}}
 
-\item{coefs}{coefficients of DAG.}
-
-\item{vars}{conditional variances of DAG.}
-
-\item{fit}{fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
+\item{x}{fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
 }
 \value{
-Covariance or precision (inverse covariance) matrix as \code{\link[Matrix]{Matrix}}.
+Solution path as a plain \code{\link{list}}. Each component is a \code{\link[Matrix]{Matrix}}
+corresponding to an estimate of the covariance or precision (inverse covariance) matrix for a
+given value of lambda.
 }
 \description{
 Methods for inferring (i) Covariance matrices and (ii) Precision matrices for continuous,

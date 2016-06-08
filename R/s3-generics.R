@@ -188,7 +188,7 @@ get.covariance <- function(x, data, ...) UseMethod("get.covariance", x)
 
 #' @rdname estimate.covariance
 #' @export
-get.precision <- function(coefs, vars) UseMethod("get.precision", coefs)
+get.precision <- function(x, data, ...) UseMethod("get.precision", x)
 
 #' @rdname sparsebn-functions
 #' @export
