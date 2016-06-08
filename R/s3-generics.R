@@ -162,29 +162,29 @@ estimate.parameters <- function(fit, data, ...){
 
 #' @rdname estimate.covariance
 #' @export
-estimate.covariance <- function(fit, data){
+estimate.covariance <- function(data, ...){
     stopifnot(is.sparsebnData(data))
     if(data$type != "continuous"){
         stop(feature_not_supported("Covariance estimation for discrete models"))
     }
 
-    UseMethod("estimate.covariance", fit)
+    UseMethod("estimate.covariance", data)
 }
 
 #' @rdname estimate.covariance
 #' @export
-estimate.precision <- function(fit, data){
+estimate.precision <- function(data, ...){
     stopifnot(is.sparsebnData(data))
     if(data$type != "continuous"){
         stop(feature_not_supported("Precision matrix estimation for discrete models"))
     }
 
-    UseMethod("estimate.precision", fit)
+    UseMethod("estimate.precision", data)
 }
 
 #' @rdname estimate.covariance
 #' @export
-get.covariance <- function(coefs, vars) UseMethod("get.covariance", coefs)
+get.covariance <- function(x, data, ...) UseMethod("get.covariance", x)
 
 #' @rdname estimate.covariance
 #' @export
