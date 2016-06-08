@@ -75,8 +75,10 @@ edgeList.list <- function(x){
     }
 
     ### Must only contain numbers
-    if(!check_list_class(x, "numeric") && !check_list_class(x, "integer")){
+    if(!check_list_numeric(x)){
         stop("Invalid input detected: List should contain only integer / numeric vectors with no missing or NULL values.")
+    } else{
+        x <- lapply(x, as.integer) # convert all entries to integer for consistency
     }
 
     ### Cannot assign a parent larger than total number of nodes, or < 1

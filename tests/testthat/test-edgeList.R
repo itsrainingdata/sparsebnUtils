@@ -21,3 +21,12 @@ test_that("Bugfix: edgeList does not accept NULL or NA values", {
     expect_error(edgeList(list(NA, NA)), "Input cannot have missing values!")
     expect_error(edgeList(list(3, NA, 2)), "Input cannot have missing values!")
 })
+
+test_that("Bugfix: edgeList accepts combination of integer / numeric values", {
+    expect_error(edgeList(list(2, 1L)), NA)  # combo
+    expect_error(edgeList(list(2, 1)), NA)   # numeric only
+    expect_error(edgeList(list(2L, 1L)), NA) # integer only
+
+    expect_error(edgeList(list(2, 1, integer(0))), NA)   # combo
+    expect_error(edgeList(list(2L, 1L, numeric(0))), NA) # combo
+})

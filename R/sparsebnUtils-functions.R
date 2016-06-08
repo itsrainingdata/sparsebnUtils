@@ -126,6 +126,21 @@ check_list_class <- function(li, check.class){
     all(unlist(lapply(li, function(x) inherits(x, check.class))))
 } # END .CHECK_LIST_CLASS
 
+# Return TRUE if every element of a list inherits numeric, FALSE otherwise
+#  In particular, if every component is integer, will still return TRUE due to quirks of R
+#  This is because is.numeric(1L) returns TRUE
+#' @rdname sparsebn-functions
+#' @export
+check_list_numeric <- function(li){
+    if(length(li) == 0){
+        warning("List contains no elements!")
+
+        TRUE # default to true if empty
+    }
+
+    all(unlist(lapply(li, is.numeric)))
+} # END .CHECK_LIST_NUMERIC
+
 # Return TRUE if names(list) matches check.names, FALSE otherwise
 #' @rdname sparsebn-functions
 #' @export

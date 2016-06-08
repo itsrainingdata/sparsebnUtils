@@ -9,6 +9,7 @@
 \alias{check_if_matrix}
 \alias{check_list_class}
 \alias{check_list_names}
+\alias{check_list_numeric}
 \alias{check_na}
 \alias{check_null}
 \alias{col_classes}
@@ -53,6 +54,8 @@ auto_generate_levels(df)
 auto_count_levels(df)
 
 check_list_class(li, check.class)
+
+check_list_numeric(li)
 
 check_list_names(li, check.names)
 
