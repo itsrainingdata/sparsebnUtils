@@ -25,6 +25,7 @@
 #' @param data data object.
 #' @param count number of missing values.
 #' @param pkg package name.
+#' @param feature feature name.
 #'
 NULL
 

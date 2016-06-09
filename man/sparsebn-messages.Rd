@@ -31,6 +31,8 @@ feature_not_supported(feature)
 \item{count}{number of missing values.}
 
 \item{pkg}{package name.}
+
+\item{feature}{feature name.}
 }
 \description{
 Warning and error messages for use in the \code{sparsebn} family

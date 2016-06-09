@@ -17,7 +17,7 @@
 #' \code{\link[bnlearn]{bn-class}}. In the second, the conversion applies directly to the object.
 #'
 #' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-#' \code{\link{bnlearn}}, \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
+#' \code{\link[bnlearn]{bn-class}}, \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
 #'
 #' @export
 to_bn <- function(x){

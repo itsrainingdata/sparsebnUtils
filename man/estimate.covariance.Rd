@@ -18,7 +18,7 @@ get.precision(x, data, ...)
 \arguments{
 \item{data}{data as \code{\link{sparsebnData}} object.}
 
-\item{...}{(optional) additional parameters to \code{\link{estimate.dag}}}
+\item{...}{(optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}}
 
 \item{x}{fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.}
 }

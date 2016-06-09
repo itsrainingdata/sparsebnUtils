@@ -70,6 +70,8 @@ zero_threshold()
 \arguments{
 \item{x}{a compatible object.}
 
+\item{numnode}{\code{integer} number of nodes.}
+
 \item{m}{a \code{matrix}.}
 
 \item{df}{a \code{data.frame}.}

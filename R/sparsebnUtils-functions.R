@@ -31,6 +31,7 @@
 #' @param check.names \code{character} names to compare against.
 #' @param X a matrix.
 #' @param string a \code{character} string.
+#' @param numnode \code{integer} number of nodes.
 #'
 #' @title Utility functions
 #'

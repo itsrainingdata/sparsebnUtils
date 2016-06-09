@@ -29,7 +29,7 @@
 #'
 #' @param data data as \code{\link{sparsebnData}} object.
 #' @param x fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
-#' @param ... (optional) additional parameters to \code{\link{estimate.dag}}
+#' @param ... (optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}
 #'
 #' @return
 #' Solution path as a plain \code{\link{list}}. Each component is a \code{\link[Matrix]{Matrix}}

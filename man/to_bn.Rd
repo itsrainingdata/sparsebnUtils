@@ -8,7 +8,7 @@ to_bn(x)
 }
 \arguments{
 \item{x}{An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-\code{\link{bnlearn}}, \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.}
+\code{\link[bnlearn]{bn-class}}, \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.}
 }
 \description{
 \code{to_bn} converts an object to a \code{\link[bnlearn]{bn-class}} object. Works on both fitted

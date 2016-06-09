@@ -10,7 +10,8 @@ Depends:
 Imports:
     Matrix,
     stats,
-    utils
+    utils,
+    nnet
 Suggests:
     bnlearn,
     graph,
