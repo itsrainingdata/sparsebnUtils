@@ -44,8 +44,12 @@ pkg_change_global_coerce <- function(from_type = c("sparsebnFit", "sparsebnPath"
             coerce_global(to_func = "to_graphNEL", from_type, envir)
         } else if(pkg_graph == "igraph"){
             coerce_global(to_func = "to_igraph", from_type, envir)
+        } else if(pkg_graph == "bnlearn"){
+            coerce_global(to_func = "to_bn", from_type, envir)
         } else if(pkg_graph == "network"){
             coerce_global(to_func = "to_network", from_type, envir)
+        } else if(pkg_graph == "sparsebn"){
+            coerce_global(to_func = "to_edgeList", from_type, envir)
         } else{
             stop(invalid_pkg_specification())
         }
