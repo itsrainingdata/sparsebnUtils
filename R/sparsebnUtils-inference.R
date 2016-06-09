@@ -36,12 +36,15 @@ estimate.parameters.sparsebnPath <- function(fit, data, ...){
 choose_fit_method <- function(edges, data, ...){
     family <- pick_family(data)
     if(family == "gaussian"){
-        fit_glm_dag(edges, data$data, call = "lm.fit", ...)
+        out <- fit_glm_dag(edges, data$data, call = "lm.fit", ...)
     } else if(family == "binomial"){
-        fit_glm_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
+        out <- fit_glm_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
+        out <- out$coefs
     } else if(family == "multinomial"){
-        discretecdAlgorithm:::fit_multinom_dag(edges, dat = data$data, n_levels = unlist(auto_count_levels(data$data)), ...)
+        out <- discretecdAlgorithm:::fit_multinom_dag(edges, dat = data$data, n_levels = unlist(auto_count_levels(data$data)), ...)
     }
+
+    out
 }
 
 #' Inference in Bayesian networks
