@@ -148,7 +148,7 @@ is.zero <- function(x) UseMethod("is.zero", x)
 #' Given the structure of a Bayesian network, estimate the parameters (weights) using ordinary least
 #' squares (for Gaussian data) or logistic regression (for discrete data).
 #'
-#' The low-level fitting method is \code{\link{fit_dag}}.
+#' The low-level fitting method is \code{\link{fit_glm_dag}}.
 #'
 #' @param fit fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object containing the Bayesian network structure to fit.
 #' @param data Data to use for fitting.

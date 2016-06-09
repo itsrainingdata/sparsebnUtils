@@ -12,7 +12,7 @@
 #   CONTENTS:
 #       estimate.parameters
 #       choose_fit_method
-#       fit_dag
+#       fit_glm_dag
 #
 
 ### DAG fitting --------------------------------------------------------
@@ -32,13 +32,13 @@ estimate.parameters.sparsebnPath <- function(fit, data, ...){
 }
 
 ### Choose which fitting method to use: Enforces use of OLS or logistic regression only
-###  (See fit_dag for a more general fitting function)
+###  (See fit_glm_dag for a more general fitting function)
 choose_fit_method <- function(edges, data, ...){
     family <- pick_family(data)
     if(family == "gaussian"){
-        fit_dag(edges, data$data, call = "lm.fit", ...)
+        fit_glm_dag(edges, data$data, call = "lm.fit", ...)
     } else if(family == "binomial"){
-        fit_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
+        fit_glm_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
     } else if(family == "multinomial"){
         discretecdAlgorithm:::fit_multinom_dag(edges, dat = data$data, n_levels = unlist(auto_count_levels(data$data)), ...)
     }
@@ -57,7 +57,7 @@ choose_fit_method <- function(edges, data, ...){
 #' @param ... If \code{call = "glm.fit"}, specify \code{family} here. Also allows for other parameters to \code{lm.fit} and \code{glm.fit}.
 #'
 #' @export
-fit_dag <- function(parents,
+fit_glm_dag <- function(parents,
                     dat,
                     call = "lm.fit",
                     ...
