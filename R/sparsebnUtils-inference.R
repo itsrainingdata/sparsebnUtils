@@ -41,7 +41,7 @@ choose_fit_method <- function(edges, data, ...){
         out <- fit_glm_dag(edges, data$data, call = "glm.fit", family = stats::binomial(), ...)
         out <- out$coefs
     } else if(family == "multinomial"){
-        out <- discretecdAlgorithm:::fit_multinom_dag(edges, dat = data$data, n_levels = unlist(auto_count_levels(data$data)), ...)
+        out <- fit_multinom_dag(edges, dat = data$data, n_levels = unlist(auto_count_levels(data$data)), ...)
     }
 
     out
