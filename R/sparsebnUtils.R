@@ -17,12 +17,12 @@
 #'
 #' \itemize{
 #' \item \code{\link{estimate.parameters}} for directed graphs.
-#' \item \code{\link{estimate.precision}} for undirected graphs.
-#' \item \code{\link{estimate.covariance}} for covariance matrices.
+#' \item \code{\link{get.precision}} for undirected graphs.
+#' \item \code{\link{get.covariance}} for covariance matrices.
 #' }
 #'
 #' Internally, all graph objects may be stored as \code{\link{edgeList}s} (default),
-#' or using \code{graphNEL}, \code{igraph}, or \code{network} objects.
+#' or using \code{graphNEL}, \code{igraph}, \code{bnlearn}, or \code{network} objects.
 #'
 #' @docType package
 #' @name sparsebnUtils

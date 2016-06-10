@@ -182,11 +182,26 @@ estimate.parameters <- function(fit, data, ...){
 #     UseMethod("estimate.precision", data)
 # }
 
-# #' @rdname estimate.covariance
+#' Covariance and precision matrices
+#'
+#' Methods for computing covariance and precision matrices given an estimated directed graph.
+#'
+#' For Gaussian data, the precision matrix corresponds to an undirected graphical model for the
+#' distribution. This undirected graph can be tied to the corresponding directed graphical model;
+#' see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
+#'
+#' @param x fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#' @param data data as \code{\link{sparsebnData}} object.
+#' @param ... (optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}
+#'
+#' @return
+#' Covariance (or precision) matrix as \code{\link[Matrix]{Matrix}} object.
+#'
+#' @name get.covariance
 #' @export
 get.covariance <- function(x, data, ...) UseMethod("get.covariance", x)
 
-# #' @rdname estimate.covariance
+#' @rdname get.covariance
 #' @export
 get.precision <- function(x, data, ...) UseMethod("get.precision", x)
 
