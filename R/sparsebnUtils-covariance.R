@@ -18,35 +18,7 @@
 #       inv_cov_mat
 #
 
-#' Covariance estimation
-#'
-#' Methods for inferring (i) Covariance matrices and (ii) Precision matrices for continuous,
-#' Gaussian data.
-#'
-#' For Gaussian data, the precision matrix corresponds to an undirected graphical model for the
-#' distribution. This undirected graph can be tied to the corresponding directed graphical model;
-#' see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
-#'
-#' @param data data as \code{\link{sparsebnData}} object.
-#' @param x fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
-#' @param ... (optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}
-#'
-#' @return
-#' Solution path as a plain \code{\link{list}}. Each component is a \code{\link[Matrix]{Matrix}}
-#' corresponding to an estimate of the covariance or precision (inverse covariance) matrix for a
-#' given value of lambda.
-#'
-#' @name estimate.covariance
-#' @rdname estimate.covariance
-NULL
-
-### Covariance fitting --------------------------------------------------------
-#' @export
-estimate.covariance.sparsebnData <- function(data, ...){
-    estimated.dags <- sparsebn::estimate.dag(data, ...)
-    get.covariance(estimated.dags, data)
-}
-
+### Covariance estimation --------------------------------------------------------
 #' @export
 get.covariance.sparsebnFit <- function(x, data, ...){
     fitted.dag <- estimate.parameters(x, data)
@@ -66,14 +38,7 @@ cov_mat <- function(coefs, vars){
     Matrix::t(Matrix::solve(identity_mat - coefs)) %*% vars %*% Matrix::solve(identity_mat - coefs)
 }
 
-### Inverse covariance fitting --------------------------------------------------------
-#' @export
-estimate.precision.sparsebnData <- function(data, ...){
-    estimated.dags <- sparsebn::estimate.dag(data, ...)
-    # fitted.dags <- estimate.parameters(estimated.dags, data)
-    get.precision(estimated.dags, data)
-}
-
+### Inverse covariance estimation --------------------------------------------------------
 #' @export
 get.precision.sparsebnFit <- function(x, data, ...){
     fitted.dag <- estimate.parameters(x, data)
