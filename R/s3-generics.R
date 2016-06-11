@@ -209,6 +209,26 @@ get.precision <- function(x, data, ...) UseMethod("get.precision", x)
 #' @export
 pick_family <- function(x) UseMethod("pick_family", x)
 
+#' Recode discrete data
+#'
+#' Recodes discrete data so that the levels correspond to \code{0...n-1}, where \code{n}
+#' is the total number of levels in a discrete factor.
+#'
+#' Assumes data is unordered. Ordered factors are not supported at this time.
+#'
+#' @param x an R object to coerce.
+#'
+#' @examples
+#' x <- 1:5
+#' coerce_discrete(x) # output: 0 1 2 3 4
+#'
+#' x <- c("high", "normal", "high", "low")
+#' coerce_discrete(x) # output: 0 2 0 1
+#'
+#' @name coerce_discrete
+#' @export
+coerce_discrete <- function(x) UseMethod("coerce_discrete", x)
+
 #' @rdname sparsebn-functions
 #' @export
 reIndexC <- function(x) UseMethod("reIndexC", x)

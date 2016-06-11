@@ -197,3 +197,21 @@ capitalize <- function(string) {
         1, 1))
     return(string)
 } # END CAPITALIZE
+
+# Recode a factor to start at 0
+#' @rdname sparsebn-functions
+#' @export
+recode_levels <- function(x){
+    stopifnot(is.factor(x))
+    levels(x) <- seq(0, length(levels(x)) - 1, 1) # convert levels to 0...k-1
+
+    x
+}
+
+# Convert a factor to integer with levels 0...n-1
+#' @rdname sparsebn-functions
+#' @export
+convert_factor_to_discrete <- function(x){
+    f <- recode_levels(x)
+    as.numeric(levels(f))[f] # convert factor to numeric (see ?factor)
+}

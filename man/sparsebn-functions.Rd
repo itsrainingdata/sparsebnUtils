@@ -13,6 +13,7 @@
 \alias{check_na}
 \alias{check_null}
 \alias{col_classes}
+\alias{convert_factor_to_discrete}
 \alias{cor_vector}
 \alias{count_nas}
 \alias{default_alpha}
@@ -21,6 +22,7 @@
 \alias{pick_family}
 \alias{reIndexC}
 \alias{reIndexR}
+\alias{recode_levels}
 \alias{sparsebn-functions}
 \alias{zero_threshold}
 \title{Utility functions}
@@ -64,6 +66,10 @@ col_classes(X)
 cor_vector(X)
 
 capitalize(string)
+
+recode_levels(x)
+
+convert_factor_to_discrete(x)
 
 zero_threshold()
 }
