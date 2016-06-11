@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^sparsebnUtils\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
