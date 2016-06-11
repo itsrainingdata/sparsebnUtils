@@ -192,7 +192,7 @@ estimate.parameters <- function(fit, data, ...){
 #'
 #' @param x fitted \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
 #' @param data data as \code{\link{sparsebnData}} object.
-#' @param ... (optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}
+#' @param ... (optional) additional parameters
 #'
 #' @return
 #' Covariance (or precision) matrix as \code{\link[Matrix]{Matrix}} object.

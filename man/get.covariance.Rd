@@ -14,7 +14,7 @@ get.precision(x, data, ...)
 
 \item{data}{data as \code{\link{sparsebnData}} object.}
 
-\item{...}{(optional) additional parameters to \code{\link[sparsebn]{estimate.dag}}}
+\item{...}{(optional) additional parameters}
 }
 \value{
 Covariance (or precision) matrix as \code{\link[Matrix]{Matrix}} object.
