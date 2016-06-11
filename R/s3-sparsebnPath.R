@@ -30,8 +30,8 @@
 
 #' sparsebnPath class
 #'
-#' Convenience wrapper class for output of CCDr algorithm: Represents the entire solution path
-#' of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
+#' Convenience wrapper class for solution paths of DAG learning algorithms: This class represents an entire
+#' solution path of an algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
 #' from \code{\link{list}}.
 #'
 #' Each value of lambda in the (discrete) solution path corresponds to a single DAG estimate (see \href{http://jmlr.org/papers/v16/aragam15a.html}{Aragam and Zhou (2015)} for details).
