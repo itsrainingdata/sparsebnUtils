@@ -6,6 +6,7 @@
 \alias{global_coerce_warning}
 \alias{has_missing_values}
 \alias{input_not_sparsebnData}
+\alias{invalid_class}
 \alias{invalid_pkg_specification}
 \alias{pkg_not_installed}
 \alias{sparsebn-messages}
@@ -24,6 +25,8 @@ pkg_not_installed(pkg)
 global_coerce_warning(pkg)
 
 feature_not_supported(feature)
+
+invalid_class(actual, expected)
 }
 \arguments{
 \item{data}{data object.}

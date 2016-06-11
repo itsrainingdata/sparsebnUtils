@@ -25,8 +25,8 @@ large graphs or large solution paths. (default = \code{FALSE})}
 \item{...}{(optional) additional arguments.}
 }
 \description{
-Convenience wrapper class for output of CCDr algorithm: Represents the entire solution path
-of the CCDr algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
+Convenience wrapper class for solution paths of DAG learning algorithms: This class represents an entire
+solution path of an algorithm. Its components are of type \code{\link{sparsebnFit}}. Also inherits
 from \code{\link{list}}.
 }
 \details{
