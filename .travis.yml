@@ -3,3 +3,6 @@
 language: R
 sudo: false
 cache: packages
+
+# BiocInstaller required for 'graph' package from Bioconductor
+bioc_required: true
