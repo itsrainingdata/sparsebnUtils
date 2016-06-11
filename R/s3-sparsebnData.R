@@ -282,9 +282,9 @@ pick_family.sparsebnData <- function(x){
     topn = max(as.integer(topn),1L)
     if (nrow(x) == 0L) {
         if (length(x)==0L)
-           cat("Null data.table (0 rows and 0 cols)\n")  # See FAQ 2.5 and NEWS item in v1.8.9
+           cat("Null data.frame (0 rows and 0 cols)\n")  # See FAQ 2.5 and NEWS item in v1.8.9
         else
-           cat("Empty data.table (0 rows) of ",length(x)," col",if(length(x)>1L)"s",": ",paste(utils::head(names(x),6),collapse=","),if(ncol(x)>6)"...","\n",sep="")
+           cat("Empty data.frame (0 rows) of ",length(x)," col",if(length(x)>1L)"s",": ",paste(utils::head(names(x),6),collapse=","),if(ncol(x)>6)"...","\n",sep="")
         return()
     }
     if (topn*2<nrow(x) && (nrow(x)>nrows || !topnmiss)) {
