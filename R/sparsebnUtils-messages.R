@@ -83,3 +83,10 @@ global_coerce_warning <- function(pkg){
 feature_not_supported <- function(feature){
     sprintf("%s is not yet available, but may be supported in a future version of this package. Stay tuned!", feature)
 }
+
+### Notify user that function argument has incorrect or unexpected class
+#' @rdname sparsebn-messages
+#' @export
+invalid_class <- function(actual, expected){
+    sprintf("Invalid input! Expected <%s>, actual input was <%s>.", expected, actual)
+}
