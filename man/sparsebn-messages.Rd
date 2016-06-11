@@ -36,6 +36,10 @@ invalid_class(actual, expected)
 \item{pkg}{package name.}
 
 \item{feature}{feature name.}
+
+\item{actual}{class input by user.}
+
+\item{expected}{class input expected by function.}
 }
 \description{
 Warning and error messages for use in the \code{sparsebn} family

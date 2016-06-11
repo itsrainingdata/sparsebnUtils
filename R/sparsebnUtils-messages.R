@@ -26,6 +26,8 @@
 #' @param count number of missing values.
 #' @param pkg package name.
 #' @param feature feature name.
+#' @param actual class input by user.
+#' @param expected class input expected by function.
 #'
 NULL
 
