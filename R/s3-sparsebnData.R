@@ -268,29 +268,42 @@ pick_family.sparsebnData <- function(x){
     }
 }
 
+#' @rdname coerce_discrete
 #' @export
 coerce_discrete.factor <- function(x){
     convert_factor_to_discrete(x)
 }
 
+#' @rdname coerce_discrete
 #' @export
 coerce_discrete.numeric <- function(x){
     convert_factor_to_discrete(factor(x, ordered = FALSE))
 }
 
+#' @rdname coerce_discrete
 #' @export
 coerce_discrete.integer <- function(x){
     convert_factor_to_discrete(factor(x, ordered = FALSE))
 }
 
+#' @rdname coerce_discrete
 #' @export
 coerce_discrete.character <- function(x){
     convert_factor_to_discrete(factor(x, ordered = FALSE))
 }
 
+#' @rdname coerce_discrete
 #' @export
 coerce_discrete.data.frame <- function(x){
     apply(x, 2, coerce_discrete)
+}
+
+#' @rdname coerce_discrete
+#' @export
+coerce_discrete.sparsebnData <- function(x){
+    x$data <- coerce_discrete(x$data)
+
+    x
 }
 
 ### Borrow the print.data.table method from the 'data.table' package
