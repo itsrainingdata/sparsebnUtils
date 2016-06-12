@@ -80,6 +80,19 @@ generate_fixed_edgeList <- function(){
     edgeL
 }
 
+generate_fixed_graphNEL <- function(){
+    V <- LETTERS[1:5]
+    edL <- vector("list", length=5)
+    names(edL) <- V
+    edL[[1]] <- list(edges=c(), weights=runif(1))     # Edge list is
+    edL[[2]] <- list(edges=c(1), weights=runif(1))    # to-from, not
+    edL[[3]] <- list(edges=c(2), weights=runif(1))    # from-to!
+    edL[[4]] <- list(edges=c(1,2), weights=runif(2))  #
+    edL[[5]] <- list(edges=c(2), weights=runif(1))    #
+
+    graph::graphNEL(nodes=V, edgeL=edL, edgemode="directed")
+}
+
 generate_fixed_SparseBlockMatrixR <- function(){
     nnode <- 5
     li <- list(rows = vector("list", length = nnode),
