@@ -137,11 +137,16 @@ get.adjacency.matrix.sparsebnPath <- function(x){
 #' Select solutions from a solution path
 #'
 #' Choose solutions from a solution path based on number of edges, value of
-#' regulariation parameter lambda, or index.
+#' regularization parameter lambda, or index.
 #'
 #' If there is more than one match (for example, by number of edges), then
 #' the first such estimate is returned. Note that \code{get.solution(x, index = j)}
 #' is equivalent to (but slightly slower than) \code{x[[j]]}.
+#'
+#' @param x a \code{\link{sparsebnPath}} object.
+#' @param edges number of edges to search for.
+#' @param lambda value of regularization parameter to search for.
+#' @param index integer index to select.
 #'
 #' @export
 get.solution <- function(x, edges, lambda, index){

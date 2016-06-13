@@ -6,9 +6,18 @@
 \usage{
 get.solution(x, edges, lambda, index)
 }
+\arguments{
+\item{x}{a \code{\link{sparsebnPath}} object.}
+
+\item{edges}{number of edges to search for.}
+
+\item{lambda}{value of regularization parameter to search for.}
+
+\item{index}{integer index to select.}
+}
 \description{
 Choose solutions from a solution path based on number of edges, value of
-regulariation parameter lambda, or index.
+regularization parameter lambda, or index.
 }
 \details{
 If there is more than one match (for example, by number of edges), then
