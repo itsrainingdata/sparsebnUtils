@@ -20,9 +20,14 @@
 
 ### Covariance estimation --------------------------------------------------------
 #' @export
-get.covariance.sparsebnFit <- function(x, data, ...){
+get.covariance.edgeList <- function(x, data, ...){
     fitted.dag <- estimate.parameters(x, data)
     cov_mat(Matrix::Matrix(fitted.dag$coefs), Matrix::Matrix(fitted.dag$vars))
+}
+
+#' @export
+get.covariance.sparsebnFit <- function(x, data, ...){
+    get.covariance(x$edges, data, ...)
 }
 
 #' @export
