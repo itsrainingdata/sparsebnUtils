@@ -167,31 +167,33 @@ num.samples.sparsebnFit <- function(x){
     x$nn
 } # END NUM.SAMPLES.sparsebnFit
 
-#' Plot a fitted Bayesian network object
-#'
-#' Plot plot plot
-#'
-#' @param x fitted object (\code{\link{sparsebnFit}} or \code{\link{sparsebnPath}}) to plot.
-#' @param ... (optional) additional arguments to plotting mechanism.
-#'
+#' @rdname plot.edgeList
 #' @method plot sparsebnFit
 #' @export
 plot.sparsebnFit <- function(x, ...){
-    pkg_plot <- getPlotPackage()
+    par.default <- par()
+    par(mai=rep(0.1,4)) # Need to reset margins (why??? graph packages seem to handle this oddly)
 
-    if(!is.null(pkg_plot)){
-        if(pkg_plot == "graph"){
-            graph::plot(to_graphNEL(x$edges), ...)
-        } else if(pkg_plot == "igraph"){
-            plot(to_igraph(x$edges), ...)
-        } else if(pkg_plot == "network"){
-            plot(to_network(x$edges), ...)
-        } else{
-            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
-        }
-    } else{
-        stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
-    }
+    plot(x$edges, ...)
+
+    # pkg_plot <- getPlotPackage()
+    #
+    # if(!is.null(pkg_plot)){
+    #     if(pkg_plot == "igraph"){
+    #         ### Over-ride defaults for igraph.plot
+    #         circle_layout <- igraph::layout.circle(to_igraph(x$edges))
+    #         plot(x$edges,
+    #              layout = circle_layout,
+    #              vertex.label.color = gray(0),
+    #              vertex.color = gray(0.9),
+    #              edge.color = gray(0),
+    #              ...)
+    #     } else{
+    #         plot(x$edges, ...)
+    #     }
+    # }
+
+    par(par.default) # restore user's original settings
 }
 
 #' @describeIn to_edgeList description

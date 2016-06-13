@@ -134,13 +134,13 @@ get.adjacency.matrix.sparsebnPath <- function(x){
     sparsebnPath(as.list(x)[i])
 }
 
-#' @rdname plot.sparsebnFit
+#' @rdname plot.edgeList
 #' @method plot sparsebnPath
 #' @export
 plot.sparsebnPath <- function(x, ...){
     par.default <- par()
     par(mfrow = n2mfrow(length(x)), # Automatically choose a sensible grid to use
-        mai=rep(0,4)                   # Need to reset margins (why??? graph packages seem to handle this oddly)
+        mai=rep(0,4)                # Need to reset margins (why??? graph packages seem to handle this oddly)
         )
 
     ### Issues when plotting null DAG, so remove it

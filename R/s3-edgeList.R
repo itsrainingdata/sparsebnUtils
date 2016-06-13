@@ -157,6 +157,38 @@ is.zero.edgeList <- function(x){
     (num.edges(x) == 0)
 } # END IS.ZERO.EDGELIST
 
+#' Plot a fitted Bayesian network object
+#'
+#' Plots the graph object associated with the output of a learning algorithm.
+#'
+#' \code{plot.sparsebnFit} uses some default settings to make large graphs
+#' easier to interpret, but these settings can be over-ridden.
+#'
+#' @param x fitted object to plot.
+#' @param ... (optional) additional arguments to plotting mechanism.
+#'
+#' @seealso \code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
+#'
+#' @method plot edgeList
+#' @export
+plot.edgeList <- function(x, ...){
+    pkg_plot <- getPlotPackage()
+
+    if(!is.null(pkg_plot)){
+        if(pkg_plot == "graph"){
+            graph::plot(to_graphNEL(x), ...)
+        } else if(pkg_plot == "igraph"){
+            plot(to_igraph(x), ...)
+        } else if(pkg_plot == "network"){
+            plot(to_network(x), ...)
+        } else{
+            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+        }
+    } else{
+        stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
+    }
+}
+
 #' @export
 to_edgeList.edgeList <- function(x){
     x
