@@ -94,10 +94,10 @@ edgeList.list <- function(x){
 
 #' @method print edgeList
 #' @export
-print.edgeList <- function(x, ...){
+print.edgeList <- function(x, maxsize = 10, ...){
     if(num.edges(x) == 0){
-        edgeL.out <- paste0("<Empty graph on ", num.nodes(x), " nodes.>")
-    } else{
+        edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
+    } else if(num.nodes(x) <= maxsize){
         ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
         ### We shouldn't be printing this when pp > 1000 anyway!
         edgeL.out <- mapply(function(x, y){
@@ -107,6 +107,8 @@ print.edgeList <- function(x, ...){
         }, 1L:length(x), x)
         edgeL.out <- unlist(edgeL.out)
         edgeL.out <- paste(edgeL.out, collapse = " \n")
+    } else{
+        edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num.nodes(x), num.edges(x))
     }
 
     cat("edgeList object\n", edgeL.out, "\n", sep = "")
