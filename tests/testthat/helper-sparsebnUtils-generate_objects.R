@@ -148,3 +148,22 @@ generate_fixed_adjacency_matrix <- function(){
     m
     # Matrix::Matrix(m)
 }
+
+generate_nontrivial_sparsebnPath <- function(){
+    sbf1 <- sbf2 <- sbf3 <- sbf4 <- generate_fixed_sparsebnFit()
+    sbf1$edges[[1]] <- sbf1$edges[[2]] <- integer(0)
+    sbf1$lambda <- 2.1
+    sbf1$nedge <- 0
+
+    sbf3$edges[[3]] <- c(4)
+    sbf3$lambda <- 0.97
+    sbf3$nedge <- sbf3$nedge + 1
+
+    sbf4$edges[[4]] <- c(1,3,5)
+    sbf4$lambda <- 0.57
+    sbf4$nedge <- sbf4$nedge + 3
+
+    sbp <- sparsebnPath(list(sbf1, sbf2, sbf3, sbf4))
+
+    sbp
+}
