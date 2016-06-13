@@ -126,7 +126,7 @@ sparsebnData.list <- function(x, ...){
 #  Default constructor for data.frame input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
+sparsebnData.data.frame <- function(x, type, levels = NULL, ivn = NULL, ...){
 
     type_list <- c("continuous", "discrete")
 
@@ -147,7 +147,7 @@ sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
     # If the user fails to specify a list of interventions, ASSUME all rows are observational. If the data
     #  is experimental, the user needs to specify this by passing in 'ivn' (see also sparsebnData.list).
     #
-    if(missing(ivn)){
+    if(is.null(ivn)){
         message("A list of interventions was not specified: Assuming data is purely observational.")
         ivn <- vector("list", length = nrow(x))
     }
@@ -155,7 +155,7 @@ sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
     #
     # If the user fails to specify a list of levels, attempt to infer them automatically.
     #
-    if(missing(levels)){
+    if(is.null(levels)){
         # message("A list of levels was not specified: Assuming data is continuous.")
         if(type == "continuous"){
             levels <- NULL
@@ -172,7 +172,7 @@ sparsebnData.data.frame <- function(x, type, levels, ivn, ...){
 #  Default constructor for matrix input
 #' @rdname sparsebnData
 #' @export
-sparsebnData.matrix <- function(x, type, levels, ivn, ...){
+sparsebnData.matrix <- function(x, type, levels = NULL, ivn = NULL, ...){
     sparsebnData.data.frame(as.data.frame(x), type, levels, ivn)
 } # END SPARSEBNDATA.MATRIX
 

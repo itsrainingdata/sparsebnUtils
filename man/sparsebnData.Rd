@@ -16,9 +16,9 @@ as.sparsebnData(x, ...)
 
 is.sparsebnData(x)
 
-\method{sparsebnData}{data.frame}(x, type, levels, ivn, ...)
+\method{sparsebnData}{data.frame}(x, type, levels = NULL, ivn = NULL, ...)
 
-\method{sparsebnData}{matrix}(x, type, levels, ivn, ...)
+\method{sparsebnData}{matrix}(x, type, levels = NULL, ivn = NULL, ...)
 
 \method{print}{sparsebnData}(x, n = 5L, ...)
 }
