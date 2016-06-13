@@ -172,9 +172,6 @@ num.samples.sparsebnFit <- function(x){
 #' @method plot sparsebnFit
 #' @export
 plot.sparsebnFit <- function(x, ...){
-    par.default <- par()
-    par(mai=rep(0.1,4)) # Need to reset margins (why??? graph packages seem to handle this oddly)
-
     plot(x$edges, ...)
 
     # pkg_plot <- getPlotPackage()
@@ -193,8 +190,6 @@ plot.sparsebnFit <- function(x, ...){
     #         plot(x$edges, ...)
     #     }
     # }
-
-    par(par.default) # restore user's original settings
 }
 
 #' @describeIn to_edgeList description

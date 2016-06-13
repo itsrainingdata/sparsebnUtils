@@ -172,6 +172,9 @@ is.zero.edgeList <- function(x){
 #' @method plot edgeList
 #' @export
 plot.edgeList <- function(x, ...){
+    par.default <- par(no.readonly = TRUE)
+    par(mai=rep(0.1,4)) # Need to reset margins (why??? graph packages seem to handle this oddly)
+
     pkg_plot <- getPlotPackage()
 
     if(!is.null(pkg_plot)){
@@ -187,6 +190,8 @@ plot.edgeList <- function(x, ...){
     } else{
         stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
     }
+
+    par(par.default) # restore user's original settings
 }
 
 #' @export
