@@ -10,8 +10,9 @@
 # PACKAGE SPARSEBNUTILS: Generate
 #
 #   CONTENTS:
-#     random.dag
-#     random.psd
+#       random.dag
+#       random.psd
+#       random_householder
 #
 
 #' Generate a random DAG with fixed number of edges

@@ -10,14 +10,23 @@
 # PACKAGE SPARSEBNUTILS: Functions
 #
 #   CONTENTS:
-#     check_if_matrix
-#     check_if_data_matrix
-#     check_if_complete_data
-#     count_nas
-#     list_classes
-#     check_list_class
-#     col_classes
-#     cor_vector
+#       check_if_matrix
+#       check_if_data_matrix
+#       check_if_complete_data
+#       check_null
+#       check_na
+#       count_nas
+#       list_classes
+#       auto_generate_levels
+#       auto_count_levels
+#       check_list_class
+#       check_list_numeric
+#       check_list_names
+#       col_classes
+#       cor_vector
+#       capitalize
+#       recode_levels
+#       convert_factor_to_discrete
 #
 
 #' @name sparsebn-functions

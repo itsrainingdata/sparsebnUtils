@@ -13,6 +13,8 @@
 #       estimate.parameters
 #       choose_fit_method
 #       fit_glm_dag
+#       get_coef_matrix
+#       fit_multinom_dag
 #
 
 ### DAG fitting --------------------------------------------------------

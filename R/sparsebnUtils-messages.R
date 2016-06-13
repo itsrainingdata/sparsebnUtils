@@ -12,7 +12,11 @@
 #   CONTENTS:
 #       input_not_sparsebnData
 #       alg_input_data_frame
-#
+#       has_missing_values
+#       invalid_pkg_specification
+#       global_coerce_warning
+#       feature_not_supported
+#       invalid_class
 #
 
 #' @name sparsebn-messages
