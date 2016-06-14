@@ -2,6 +2,8 @@ context("fit_multinom_dag")
 
 # set up input variable
 data <- generate_fixed_discrete_data_frame()
+data_matrix <- as.matrix(data)
+colnames(data_matrix) <- NULL
 node <- ncol(data)
 n_levels <- unlist(auto_count_levels(data))
 final <- generate_fixed_sparsebnPath()
@@ -24,25 +26,38 @@ test_that("fit_multinom_dag can take empty graphs", {
 })
 
 test_that("fit_multinom_dag can run", {
-  ### fit_multinom_dag can accept an edgeList object as an input
+  ### fit_multinom_dag can accept an edgeList object and a data.frame object as an input
   expect_error(fit_multinom_dag(edge_list, n_levels, data), NA)
+
+  ### fit_multinom_dag can accept an edgeList object and a matrix as an input
+  expect_error(fit_multinom_dag(edge_list, n_levels, data_matrix), NA)
 
   ### throw an error if fit_multinom_dag has the wrong input
   expect_error(fit_multinom_dag(final.dag, n_levels, data))
 })
 
 test_that("fit_multinom_dag output the right result", {
-  out <- fit_multinom_dag(edge_list, n_levels, data)
+  out <- fit_multinom_dag(edge_list, n_levels, data) # input a data frame
+  out_matrix <- fit_multinom_dag(edge_list, n_levels, data_matrix) # input a matrix
 
   ### length of output should be the number of variables
   expect_equal(length(out), node)
-  ### legnth of each element should be the numeber of parents
+  expect_equal(length(out_matrix), node)
+  ### legnth of each element should be the number of parents
   for (i in 1:node) {
     expect_equal(length(out[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
   }
+  for (i in 1:node) {
+      expect_equal(length(out_matrix[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
+  }
   ### randomly check some entries
   expect_equal(dim(out[[1]][[1]]$coef), c(1, 1))
-  expect_equal(out[[1]][[1]]$parent, 2)
+  expect_equal(out[[1]][[1]]$parent, "y")
   expect_equal(dim(out[[1]][[2]]$coef), c(1, 1))
-  expect_equal(out[[1]][[2]]$parent, 4)
+  expect_equal(out[[1]][[2]]$parent, "a")
+
+  expect_equal(dim(out_matrix[[1]][[1]]$coef), c(1, 1))
+  expect_equal(out_matrix[[1]][[1]]$parent, "V2")
+  expect_equal(dim(out_matrix[[1]][[2]]$coef), c(1, 1))
+  expect_equal(out_matrix[[1]][[2]]$parent, "V4")
 })

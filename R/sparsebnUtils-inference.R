@@ -123,12 +123,66 @@ get_coef_matrix <- function(coef_vec, n_levels) {
     return(coef_matrix)
 }
 
-#' A function to do inference in Bayesian network.
-#' @param parents An edgeList object.
+#' Inference in discrete Bayesian networks
+#'
+#' Given the structure of a Bayesian network, estimate the parameters
+#' using multinomial logistic regression. For each node \eqn{i}, regress
+#' \eqn{i} onto its parents set using \code{\link[nnet]{multinom}}
+#' in package \code{\link{nnet}}.
+#'
+#' @param parents An \code{\link{edgeList}} object.
 #' @param n_levels A vector indicating number of levels for each variable
 #' @param dat Data, a dataframe or matrix
+#'
 #' @return
-#' List, of length the number of nodes. ith entry of the list is another list that contains parents of node i and the intercept coefficient for the ith node. For each parent of node i, it is a list of index of parent and the coefficient matrix of influence of parent has on node i.
+#' A list with with one component for each node in the graph. The
+#' \eqn{i}th entry is a list containing information on the \eqn{i}th
+#' regression, last element for the \eqn{i}th regression is the
+#' intercept coefficient (always a scalar). For each parent \eqn{j} of
+#' node \eqn{i}, there is a list consisting of the index of parent \eqn{j}
+#' and a coefficient matrix \eqn{C_{ij}} for the influence parent \eqn{j}
+#' has on node \eqn{i} (the coefficient matrix is of size
+#' \eqn{(r_i-1)\times (r_j-1)}, where \eqn{r_i} is the number of levels
+#' of ith node). Note that the \eqn{(h,k)}th entry of the coefficient
+#' matrix \eqn{C_{ij}}, is the coefficient for level \eqn{k} of parent
+#' \eqn{j} has on level \eqn{h} of node \eqn{i}.
+#'
+#' @examples
+#'
+#' \dontrun{
+#' ### construct a random data set
+#' x <- c(0,1,0,1,0)
+#' y <- c(1,0,1,0,1)
+#' z <- c(0,1,2,1,0)
+#' a <- c(1,1,1,0,0)
+#' b <- c(0,0,1,1,1)
+#' dat <- data.frame(x, y, z, a, b)
+#'
+#' ### randomly construct an edgelist of a graph
+#' nnode <- ncol(dat)
+#' li <- vector("list", length = nnode)
+#' li[[1]] <- c(2L,4L)
+#' li[[2]] <- c(3L,4L,5L)
+#' li[[3]] <- integer(0)
+#' li[[4]] <- integer(0)
+#' li[[5]] <- integer(0)
+#' edgeL <- edgeList(li)
+#'
+#' ### get the number of levels for each node
+#' nlevels <- unlist(auto_count_levels(dat))
+#'
+#' ### run fit_multinom_dag
+#' fit.multinom <- fit_multinom_dag(edgeL, nlevels, dat)
+#'
+#' ### interpret the output
+#' fit.multinom # a list of length 5
+#' fit.multinom[[1]] # the first variable has 2 parents,
+#'  thus the first entry has 3 slots. The last slot is the intercept coefficient.
+#'  And the first two slots each represent for a parent
+#' fit.multinom[[1]][[1]] # the first parent for the first node is "y"
+#' and the coefficient is -19.44
+#' }
+#'
 #' @export
 fit_multinom_dag <- function(parents, # rename to something else
                              n_levels,
@@ -158,7 +212,8 @@ fit_multinom_dag <- function(parents, # rename to something else
             coef_vec <- coef_vec[-1]
             coef_seq <- get_coef_matrix(coef_vec, temp_n_levels)
             node_index <- 1:length(x_ind)
-            coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=x_ind[x], coef=coef_seq[[x]])}, coef_seq, x_ind)
+            # coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=x_ind[x], coef=coef_seq[[x]])}, coef_seq, x_ind)
+            coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=colnames(data)[x_ind[x]], coef=coef_seq[[x]])}, coef_seq, x_ind)
             coef[[i]][[length(x_ind)+1]] <- list(intercept=intercept)
         }
     }
