@@ -15,7 +15,7 @@ test_that("sparsebnFit correctly identifies when input number of edges is not co
 })
 
 test_that("sparsebnFit is consistent with different ways of accessing nedge", {
-    li <- list(edges = edges, lambda = pi, nedge = 5, pp = 5, nn = 10, time = exp(1))
+    li <- list(edges = edges, nodes = LETTERS[1:5], lambda = pi, nedge = 5, pp = 5, nn = 10, time = exp(1))
     cf <- sparsebnFit(li) ### Should not generate an error anymore
 
     matrix.nedge <- Matrix::nnzero(get.adjacency.matrix(cf$edges))
