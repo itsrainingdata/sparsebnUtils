@@ -127,7 +127,7 @@ print.edgeList <- function(x, maxsize = 10, ...){
     num_edges_x <- sum(sapply(x, length))
 
     if(num_edges_x == 0){
-        edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
+        edgeL.out <- sprintf("<Empty graph on %d nodes.>", length(x))
     } else if(num_nodes_x <= maxsize){
         ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
         ### We shouldn't be printing this when pp > 1000 anyway!
