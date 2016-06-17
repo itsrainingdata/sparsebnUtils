@@ -4,12 +4,10 @@
 \alias{fit_multinom_dag}
 \title{Inference in discrete Bayesian networks}
 \usage{
-fit_multinom_dag(parents, n_levels, dat)
+fit_multinom_dag(parents, dat)
 }
 \arguments{
 \item{parents}{An \code{\link{edgeList}} object.}
-
-\item{n_levels}{A vector indicating number of levels for each variable}
 
 \item{dat}{Data, a dataframe or matrix}
 }
@@ -53,11 +51,8 @@ li[[4]] <- integer(0)
 li[[5]] <- integer(0)
 edgeL <- edgeList(li)
 
-### get the number of levels for each node
-nlevels <- unlist(auto_count_levels(dat))
-
 ### run fit_multinom_dag
-fit.multinom <- fit_multinom_dag(edgeL, nlevels, dat)
+fit.multinom <- fit_multinom_dag(edgeL, dat)
 
 ### interpret the output
 fit.multinom # a list of length 5
