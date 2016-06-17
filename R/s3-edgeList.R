@@ -119,7 +119,7 @@ print.edgeList <- function(x, maxsize = 10, ...){
 ### Mainly useful for allow print.sparsebnFit to print out node names instead of numbers
 .str_edgeList <- function(x, maxsize, nodes, ...){
     if(length(nodes) != length(x)){
-        stop(sprintf("Length of nodes must equal the length of x! length(nodes) = %d != %d = length(x)", length(nodes), num.nodes(x)))
+        stop(sprintf("Length of nodes must equal the length of x! length(nodes) = %d != %d = length(x)", length(nodes), length(x)))
     }
 
     ### Can't use num.nodes or num.edges since x may not be an edgeList
