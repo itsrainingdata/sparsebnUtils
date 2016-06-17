@@ -17,6 +17,8 @@
 #       global_coerce_warning
 #       feature_not_supported
 #       invalid_class
+#       dag_summary
+#       empty_dag_summary
 #
 
 #' @name sparsebn-messages
@@ -32,6 +34,8 @@
 #' @param feature feature name.
 #' @param actual class input by user.
 #' @param expected class input expected by function.
+#' @param nnode number of nodes in a DAG.
+#' @param nedge number of edges in a DAG.
 #'
 NULL
 

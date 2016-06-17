@@ -46,6 +46,10 @@ empty_dag_summary(nnode)
 \item{actual}{class input by user.}
 
 \item{expected}{class input expected by function.}
+
+\item{nnode}{number of nodes in a DAG.}
+
+\item{nedge}{number of edges in a DAG.}
 }
 \description{
 Warning and error messages for use in the \code{sparsebn} family
