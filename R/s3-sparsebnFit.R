@@ -91,7 +91,7 @@ sparsebnFit.list <- function(x){
 
     ### Check dimensions of names
     if(!is.null(x$nodes) && length(x$nodes) != x$pp){
-        stop("Length of 'nodes' must equal 'pp'! length(nodes) = %d != pp = %d", length(x$nodes), x$pp)
+        stop(sprintf("Length of 'nodes' must equal 'pp'! length(nodes) = %d != %d = pp", length(x$nodes), x$pp))
     }
 
     ### Update values to be consistent with edgeList
@@ -143,10 +143,10 @@ print.sparsebnFit <- function(x, ...){
         sep = "")
 
     cat("\nDAG: \n")
-    print(x$edges)
-    if(x$pp < MAX_NODES) {
-        # print(get.adjacency.matrix(x))
-    }
+    # print(x$edges)
+    edgeL_names <- lapply(as.list(x$edges), function(z) substr(x$nodes[z], 1, 5))
+    edgeL.out <- .str_edgeList(edgeL_names, maxsize = 10, nodes = x$nodes)
+    cat(edgeL.out, "\n", sep = "")
 } # END PRINT.sparsebnFit
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix

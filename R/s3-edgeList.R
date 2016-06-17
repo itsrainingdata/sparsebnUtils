@@ -95,23 +95,54 @@ edgeList.list <- function(x){
 #' @method print edgeList
 #' @export
 print.edgeList <- function(x, maxsize = 10, ...){
-    if(num.edges(x) == 0){
+    # if(num.edges(x) == 0){
+    #     edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
+    # } else if(num.nodes(x) <= maxsize){
+    #     ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
+    #     ### We shouldn't be printing this when pp > 1000 anyway!
+    #     edgeL.out <- mapply(function(x, y){
+    #         prefix <- paste0("[", x, "]")
+    #         prefix <- sprintf("%-5s", prefix)
+    #         paste0(prefix, paste(sprintf("%4d", sort(y)), collapse = ""))
+    #     }, 1L:length(x), x)
+    #     edgeL.out <- unlist(edgeL.out)
+    #     edgeL.out <- paste(edgeL.out, collapse = " \n")
+    # } else{
+    #     edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num.nodes(x), num.edges(x))
+    # }
+    edgeL.out <- .str_edgeList(x, maxsize = maxsize, nodes = 1L:length(x))
+
+    cat("edgeList object\n", edgeL.out, "\n", sep = "")
+}
+
+### Internal method to return (as a string) the screen output of an edgeList
+### Mainly useful for allow print.sparsebnFit to print out node names instead of numbers
+.str_edgeList <- function(x, maxsize, nodes, ...){
+    if(length(nodes) != length(x)){
+        stop(sprintf("Length of nodes must equal the length of x! length(nodes) = %d != %d = length(x)", length(nodes), num.nodes(x)))
+    }
+
+    ### Can't use num.nodes or num.edges since x may not be an edgeList
+    num_nodes_x <- length(x)
+    num_edges_x <- sum(sapply(x, length))
+
+    if(num_edges_x == 0){
         edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
-    } else if(num.nodes(x) <= maxsize){
+    } else if(num_nodes_x <= maxsize){
         ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
         ### We shouldn't be printing this when pp > 1000 anyway!
         edgeL.out <- mapply(function(x, y){
             prefix <- paste0("[", x, "]")
             prefix <- sprintf("%-5s", prefix)
-            paste0(prefix, paste(sprintf("%4d", sort(y)), collapse = ""))
-        }, 1L:length(x), x)
+            paste0(prefix, paste(sprintf("%5s", sort(y)), collapse = ""))
+        }, nodes, x)
         edgeL.out <- unlist(edgeL.out)
         edgeL.out <- paste(edgeL.out, collapse = " \n")
     } else{
-        edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num.nodes(x), num.edges(x))
+        edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num_nodes_x, num_edges_x)
     }
 
-    cat("edgeList object\n", edgeL.out, "\n", sep = "")
+    edgeL.out
 }
 
 #' @export
