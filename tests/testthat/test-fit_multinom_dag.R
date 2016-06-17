@@ -6,15 +6,16 @@ data_matrix <- as.matrix(data)
 colnames(data_matrix) <- NULL
 node <- ncol(data)
 n_levels <- unlist(auto_count_levels(data))
-final <- generate_fixed_sparsebnPath()
-final.dag <- final[[length(final)]]
-edge_list<- final.dag$edges
+li <- vector("list", length = node)
+li[[1]] <- c(2L,4L)
+li[[2]] <- c(3L,4L,5L)
+li[[3]] <- c(2L,5L)
+li[[4]] <- integer(0)
+li[[5]] <- integer(0)
+edge_list <- edgeList(li)
 
 # test
 test_that("fit_multinom_dag can take empty graphs", {
-  empty_graph <- final[[1]]$edges
-  expect_error(fit_multinom_dag(empty_graph, n_levels, data), NA)
-
   ### test if I input a graph with a single node, will the algorithm work.
   data_single <- as.data.frame(matrix(c(0, 1, 2, 0, 0, 3, 3, 2, 2, 1), nrow=10))
   ### Generate fixed objects for empty graphs
@@ -22,23 +23,23 @@ test_that("fit_multinom_dag can take empty graphs", {
     sparsebnUtils::edgeList(list(integer(0)))
   }
   single_node <- generate_empty_edgeList()
-  expect_error(fit_multinom_dag(single_node, n_levels=4, data_single), NA)
+  expect_error(fit_multinom_dag(single_node, data_single), NA)
 })
 
 test_that("fit_multinom_dag can run", {
   ### fit_multinom_dag can accept an edgeList object and a data.frame object as an input
-  expect_error(fit_multinom_dag(edge_list, n_levels, data), NA)
+  expect_error(fit_multinom_dag(edge_list, data), NA)
 
   ### fit_multinom_dag can accept an edgeList object and a matrix as an input
-  expect_error(fit_multinom_dag(edge_list, n_levels, data_matrix), NA)
+  expect_error(fit_multinom_dag(edge_list, data_matrix), NA)
 
   ### throw an error if fit_multinom_dag has the wrong input
-  expect_error(fit_multinom_dag(final.dag, n_levels, data))
+  expect_error(fit_multinom_dag(final.dag, data))
 })
 
 test_that("fit_multinom_dag output the right result", {
-  out <- fit_multinom_dag(edge_list, n_levels, data) # input a data frame
-  out_matrix <- fit_multinom_dag(edge_list, n_levels, data_matrix) # input a matrix
+  out <- fit_multinom_dag(edge_list, data) # input a data frame
+  out_matrix <- fit_multinom_dag(edge_list, data_matrix) # input a matrix
 
   ### length of output should be the number of variables
   expect_equal(length(out), node)
@@ -55,6 +56,10 @@ test_that("fit_multinom_dag output the right result", {
   expect_equal(out[[1]][[1]]$parent, "y")
   expect_equal(dim(out[[1]][[2]]$coef), c(1, 1))
   expect_equal(out[[1]][[2]]$parent, "a")
+  expect_equal(dim(out[[3]][[1]]$coef), c(2, 1))
+  expect_equal(out[[3]][[1]]$parent, "y")
+  expect_equal(dim(out[[3]][[2]]$coef), c(2, 1))
+  expect_equal(out[[3]][[2]]$parent, "b")
 
   expect_equal(dim(out_matrix[[1]][[1]]$coef), c(1, 1))
   expect_equal(out_matrix[[1]][[1]]$parent, "V2")
