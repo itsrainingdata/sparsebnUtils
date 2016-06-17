@@ -110,14 +110,14 @@ print.edgeList <- function(x, maxsize = 10, ...){
     # } else{
     #     edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num.nodes(x), num.edges(x))
     # }
-    edgeL.out <- .str_edgeList(x, maxsize = maxsize, nodes = 1L:length(x))
+    edgeL.out <- .str_edgeList(x, nodes = 1L:length(x), maxsize = maxsize)
 
     cat("edgeList object\n", edgeL.out, "\n", sep = "")
 }
 
 ### Internal method to return (as a string) the screen output of an edgeList
 ### Mainly useful for allow print.sparsebnFit to print out node names instead of numbers
-.str_edgeList <- function(x, maxsize, nodes, ...){
+.str_edgeList <- function(x, nodes, maxsize, ...){
     if(length(nodes) != length(x)){
         stop(sprintf("Length of nodes must equal the length of x! length(nodes) = %d != %d = length(x)", length(nodes), length(x)))
     }

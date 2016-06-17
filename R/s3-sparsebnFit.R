@@ -150,7 +150,7 @@ print.sparsebnFit <- function(x, maxsize = 10, ...){
     ### Truncate node names, convert edge list to reference names instead of indices, generate output
     node_names_trunc <- substr(x$nodes, 1, 4)
     edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
-    edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize, nodes = node_names_trunc)
+    edgeL.out <- .str_edgeList(edgeL_names, nodes = node_names_trunc, maxsize = maxsize)
 
     ### Print DAG output
     cat(edgeL.out, "\n", sep = "")
