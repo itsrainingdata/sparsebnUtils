@@ -40,6 +40,8 @@
 #' can be handled separately if desired (be careful!).
 #'
 #' @param x Only used internally.
+#' @param maxsize If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
+#' graph is printed to screen, otherwise a short summary is displayed instead.
 #' @param ... (optional) additional arguments.
 #'
 #' @section Slots:

@@ -19,6 +19,9 @@ is.sparsebnFit(x)
 \arguments{
 \item{x}{Only used internally.}
 
+\item{maxsize}{If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
+graph is printed to screen, otherwise a short summary is displayed instead.}
+
 \item{...}{(optional) additional arguments.}
 }
 \description{
