@@ -81,12 +81,17 @@ sparsebnFit.list <- function(x){
 
     if( !is.list(x)){
         stop("Input must be a list!")
-    } else if( length(x) != 6 || !setequal(names(x), c("edges", "lambda", "nedge", "pp", "nn", "time"))){
+    } else if( length(x) != 7 || !setequal(names(x), c("edges", "nodes", "lambda", "nedge", "pp", "nn", "time"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: edges (edgeList), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
     } else if( !is.edgeList(x$edges)){
         stop("'edges' component must be a valid edgeList object!")
     } else if(num.edges(x$edges) != x$nedge){
         stop("Attempting to set nedge to an improper value: Must be equal to the number of nonzero values in edges.")
+    }
+
+    ### Check dimensions of names
+    if(!is.null(x$nodes) && length(x$nodes) != x$pp){
+        stop("Length of 'nodes' must equal 'pp'! length(nodes) = %d != pp = %d", length(x$nodes), x$pp)
     }
 
     ### Update values to be consistent with edgeList
@@ -123,7 +128,7 @@ sparsebnFit.list <- function(x){
 #' @method as.list sparsebnFit
 #' @export
 as.list.sparsebnFit <- function(x, ...){
-    list(edges = x$edges, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
+    list(edges = x$edges, nodes = x$nodes, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
 } # END AS.LIST.sparsebnFit
 
 #' @rdname sparsebnFit
