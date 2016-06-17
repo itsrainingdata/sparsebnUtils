@@ -134,18 +134,23 @@ as.list.sparsebnFit <- function(x, ...){
 #' @rdname sparsebnFit
 #' @method print sparsebnFit
 #' @export
-print.sparsebnFit <- function(x, ...){
-    MAX_NODES <- 20
+print.sparsebnFit <- function(x, maxsize = 10, ...){
+    # MAX_NODES <- 20
 
+    ### Print pre-amble
     cat("CCDr estimate\n",
         x$nn, " observations\n",
         "lambda = ", x$lambda, "\n",
         sep = "")
 
     cat("\nDAG: \n")
-    # print(x$edges)
-    edgeL_names <- lapply(as.list(x$edges), function(z) substr(x$nodes[z], 1, 5))
-    edgeL.out <- .str_edgeList(edgeL_names, maxsize = 10, nodes = x$nodes)
+
+    ### Truncate node names, convert edge list to reference names instead of indices, generate output
+    node_names_trunc <- substr(x$nodes, 1, 4)
+    edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize, nodes = node_names_trunc)
+
+    ### Print DAG output
     cat(edgeL.out, "\n", sep = "")
 } # END PRINT.sparsebnFit
 

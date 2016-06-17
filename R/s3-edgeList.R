@@ -133,7 +133,7 @@ print.edgeList <- function(x, maxsize = 10, ...){
         ### We shouldn't be printing this when pp > 1000 anyway!
         edgeL.out <- mapply(function(x, y){
             prefix <- paste0("[", x, "]")
-            prefix <- sprintf("%-5s", prefix)
+            prefix <- sprintf("%-7s", prefix)
             paste0(prefix, paste(sprintf("%5s", sort(y)), collapse = ""))
         }, nodes, x)
         edgeL.out <- unlist(edgeL.out)
