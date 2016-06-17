@@ -82,7 +82,7 @@ sparsebnFit.list <- function(x){
     if( !is.list(x)){
         stop("Input must be a list!")
     } else if( length(x) != 7 || !setequal(names(x), c("edges", "nodes", "lambda", "nedge", "pp", "nn", "time"))){
-        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: edges (edgeList), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
+        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: edges (edgeList), nodes (character), lambda (numeric), nedge (integer), pp (integer), nn (integer), time (numeric or NA)")
     } else if( !is.edgeList(x$edges)){
         stop("'edges' component must be a valid edgeList object!")
     } else if(num.edges(x$edges) != x$nedge){
