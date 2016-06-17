@@ -94,3 +94,17 @@ feature_not_supported <- function(feature){
 invalid_class <- function(actual, expected){
     sprintf("Invalid input! Expected <%s>, actual input was <%s>.", expected, actual)
 }
+
+### Used to summarize output of DAGs that are very big
+#' @rdname sparsebn-messages
+#' @export
+dag_summary <- function(nnode, nedge){
+    sprintf("Directed graph with %d nodes and %d edges.", nnode, nedge)
+}
+
+### Used to show output of DAG with no edges
+#' @rdname sparsebn-messages
+#' @export
+empty_dag_summary <- function(nnode){
+    sprintf("<Empty graph on %d nodes.>", nnode)
+}

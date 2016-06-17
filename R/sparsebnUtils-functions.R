@@ -27,6 +27,7 @@
 #       capitalize
 #       recode_levels
 #       convert_factor_to_discrete
+#       format_list
 #
 
 #' @name sparsebn-functions
@@ -223,4 +224,26 @@ recode_levels <- function(x){
 convert_factor_to_discrete <- function(x){
     f <- recode_levels(x)
     as.numeric(levels(f))[f] # convert factor to numeric (see ?factor)
+}
+
+# Format a list for pretty printing
+format_list <- function(x){
+    stopifnot(is.list(x))
+
+    if(is.null(names(x))){
+        row_names <- 1L:length(x)
+    } else{
+        row_names <- names(x)
+    }
+
+    list.out <- mapply(function(x, y){
+        prefix <- paste0("[", x, "]")
+        prefix <- sprintf("%-5s", prefix)
+        if(is.numeric(y)) y <- round(y, 2)
+        paste0(prefix, paste(sprintf("%-5s", sort(y)), collapse = ""))
+    }, row_names, x)
+    list.out <- unlist(list.out)
+    list.out <- paste(list.out, collapse = " \n")
+
+    list.out
 }

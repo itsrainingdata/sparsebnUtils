@@ -127,19 +127,20 @@ print.edgeList <- function(x, maxsize = 10, ...){
     num_edges_x <- sum(sapply(x, length))
 
     if(num_edges_x == 0){
-        edgeL.out <- sprintf("<Empty graph on %d nodes.>", length(x))
+        edgeL.out <- empty_dag_summary(length(x))
     } else if(num_nodes_x <= maxsize){
-        ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
-        ### We shouldn't be printing this when pp > 1000 anyway!
-        edgeL.out <- mapply(function(x, y){
-            prefix <- paste0("[", x, "]")
-            prefix <- sprintf("%-7s", prefix)
-            paste0(prefix, paste(sprintf("%5s", sort(y)), collapse = ""))
-        }, nodes, x)
-        edgeL.out <- unlist(edgeL.out)
-        edgeL.out <- paste(edgeL.out, collapse = " \n")
+        # ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
+        # ### We shouldn't be printing this when pp > 1000 anyway!
+        # edgeL.out <- mapply(function(x, y){
+        #     prefix <- paste0("[", x, "]")
+        #     prefix <- sprintf("%-7s", prefix)
+        #     paste0(prefix, paste(sprintf("%5s", sort(y)), collapse = ""))
+        # }, nodes, x)
+        # edgeL.out <- unlist(edgeL.out)
+        # edgeL.out <- paste(edgeL.out, collapse = " \n")
+        edgeL.out <- format_list(as.list(x))
     } else{
-        edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num_nodes_x, num_edges_x)
+        edgeL.out <- dag_summary(num_nodes_x, num_edges_x)
     }
 
     edgeL.out
