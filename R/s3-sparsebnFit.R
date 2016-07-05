@@ -218,7 +218,10 @@ edgeList_to_node_names <- function(x, trunc_level = 4){
     stopifnot(is.sparsebnFit(x))
 
     node_names_trunc <- substr(x$nodes, 1, trunc_level)
-    lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    out <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    names(out) <- node_names_trunc
+
+    out
 }
 
 #------------------------------------------------------------------------------#
