@@ -48,6 +48,10 @@ setGraphPackage <- function(pkg,
                             matchPlot = TRUE,
                             coerce = FALSE){
     if(!is.null(pkg)){
+        ### Check that input is currently supported
+        pkg <- match.arg(pkg, c("sparsebn", "igraph", "graph", "network"))
+
+        ### Check that required package is installed
         if (!requireNamespace(pkg, quietly = TRUE)) {
             stop(pkg_not_installed(pkg = pkg), call. = FALSE)
         }
@@ -93,7 +97,9 @@ getGraphPackage <- function(){
 #'
 #' @export
 setPlotPackage <- function(pkg){
-    ### Need to add checks for packages
+    ### Check that input is currently supported
+    pkg <- match.arg(pkg, c("igraph", "graph", "network"))
+
     set_option("sparsebn.plotting", pkg)
 }
 
