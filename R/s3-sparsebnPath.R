@@ -187,9 +187,10 @@ get.solution <- function(x, edges, lambda, index){
 #' @method plot sparsebnPath
 #' @export
 plot.sparsebnPath <- function(x, ...){
-    par.default <- par()
-    par(mfrow = n2mfrow(length(x)), # Automatically choose a sensible grid to use
-        mai=rep(0,4)                # Need to reset margins (why??? graph packages seem to handle this oddly)
+    ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
+    par.default <- par()[c("mfrow", "mai")] # Only re-set what we change here
+    par(mfrow = n2mfrow(length(x)),         # Automatically choose a sensible grid to use
+        mai = rep(0,4)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
         )
 
     ### Issues when plotting null DAG, so remove it
