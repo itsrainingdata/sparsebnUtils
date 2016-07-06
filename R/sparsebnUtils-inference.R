@@ -15,6 +15,8 @@
 #       fit_glm_dag
 #       get_coef_matrix
 #       fit_multinom_dag
+#       gaussian_loglikelihood
+#       gaussian_profile_loglikelihood
 #
 
 ### DAG fitting --------------------------------------------------------
@@ -230,4 +232,71 @@ fit_multinom_dag <- function(parents,
         }
     }
     return(coef)
+}
+
+gaussian_loglikelihood <- function(data, coefs, vars){
+    data_matrix <- as.matrix(data$data)
+    vars_vector <- Matrix::diag(vars)
+    nn <- nrow(data_matrix)
+    pp <- ncol(data_matrix)
+
+    ### Compute cumulant function
+    cumulant <- -0.5 * nn * sum(log(vars_vector))
+
+    ### Compute LS
+    ls <- numeric(pp)
+    for(j in seq_along(ls)){
+        res <- data_matrix[, j] - data_matrix %*% coefs[, j]
+        ls[j] <- (0.5 / vars_vector[j]) * sum(res^2)
+    }
+    ls <- sum(ls)
+
+    cumulant + ls
+}
+
+gaussian_profile_loglikelihood <- function(data, coefs){
+    data_matrix <- as.matrix(data$data)
+    nn <- nrow(data_matrix)
+    pp <- ncol(data_matrix)
+
+    ### Compute log(LS)
+    pll <- numeric(pp)
+    for(j in seq_along(pll)){
+        res <- data_matrix[, j] - data_matrix %*% coefs[, j]
+        pll[j] <- 0.5 * nn * log(sum(res^2))
+    }
+    pll <- sum(pll)
+
+    -pll ### Need to take negative output loglikelihood (vs NLL)
+}
+
+### Eventually move to its own file
+select.parameter <- function(x,
+                             data,
+                             type = "profile",
+                             alpha = 0.05){
+    ### Check args
+    stopifnot(is.sparsebnPath(x))
+    stopifnot(is.sparsebnData(data))
+    type <- match.arg(type, c("profile", "full"))
+
+    ### Estimate unpenalized parameters
+    params <- estimate.parameters(x, data)
+
+    ### Compute (profile / full) log-likelihood + number of edges
+    obj <- switch(type,
+                  profile = unlist(lapply(params, function(x) gaussian_profile_loglikelihood(dat, x$coefs))),
+                  full = unlist(lapply(params, function(x) gaussian_loglikelihood(dat, x$coefs, x$vars)))
+                  )
+    nedges <- num.edges(x)
+
+    ### Compute lagged differences, difference ratios, and threshold
+    dobj <- diff(obj)
+    # dprloglik <- diff(prloglik)
+    dnedge <- diff(nedges)
+    dr <- dobj / dnedge
+    dr[dnedge == 0] <- NA
+    threshold <- alpha * max(dr, na.rm = TRUE)
+
+    max(which(dr >= threshold))
 }
