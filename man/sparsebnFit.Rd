@@ -14,7 +14,7 @@ as.sparsebnFit(x)
 
 is.sparsebnFit(x)
 
-\method{print}{sparsebnFit}(x, maxsize = 10, ...)
+\method{print}{sparsebnFit}(x, maxsize = 20, ...)
 }
 \arguments{
 \item{x}{Only used internally.}
