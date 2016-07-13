@@ -150,11 +150,18 @@ print.sparsebnFit <- function(x, maxsize = 10, ...){
     ### Truncate node names, convert edge list to reference names instead of indices, generate output
     # node_names_trunc <- substr(x$nodes, 1, 4)
     # edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
-    edgeL_names <- edgeList_to_node_names(x, 4)
-    edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
 
-    ### Print DAG output
-    cat(edgeL.out, "\n", sep = "")
+    if(is.edgeList(x$edges)){
+        edgeL_names <- edgeList_to_node_names(x, 4)
+        edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
+
+        ### Print DAG output
+        cat(edgeL.out, "\n", sep = "")
+    } else{
+        ### Use default print method for whichever data structure user has selected
+        print(x$edges)
+    }
+
 } # END PRINT.sparsebnFit
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
