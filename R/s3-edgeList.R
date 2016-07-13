@@ -94,34 +94,15 @@ edgeList.list <- function(x){
 
 #' @method print edgeList
 #' @export
-print.edgeList <- function(x, maxsize = 10, ...){
-    # if(num.edges(x) == 0){
-    #     edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
-    # } else if(num.nodes(x) <= maxsize){
-    #     ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
-    #     ### We shouldn't be printing this when pp > 1000 anyway!
-    #     edgeL.out <- mapply(function(x, y){
-    #         prefix <- paste0("[", x, "]")
-    #         prefix <- sprintf("%-5s", prefix)
-    #         paste0(prefix, paste(sprintf("%4d", sort(y)), collapse = ""))
-    #     }, 1L:length(x), x)
-    #     edgeL.out <- unlist(edgeL.out)
-    #     edgeL.out <- paste(edgeL.out, collapse = " \n")
-    # } else{
-    #     edgeL.out <- sprintf("Directed graph with %d nodes and %d edges.", num.nodes(x), num.edges(x))
-    # }
+print.edgeList <- function(x, maxsize = 20, ...){
     edgeL.out <- .str_edgeList(x, maxsize = maxsize)
 
     cat("edgeList object\n", edgeL.out, "\n", sep = "")
-}
+} # END PRINT.EDGELIST
 
 ### Internal method to return (as a string) the screen output of an edgeList
 ### Mainly useful for allow print.sparsebnFit to print out node names instead of numbers
 .str_edgeList <- function(x, maxsize, ...){
-    # if(length(nodes) != length(x)){
-    #     stop(sprintf("Length of nodes must equal the length of x! length(nodes) = %d != %d = length(x)", length(nodes), length(x)))
-    # }
-
     ### Can't use num.nodes or num.edges since x may not be an edgeList
     num_nodes_x <- length(x)
     num_edges_x <- sum(sapply(x, length))
@@ -129,33 +110,24 @@ print.edgeList <- function(x, maxsize = 10, ...){
     if(num_edges_x == 0){
         edgeL.out <- empty_dag_summary(length(x))
     } else if(num_nodes_x <= maxsize){
-        # ### Assumes the DAG has at most 1000 nodes: Output will be cramped and illegible if the graph is larger than this
-        # ### We shouldn't be printing this when pp > 1000 anyway!
-        # edgeL.out <- mapply(function(x, y){
-        #     prefix <- paste0("[", x, "]")
-        #     prefix <- sprintf("%-7s", prefix)
-        #     paste0(prefix, paste(sprintf("%5s", sort(y)), collapse = ""))
-        # }, nodes, x)
-        # edgeL.out <- unlist(edgeL.out)
-        # edgeL.out <- paste(edgeL.out, collapse = " \n")
         edgeL.out <- format_list(as.list(x))
     } else{
         edgeL.out <- dag_summary(num_nodes_x, num_edges_x)
     }
 
     edgeL.out
-}
+} # END .STR_EDGELIST
 
 #' @export
 as.matrix.edgeList <- function(x, ...){
     as.matrix(get.adjacency.matrix.edgeList(x))
-}
+} # END AS.MATRIX.EDGELIST
 
 #' @export
 as.list.edgeList <- function(x, ...){
     class(x) <- "list"
     x
-}
+} # END AS.LIST.EDGELIST
 
 #' @describeIn get.adjacency.matrix Convert internal \code{edgeList} representation to an adjacency matrix
 #' @export
@@ -227,12 +199,12 @@ plot.edgeList <- function(x, ...){
     }
 
     par(par.default) # restore user's original settings
-}
+} # END PLOT.EDGELIST
 
 #' @export
 to_edgeList.edgeList <- function(x){
     x
-}
+} # END TO_EDGELIST.EDGELIST
 
 #
 # Convert a standard two-column edge list to an edgeList compatible list
@@ -248,5 +220,4 @@ edgelist_mat_to_edgeList_list <- function(x, numnode){
     }
 
     edgeL
-}
-
+} # END EDGELIST_MAT_TO_EDGELIST_LIST
