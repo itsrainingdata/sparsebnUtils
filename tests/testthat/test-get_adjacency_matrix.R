@@ -32,3 +32,9 @@ test_that("get.adjacency.matrix works on nontrivial graphs", {
     expect_equivalent(lapply(get.adjacency.matrix(cp), as.matrix), list(adj, adj, adj, adj))
 })
 
+test_that("get.adjacency.matrix include node names whenever present", {
+    sbf <- generate_fixed_sparsebnFit()
+    expect_equal(colnames(get.adjacency.matrix(sbf)), c("xyz", "abc", "123", "hij", "a1b2c3"))
+    expect_equal(rownames(get.adjacency.matrix(sbf)), c("xyz", "abc", "123", "hij", "a1b2c3"))
+})
+
