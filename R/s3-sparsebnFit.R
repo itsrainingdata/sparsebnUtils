@@ -165,7 +165,10 @@ print.sparsebnFit <- function(x, maxsize = 20, ...){
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export
 get.adjacency.matrix.sparsebnFit <- function(x){
-    get.adjacency.matrix.edgeList(x$edges)
+    adj <- get.adjacency.matrix(to_edgeList(x$edges))
+    colnames(adj) <- rownames(adj) <- x$nodes
+
+    adj
 } # END GET.ADJACENCY.MATRIX.SPARSEBNFIT
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
