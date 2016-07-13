@@ -13,6 +13,17 @@
 #       show.parents
 #
 
+#' Inspect subgraph
+#'
+#' Print out the edge list corresponding to a subset of nodes in a graph. Useful
+#' for inspecting particular nodes of interest in a large graph. Out is indexed
+#' by children, with the parents of each node listed to the right of each child.
+#'
+#' Uses partial matching, duplicates are OK and will be duplicated in output.
+#'
+#' @param x \code{\link{sparsebnFit}} object.
+#' @param nodes \code{character} vector containing names of nodes to show.
+#'
 #' @export
 show.parents <- function(x, nodes){
     stopifnot(is.sparsebnFit(x))
