@@ -237,11 +237,11 @@ format_list <- function(x){
     }
 
     ### Adjust width of output based on longest string
-    row_width <- max(nchar(row_names)) + 4          # Row headers
-    row_width_str <- paste0("%-", row_width, "s")   #
+    row_width <- max(c(0, nchar(row_names))) + 4        # Row headers
+    row_width_str <- paste0("%-", row_width, "s")       #
 
-    cell_width <- max(nchar(unlist(x))) + 2         # Cell contents
-    cell_width_str <- paste0("%-", cell_width, "s") #
+    cell_width <- max(c(0, nchar(unlist(x)))) + 2       # Cell contents
+    cell_width_str <- paste0("%-", cell_width, "s")     #
 
     ### Assemble string output
     list.out <- mapply(function(x, y){
