@@ -25,7 +25,7 @@ estimate.parameters.edgeList <- function(fit, data, ...){
 
 #' @export
 estimate.parameters.sparsebnFit <- function(fit, data, ...){
-    estimate.parameters.edgeList(fit$edges, data)
+    estimate.parameters.edgeList(to_edgeList(fit$edges), data)
 }
 
 #' @export
