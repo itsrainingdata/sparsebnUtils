@@ -94,7 +94,7 @@ edgeList.list <- function(x){
 
 #' @method print edgeList
 #' @export
-print.edgeList <- function(x, maxsize = 10, ...){
+print.edgeList <- function(x, maxsize = 20, ...){
     # if(num.edges(x) == 0){
     #     edgeL.out <- sprintf("<Empty graph on %d nodes.>", num.nodes(x))
     # } else if(num.nodes(x) <= maxsize){

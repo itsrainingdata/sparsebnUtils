@@ -136,7 +136,7 @@ as.list.sparsebnFit <- function(x, ...){
 #' @rdname sparsebnFit
 #' @method print sparsebnFit
 #' @export
-print.sparsebnFit <- function(x, maxsize = 10, ...){
+print.sparsebnFit <- function(x, maxsize = 20, ...){
     # MAX_NODES <- 20
 
     ### Print pre-amble
