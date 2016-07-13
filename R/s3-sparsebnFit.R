@@ -66,7 +66,7 @@ NULL
 #' @export
 is.sparsebnFit <- function(x){
     inherits(x, "sparsebnFit")
-} # END IS.sparsebnFit
+} # END IS.SPARSEBNFIT
 
 # sparsebnFit constructor
 #' @method sparsebnFit list
@@ -125,20 +125,18 @@ sparsebnFit.list <- function(x){
     }
 
     out
-} # END sparsebnFit.LIST
+} # END SPARSEBNFIT.LIST
 
 #' @method as.list sparsebnFit
 #' @export
 as.list.sparsebnFit <- function(x, ...){
     list(edges = x$edges, nodes = x$nodes, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
-} # END AS.LIST.sparsebnFit
+} # END AS.LIST.SPARSEBNFIT
 
 #' @rdname sparsebnFit
 #' @method print sparsebnFit
 #' @export
 print.sparsebnFit <- function(x, maxsize = 20, ...){
-    # MAX_NODES <- 20
-
     ### Print pre-amble
     cat("CCDr estimate\n",
         x$nn, " observations\n",
@@ -162,31 +160,31 @@ print.sparsebnFit <- function(x, maxsize = 20, ...){
         print(x$edges)
     }
 
-} # END PRINT.sparsebnFit
+} # END PRINT.SPARSEBNFIT
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export
 get.adjacency.matrix.sparsebnFit <- function(x){
     get.adjacency.matrix.edgeList(x$edges)
-} # END GET.ADJACENCY.MATRIX.sparsebnFit
+} # END GET.ADJACENCY.MATRIX.SPARSEBNFIT
 
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
 #' @export
 num.nodes.sparsebnFit <- function(x){
     x$pp
-} # END NUM.NODES.sparsebnFit
+} # END NUM.NODES.SPARSEBNFIT
 
 #' @describeIn num.edges Extracts the number of edges of \link{sparsebnFit} object.
 #' @export
 num.edges.sparsebnFit <- function(x){
     x$nedge
-} # END NUM.EDGES.sparsebnFit
+} # END NUM.EDGES.SPARSEBNFIT
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnFit} object.
 #' @export
 num.samples.sparsebnFit <- function(x){
     x$nn
-} # END NUM.SAMPLES.sparsebnFit
+} # END NUM.SAMPLES.SPARSEBNFIT
 
 #' @rdname plot.edgeList
 #' @method plot sparsebnFit
@@ -218,7 +216,7 @@ to_edgeList.sparsebnFit <- function(x){
     x$edges <- to_edgeList(x$edges)
 
     x
-}
+} # END TO_EDGELIST.SPARSEBNFIT
 
 # convert an edgeList to a character list containing node names (vs indices)
 edgeList_to_node_names <- function(x, trunc_level = 4){
@@ -229,18 +227,4 @@ edgeList_to_node_names <- function(x, trunc_level = 4){
     names(out) <- node_names_trunc
 
     out
-}
-
-#------------------------------------------------------------------------------#
-# to_B.sparsebnFit
-# Internal function to convert estimates from the (Rho, R) parametrization to
-#  the standard (B, Omega) parametrization.
-#
-# !!! 1-29-16: This function needs to be deprecated
-#
-# to_B.sparsebnFit <- function(fit){
-#     .Deprecated()
-#     fit$sbm <- to_B(fit$sbm)
-#
-#     fit
-# }
+} # END EDGELIST_TO_NODE_NAMES
