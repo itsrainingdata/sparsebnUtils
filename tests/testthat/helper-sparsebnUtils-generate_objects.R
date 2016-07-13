@@ -1,3 +1,8 @@
+### Helper function to suppress output (form https://stat.ethz.ch/pipermail/r-help/2008-January/151471.html)
+suppressFunctionOutput <- function(expr){
+    this_will_die <- capture.output({expr})
+}
+
 ### Generate fixed data -- need 5 columns to match objects below
 generate_fixed_data_frame <- function(){
     x <- runif(5)
@@ -126,7 +131,14 @@ generate_fixed_SparseBlockMatrixR <- function(){
 generate_fixed_sparsebnFit <- function(){
     # sbm <- generate_fixed_SparseBlockMatrixR()
     edges <- generate_fixed_edgeList()
-    sbf <- sparsebnFit(list(edges = edges, nodes = LETTERS[1:num.nodes(edges)], lambda = 1.54, nedge = num.edges(edges), pp = num.nodes(edges), nn = 10, time = 1))
+    # sbf <- sparsebnFit(list(edges = edges, nodes = LETTERS[1:num.nodes(edges)], lambda = 1.54, nedge = num.edges(edges), pp = num.nodes(edges), nn = 10, time = 1))
+    sbf <- sparsebnFit(list(edges = edges,
+                            nodes = c("xyz", "abc", "123", "hij", "a1b2c3"),
+                            lambda = 1.54,
+                            nedge = num.edges(edges),
+                            pp = num.nodes(edges),
+                            nn = 10,
+                            time = 1))
 
     sbf
 }
