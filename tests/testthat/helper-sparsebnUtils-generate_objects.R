@@ -138,7 +138,7 @@ generate_fixed_sparsebnFit <- function(edges = generate_fixed_edgeList()){
     # edges <- generate_fixed_edgeList()
     # sbf <- sparsebnFit(list(edges = edges, nodes = LETTERS[1:num.nodes(edges)], lambda = 1.54, nedge = num.edges(edges), pp = num.nodes(edges), nn = 10, time = 1))
     sbf <- sparsebnFit(list(edges = edges,
-                            nodes = helper_node_names(),
+                            nodes = helper_node_names()[1:num.nodes(edges)],
                             lambda = 1.54,
                             nedge = num.edges(edges),
                             pp = num.nodes(edges),
