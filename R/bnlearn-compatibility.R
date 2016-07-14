@@ -87,10 +87,13 @@ bn_to_edgeList_list <- function(bn){
     #
     if(bn.nedge > 0){
         bn.edgelist <- apply(bn$arcs, 2, as.integer) # convert char to int
+
+        ### Beware drop = FALSE (or lack thereof) bug in apply
+        if(!is.matrix(bn.edgelist)) bn.edgelist <- matrix(bn.edgelist, nrow = 1)
+
         edgelist_mat_to_edgeList_list(bn.edgelist, bn.numnode)
     } else{
         ### Need a special case for nedge == 0 since otherwise R coerces the output of apply to an empty vector
         edgelist_mat_to_edgeList_list(bn$arcs, bn.numnode)
     }
 }
-
