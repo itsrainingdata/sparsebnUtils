@@ -5,6 +5,11 @@ sbp.empty <- generate_empty_sparsebnPath()
 sbp <- generate_fixed_sparsebnPath()
 sbf <- generate_fixed_sparsebnFit()
 
+### Special test case: Last node is isolated (this breaks the network package constructor)
+edgeL <- edgeList(list(2, integer(0), integer(0)))
+sbf.isolated.last <- generate_fixed_sparsebnFit(edgeL)
+sbp.isolated.last <- generate_fixed_sparsebnPath(sbf.isolated.last)
+
 test_that("Coercion works on empty graphs", {
     ### sparsebnFit
     expect_equivalent(sbf.empty, to_edgeList(to_graphNEL(sbf.empty)))
@@ -27,6 +32,10 @@ test_that("Coercion to graphNEL works", {
     ### Check that nothing changes
     expect_equivalent(sbf, to_edgeList(to_graphNEL(sbf)))
     expect_equivalent(sbp, to_edgeList(to_graphNEL(sbp)))
+
+    ### Check that nothing changes
+    expect_equivalent(sbf.isolated.last, to_edgeList(to_graphNEL(sbf.isolated.last)))
+    expect_equivalent(sbp.isolated.last, to_edgeList(to_graphNEL(sbp.isolated.last)))
 })
 
 test_that("Coercion to igraph works", {
@@ -37,6 +46,10 @@ test_that("Coercion to igraph works", {
     ### Check that nothing changes
     expect_equivalent(sbf, to_edgeList(to_igraph(sbf)))
     expect_equivalent(sbp, to_edgeList(to_igraph(sbp)))
+
+    ### Check that nothing changes
+    expect_equivalent(sbf.isolated.last, to_edgeList(to_igraph(sbf.isolated.last)))
+    expect_equivalent(sbp.isolated.last, to_edgeList(to_igraph(sbp.isolated.last)))
 })
 
 test_that("Coercion to network works", {
@@ -47,6 +60,10 @@ test_that("Coercion to network works", {
     ### Check that nothing changes
     expect_equivalent(sbf, to_edgeList(to_network(sbf)))
     expect_equivalent(sbp, to_edgeList(to_network(sbp)))
+
+    ### Check that nothing changes
+    expect_equivalent(sbf.isolated.last, to_edgeList(to_network(sbf.isolated.last)))
+    expect_equivalent(sbp.isolated.last, to_edgeList(to_network(sbp.isolated.last)))
 })
 
 test_that("Coercion to bn works", {
@@ -57,6 +74,10 @@ test_that("Coercion to bn works", {
     ### Check that nothing changes
     expect_equivalent(sbf, to_edgeList(to_bn(sbf)))
     expect_equivalent(sbp, to_edgeList(to_bn(sbp)))
+
+    ### Check that nothing changes
+    expect_equivalent(sbf.isolated.last, to_edgeList(to_bn(sbf.isolated.last)))
+    expect_equivalent(sbp.isolated.last, to_edgeList(to_bn(sbp.isolated.last)))
 })
 
 test_that("Iterative coercing works", {
