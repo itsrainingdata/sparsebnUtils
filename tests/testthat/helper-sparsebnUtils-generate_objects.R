@@ -133,9 +133,9 @@ generate_fixed_SparseBlockMatrixR <- function(){
     SparseBlockMatrixR(li)
 }
 
-generate_fixed_sparsebnFit <- function(){
+generate_fixed_sparsebnFit <- function(edges = generate_fixed_edgeList()){
     # sbm <- generate_fixed_SparseBlockMatrixR()
-    edges <- generate_fixed_edgeList()
+    # edges <- generate_fixed_edgeList()
     # sbf <- sparsebnFit(list(edges = edges, nodes = LETTERS[1:num.nodes(edges)], lambda = 1.54, nedge = num.edges(edges), pp = num.nodes(edges), nn = 10, time = 1))
     sbf <- sparsebnFit(list(edges = edges,
                             nodes = helper_node_names(),
@@ -148,8 +148,8 @@ generate_fixed_sparsebnFit <- function(){
     sbf
 }
 
-generate_fixed_sparsebnPath <- function(){
-    sbf <- generate_fixed_sparsebnFit()
+generate_fixed_sparsebnPath <- function(sbf = generate_fixed_sparsebnFit()){
+    # sbf <- generate_fixed_sparsebnFit()
     sbp <- sparsebnPath(list(sbf, sbf, sbf, sbf))
 
     sbp
