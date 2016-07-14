@@ -36,18 +36,25 @@ to_igraph.igraph <- function(x){
 
 #' @export
 to_igraph.edgeList <- function(x){
-    if(num.edges(x) > 0){
-        el.igraph <- edgeList_to_igraph_edgelist(x)
-        igraph::graph_from_edgelist(el.igraph, directed = TRUE)
-    } else{
-        ### Special case to create empty graph
-        igraph::graph.empty(n = num.nodes(x), directed = TRUE)
-    }
+    # if(num.edges(x) > 0){
+    #     el.igraph <- edgeList_to_igraph_edgelist(x)
+    #     #
+    #     # !!! This igraph method ignores isolated edges! See ?igraph::graph
+    #     #     for a possible fix. Also affects to_igraph.network.
+    #     #
+    #     igraph::graph_from_edgelist(el.igraph, directed = TRUE)
+    # } else{
+    #     ### Special case to create empty graph
+    #     igraph::graph.empty(n = num.nodes(x), directed = TRUE)
+    # }
+
+    to_igraph(to_graphNEL(x))
 }
 
 #' @export
 to_igraph.graphNEL <- function(x){
-    to_igraph(to_edgeList(x))
+    # to_igraph(to_edgeList(x))
+    igraph::graph_from_graphnel(x)
 }
 
 #' @export
