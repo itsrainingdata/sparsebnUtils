@@ -29,9 +29,11 @@ is.sparsebnData(x)
 
 \item{type}{either '\code{discrete}' or '\code{continuous}'.}
 
-\item{levels}{(optional) list of level for each node.}
+\item{levels}{(optional) \code{\link{list}} of levels for each node. If omitted, levels will be automatically
+detected from \code{\link{unique}}.}
 
-\item{ivn}{(optional) list of interventions for each observation.}
+\item{ivn}{(optional) \code{\link{list}} of interventions for each observation. If omitted, data is assumed to be
+purely observational.}
 
 \item{n}{(optional) number of rows from data matrix to print.}
 }
@@ -42,21 +44,29 @@ allows for the degenerate case with no interventions, i.e. purely observational 
 \details{
 The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
 a type identifier (i.e. discrete or continuous), a list of factor levels, and a list of interventions.
-The 'levels' list should be the same size as the number of nodes and consist of names of the different
-levels for each node. The 'ivn' list should be the same size as the number of rows in the dataset,
+\itemize{
+\item The \code{levels} list should be the same size as the number of nodes and consist of names of the different
+levels for each node. Each level should be coded to be from 0...\eqn{k}-1 where \eqn{k} is the number of levels for a
+particular variable (see below for more).
+\item The \code{ivn} list should be the same size as the number of rows in the dataset,
 and each component indicates which column(s) in the dataset is (are) under intervention. If an
 observation has no interventions, then the corresponding component is \code{NULL}. Thus, if the data is
 purely observational, this list should contain only \code{NULL} values.
+}
+
+Presently, only levels coded as 0,1,...,\eqn{k}-1 are supported (\eqn{k} = the number of levels for a
+variable). Future releases are planned to support more general factor levels. The level 0 corresponds
+to the baseline level or measurement.
 
 Also inherits from \code{\link{list}}.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{(data.frame) Dataset.}
-\item{\code{type}}{(character) Type of data: Either "continuous", "discrete", or "mixed".}
-\item{\code{levels}}{(list) List of levels for each column in \code{data}.}
-\item{\code{ivn}}{(list) List of columns under intervention for each row in \code{data}.}
+\item{\code{data}}{(\code{\link{data.frame}}) Dataset.}
+\item{\code{type}}{(\code{\link{character}}) Type of data: Either "continuous", "discrete", or "mixed".}
+\item{\code{levels}}{(\code{\link{list}}) List of levels for each column in \code{data}.}
+\item{\code{ivn}}{(\code{\link{list}}) List of columns under intervention for each row in \code{data}.}
 }
 }
 
@@ -68,5 +78,26 @@ Also inherits from \code{\link{list}}.
 \code{\link{count.levels}}
 \code{\link{count.interventions}}
 \code{\link{as.data.frame}}
+}
+\examples{
+
+\dontrun{
+
+### Generate a random continuous dataset
+mat <- matrix(rnorm(1000), nrow = 20)
+dat <- sparsebnData(mat, type = "continuous") # purely observational data with continuous variables
+
+### Discrete data
+mat <- cbind(c(0,1,1,0),
+             c(2,1,0,1),
+             c(0,0,3,0))
+dat.levels <- list(c(0,1), c(0,1,2), c(0,1,2,3))
+dat <- sparsebnData(mat, type = "discrete", levels = dat.levels) # purely observational data with discrete variables
+
+dat.ivn <- list(c(1), c(1), c(2,3), c(2,3)) # add some interventions
+dat <- sparsebnData(mat, type = "discrete", levels = dat.levels, ivn = dat.ivn) # purely observational data with discrete variables
+
+}
+
 }
 
