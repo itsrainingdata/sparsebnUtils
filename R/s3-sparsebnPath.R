@@ -24,7 +24,7 @@
 # * num.nodes.sparsebnPath
 # * num.edges.sparsebnPath
 # * num.samples.sparsebnPath
-# * lambda.grid.sparsebnPath
+# * get.lambdas.sparsebnPath
 # * get.adjacency.matrix.sparsebnPath
 #
 
@@ -42,7 +42,7 @@
 #' @param ... (optional) additional arguments.
 #'
 #' @section Methods:
-#' \code{\link{get.adjacency.matrix}}, \code{\link{lambda.grid}},
+#' \code{\link{get.adjacency.matrix}}, \code{\link{get.lambdas}},
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 #'
 #' @docType class
@@ -77,7 +77,7 @@ print.sparsebnPath <- function(x, verbose = FALSE, ...){
         print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
         cat("sparsebn Solution Path\n",
-            " ", length(x), " estimates for lambda in [", min(lambda.grid(x)), ",", max(lambda.grid(x)), "]\n",
+            " ", length(x), " estimates for lambda in [", min(get.lambdas(x)), ",", max(get.lambdas(x)), "]\n",
             " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
             " ", num.nodes(x), " nodes\n",
             " ", num.samples(x), " observations\n",
@@ -112,14 +112,14 @@ num.samples.sparsebnPath <- function(x){
 
 #' Extract regularization path from solution path
 #'
-#' @describeIn lambda.grid Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
+#' @describeIn get.lambdas Returns a vector of lambda values defining the solution path of a \code{\link{sparsebnPath}} object.
 #' @export
-lambda.grid.sparsebnPath <- function(x){
+get.lambdas.sparsebnPath <- function(x){
     lambdas <- unlist(lapply(x, function(z){ z$lambda}))
     names(lambdas) <- NULL
 
     lambdas
-} # END LAMBDA.GRID.sparsebnPath
+} # END GET.LAMBDAS.SPARSEBNPATH
 
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
 #' @export
@@ -165,7 +165,7 @@ get.solution <- function(x, edges, lambda, index){
             stop("'lambda' cannot be specified with 'edges' or 'index'! Select only one.")
         }
 
-        which.idx <- which(lambda.grid(x) == lambda)
+        which.idx <- which(get.lambdas(x) == lambda)
     } else if(!missing(index)){
         if(!missing(edges) || !missing(lambda)){
             stop("'index' cannot be specified with 'edges' or 'lambda'! Select only one.")

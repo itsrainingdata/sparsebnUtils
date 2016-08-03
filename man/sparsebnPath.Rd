@@ -36,7 +36,7 @@ path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit}} ob
 }
 \section{Methods}{
 
-\code{\link{get.adjacency.matrix}}, \code{\link{lambda.grid}},
+\code{\link{get.adjacency.matrix}}, \code{\link{get.lambdas}},
 \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 }
 
