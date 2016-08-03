@@ -234,11 +234,12 @@ fit_multinom_dag <- function(parents,
     return(coef)
 }
 
-gaussian_loglikelihood <- function(data, coefs, vars){
-    data_matrix <- as.matrix(data$data)
+gaussian_loglikelihood <- function(dat, coefs, vars){
+    # data_matrix <- as.matrix(data$data)
+    dat <- as.matrix(dat)
     vars_vector <- Matrix::diag(vars)
-    nn <- nrow(data_matrix)
-    pp <- ncol(data_matrix)
+    nn <- nrow(dat)
+    pp <- ncol(dat)
 
     ### Compute cumulant function
     cumulant <- -0.5 * nn * sum(log(vars_vector))
@@ -246,7 +247,7 @@ gaussian_loglikelihood <- function(data, coefs, vars){
     ### Compute LS
     ls <- numeric(pp)
     for(j in seq_along(ls)){
-        res <- data_matrix[, j] - data_matrix %*% coefs[, j]
+        res <- dat[, j] - dat %*% coefs[, j]
         ls[j] <- (0.5 / vars_vector[j]) * sum(res^2)
     }
     ls <- sum(ls)
@@ -254,15 +255,16 @@ gaussian_loglikelihood <- function(data, coefs, vars){
     cumulant + ls
 }
 
-gaussian_profile_loglikelihood <- function(data, coefs){
-    data_matrix <- as.matrix(data$data)
-    nn <- nrow(data_matrix)
-    pp <- ncol(data_matrix)
+gaussian_profile_loglikelihood <- function(dat, coefs){
+    # data_matrix <- as.matrix(data$data)
+    dat <- as.matrix(dat)
+    nn <- nrow(dat)
+    pp <- ncol(dat)
 
     ### Compute log(LS)
     pll <- numeric(pp)
     for(j in seq_along(pll)){
-        res <- data_matrix[, j] - data_matrix %*% coefs[, j]
+        res <- dat[, j] - dat %*% coefs[, j]
         pll[j] <- 0.5 * nn * log(sum(res^2))
     }
     pll <- sum(pll)
@@ -271,6 +273,7 @@ gaussian_profile_loglikelihood <- function(data, coefs){
 }
 
 ### Eventually move to its own file
+#' @export
 select.parameter <- function(x,
                              data,
                              type = "profile",
@@ -285,8 +288,8 @@ select.parameter <- function(x,
 
     ### Compute (profile / full) log-likelihood + number of edges
     obj <- switch(type,
-                  profile = unlist(lapply(params, function(x) gaussian_profile_loglikelihood(dat, x$coefs))),
-                  full = unlist(lapply(params, function(x) gaussian_loglikelihood(dat, x$coefs, x$vars)))
+                  profile = unlist(lapply(params, function(x) gaussian_profile_loglikelihood(data$data, x$coefs))),
+                  full = unlist(lapply(params, function(x) gaussian_loglikelihood(data$data, x$coefs, x$vars)))
                   )
     nedges <- num.edges(x)
 
