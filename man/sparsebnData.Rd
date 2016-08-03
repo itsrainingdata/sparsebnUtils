@@ -92,10 +92,15 @@ mat <- cbind(c(0,1,1,0),
              c(2,1,0,1),
              c(0,0,3,0))
 dat.levels <- list(c(0,1), c(0,1,2), c(0,1,2,3))
-dat <- sparsebnData(mat, type = "discrete", levels = dat.levels) # purely observational data with discrete variables
+dat <- sparsebnData(mat,
+                    type = "discrete",
+                    levels = dat.levels) # purely observational data with discrete variables
 
 dat.ivn <- list(c(1), c(1), c(2,3), c(2,3)) # add some interventions
-dat <- sparsebnData(mat, type = "discrete", levels = dat.levels, ivn = dat.ivn) # purely observational data with discrete variables
+dat <- sparsebnData(mat,
+                    type = "discrete",
+                    levels = dat.levels,
+                    ivn = dat.ivn) # specify intervention rows
 
 }
 
