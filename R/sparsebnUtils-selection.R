@@ -30,7 +30,7 @@
 #' log-likelihood and the increase in number of edges and balances these quantities appropriately. For
 #' specific details, please see Section 3.4 in \href{http://www.stat.ucla.edu/~zhou/publications/Fu13-JASA.pdf}{Fu and Zhou (2013)}.
 #'
-#' @param x \code{\link{sparsebnPath}} object returned by \code{\link[sparsebn]{estimate.dag}}.
+#' @param x \code{\link{sparsebnPath}} object.
 #' @param data \code{\link{sparsebnData}} containing the original data.
 #' @param type either "\code{profile}" or "\code{full}", default is \code{profile}.
 #' @param alpha tuning parameter for selection between 0.05 and 0.1, default is 0.5 (see equation (11) in \href{http://www.stat.ucla.edu/~zhou/publications/Fu13-JASA.pdf}{Fu and Zhou (2013)}).

@@ -7,7 +7,7 @@
 select.parameter(x, data, type = "profile", alpha = 0.05)
 }
 \arguments{
-\item{x}{\code{\link{sparsebnPath}} object returned by \code{\link[sparsebn]{estimate.dag}}.}
+\item{x}{\code{\link{sparsebnPath}} object.}
 
 \item{data}{\code{\link{sparsebnData}} containing the original data.}
 
