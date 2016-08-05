@@ -20,7 +20,7 @@ Choose the best DAG model according to the criterion described in \href{http://w
 (Section 3.4).
 }
 \details{
-The graphical models learned by \code{\link[sparsebn]{sparsebn}} depend on the choice of the regularization parameter lambda.
+A \code{\link{sparsebnPath}} objects represents a \emph{solution path} which depends on the regularization parameter lambda.
 Model selection is usually based on an estimated prediction error, and commonly used model selection
 methods include the Bayesian information criterion (BIC) and cross-validation (CV) among others. It
 is well-known that these criteria tend to produce overly complex models in practice, so instead we
