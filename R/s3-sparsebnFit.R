@@ -36,6 +36,7 @@
 #' sparsebnFit class
 #'
 #' Main class for representing DAG estimates: Represents a single DAG estimate in the solution path.
+#'
 #' Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath}} object, but
 #' can be handled separately if desired (be careful!).
 #'
@@ -46,12 +47,12 @@
 #'
 #' @section Slots:
 #' \describe{
-#' \item{\code{edges}}{(edgeList) Edge list of estimated DAG (see \code{\link{edgeList}}).}
-#' \item{\code{lambda}}{(numeric) Value of lambda for this estimate.}
-#' \item{\code{nedge}}{(integer) Number of edges in this estimate.}
-#' \item{\code{pp}}{(integer) Number of nodes.}
-#' \item{\code{nn}}{(integer) Number of observations this estimate was based on.}
-#' \item{\code{time}}{(numeric) Time in seconds to generate this estimate.}
+#' \item{\code{edges}}{(\code{\link{edgeList}}) Edge list of estimated DAG (see \code{\link{edgeList}}).}
+#' \item{\code{lambda}}{(\code{\link{numeric}}) Value of lambda for this estimate.}
+#' \item{\code{nedge}}{(\code{\link{integer}}) Number of edges in this estimate.}
+#' \item{\code{pp}}{(\code{\link{integer}}) Number of nodes.}
+#' \item{\code{nn}}{(\code{\link{integer}}) Number of observations this estimate was based on.}
+#' \item{\code{time}}{(\code{\link{numeric}}) Time in seconds to generate this estimate.}
 #' }
 #'
 #' @section Methods:

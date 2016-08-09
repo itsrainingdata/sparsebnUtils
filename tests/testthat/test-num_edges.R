@@ -6,7 +6,7 @@ test_that("num.edges works on edgeLists", {
 
     ### Non-trivial case
     edgeL <- generate_fixed_edgeList()
-    expect_equal(num.edges(edgeL), 5)
+    expect_equal(num.edges(edgeL), 4)
 })
 
 test_that("num.edges works on sparsebnFit", {
@@ -16,7 +16,7 @@ test_that("num.edges works on sparsebnFit", {
 
     ### Non-trivial case
     cf <- generate_fixed_sparsebnFit()
-    expect_equal(num.edges(cf), 5)
+    expect_equal(num.edges(cf), 4)
 })
 
 test_that("num.edges works on sparsebnPath", {
@@ -26,5 +26,5 @@ test_that("num.edges works on sparsebnPath", {
 
     ### Non-trivial case
     cp <- generate_fixed_sparsebnPath()
-    expect_equal(num.edges(cp), rep(5, length(cp)))
+    expect_equal(num.edges(cp), rep(4, length(cp)))
 })

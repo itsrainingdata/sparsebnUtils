@@ -83,7 +83,7 @@ to_edgeList <- function(x) UseMethod("to_edgeList", x)
 #' @export
 get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 
-#' lambda.grid
+#' get.lambdas
 #'
 #' Extracts the lambda values from a \code{\link{sparsebnPath}} object.
 #'
@@ -93,7 +93,7 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 #' Vector of \code{numeric} lambda values in fitted object.
 #'
 #' @export
-lambda.grid <- function(x) UseMethod("lambda.grid", x)
+get.lambdas <- function(x) UseMethod("get.lambdas", x)
 
 #' num.nodes
 #'

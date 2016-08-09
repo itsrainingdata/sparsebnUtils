@@ -37,9 +37,15 @@ to_network.network <- function(x){
 #' @export
 to_network.edgeList <- function(x){
     if(num.edges(x) > 0){
-        el.network <- edgeList_to_network_edgelist(x)
+        # This is extremely inefficient for large graphs... is there a way to
+        #  initialize a network object via edgelists w/ isolated nodes? The usual
+        #  way (see below) via edgelists ignores isolated nodes.
+        adj <- as.matrix(get.adjacency.matrix(x))
+        network::as.network(adj, matrix.type = "adjacency")
 
-        network::network(el.network, directed = TRUE)
+        # el.network <- edgeList_to_network_edgelist(x)
+        #
+        # network::network(el.network, directed = TRUE)
     } else{
         #
         # Is there a way to intialize a null graph using the network constructor?

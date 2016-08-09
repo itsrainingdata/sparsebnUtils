@@ -15,6 +15,8 @@
 #       fit_glm_dag
 #       get_coef_matrix
 #       fit_multinom_dag
+#       gaussian_loglikelihood
+#       gaussian_profile_loglikelihood
 #
 
 ### DAG fitting --------------------------------------------------------
@@ -25,7 +27,7 @@ estimate.parameters.edgeList <- function(fit, data, ...){
 
 #' @export
 estimate.parameters.sparsebnFit <- function(fit, data, ...){
-    estimate.parameters.edgeList(fit$edges, data)
+    estimate.parameters.edgeList(to_edgeList(fit$edges), data)
 }
 
 #' @export
@@ -230,4 +232,42 @@ fit_multinom_dag <- function(parents,
         }
     }
     return(coef)
+}
+
+gaussian_loglikelihood <- function(dat, coefs, vars){
+    # data_matrix <- as.matrix(data$data)
+    dat <- as.matrix(dat)
+    vars_vector <- Matrix::diag(vars)
+    nn <- nrow(dat)
+    pp <- ncol(dat)
+
+    ### Compute cumulant function
+    cumulant <- -0.5 * nn * sum(log(vars_vector))
+
+    ### Compute LS
+    ls <- numeric(pp)
+    for(j in seq_along(ls)){
+        res <- dat[, j] - dat %*% coefs[, j]
+        ls[j] <- (0.5 / vars_vector[j]) * sum(res^2)
+    }
+    ls <- sum(ls)
+
+    cumulant + ls
+}
+
+gaussian_profile_loglikelihood <- function(dat, coefs){
+    # data_matrix <- as.matrix(data$data)
+    dat <- as.matrix(dat)
+    nn <- nrow(dat)
+    pp <- ncol(dat)
+
+    ### Compute log(LS)
+    pll <- numeric(pp)
+    for(j in seq_along(pll)){
+        res <- dat[, j] - dat %*% coefs[, j]
+        pll[j] <- 0.5 * nn * log(sum(res^2))
+    }
+    pll <- sum(pll)
+
+    -pll ### Need to take negative output loglikelihood (vs NLL)
 }
