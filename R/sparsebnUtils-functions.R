@@ -239,9 +239,13 @@ format_list <- function(x){
 
 # Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
 #  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
+#
+# NOTE: Should be deprecated at this point, but needs further testing.
 #' @rdname sparsebn-functions
 #' @export
 cor_vector <- function(X){
+    # .Deprecated()
+
     check.numeric <- (col_classes(X) != "numeric")
     if( any(check.numeric)){
         not.numeric <- which(check.numeric)
