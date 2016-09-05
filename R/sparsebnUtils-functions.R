@@ -295,10 +295,10 @@ cor_vector_ivn <- function(data, ivn){
             jj <- ivnj[j]
             indexj[jj] <- j - 1
             ## extract rows where node jj has no intervetion
-            corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, jj), any), ])
+            corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, jj), any), , drop = FALSE])
             cors[[j]] <- corsjj[upper.tri(corsjj, diag = TRUE)]
         }
-        corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, pp + 1), any), ])
+        corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, pp + 1), any), , drop = FALSE])
         ## do not change above line to cor(data[sapply(ivn, is.null), ])
         ## why?
         cors[[len]] <- corsjj[upper.tri(corsjj, diag = TRUE)]
