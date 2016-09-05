@@ -169,11 +169,12 @@ check_list_names <- function(li, check.names){
 #' @rdname sparsebn-functions
 #' @export
 col_classes <- function(X){
-    if( !check_if_data_matrix(X)){
-        stop("Input must be a data.frame or a matrix!")
-    }
+    # if( !check_if_data_matrix(X)){
+    #     stop("Input must be a data.frame or a matrix!")
+    # }
+    stopifnot(is.data.frame(X))
 
-    apply(X, 2, class)
+    unlist(lapply(X, class))
 } # END .COL_CLASSES
 
 # Utility to capitalize the first letter in a string
@@ -266,7 +267,7 @@ cor_vector <- function(X){
 #' @rdname sparsebn-functions
 #' @export
 cor_vector_ivn <- function(data, ivn){
-    check.numeric <- (sparsebnUtils::col_classes(data) != "numeric")
+    check.numeric <- (col_classes(data) != "numeric")
     if( any(check.numeric)){
         not.numeric <- which(check.numeric)
         stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
