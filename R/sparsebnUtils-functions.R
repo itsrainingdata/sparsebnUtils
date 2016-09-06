@@ -40,6 +40,8 @@
 #' @param check.class \code{character} class name to compare against.
 #' @param check.names \code{character} names to compare against.
 #' @param X a matrix.
+#' @param data a \code{data.frame}.
+#' @param ivn list of interventions (see \code{\link{sparsebnData}}).
 #' @param string a \code{character} string.
 #' @param numnode \code{integer} number of nodes.
 #'
@@ -244,20 +246,20 @@ format_list <- function(x){
 # NOTE: Should be deprecated at this point, but needs further testing.
 #' @rdname sparsebn-functions
 #' @export
-cor_vector <- function(X){
+cor_vector <- function(data){
     # .Deprecated()
 
-    check.numeric <- (col_classes(X) != "numeric")
+    check.numeric <- (col_classes(data) != "numeric")
     if( any(check.numeric)){
         not.numeric <- which(check.numeric)
         stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
     }
 
-    if( any(dim(X) < 2)){
+    if( any(dim(data) < 2)){
         stop("Input must have at least 2 rows and columns!") # 2-8-15: Why do we check this here?
     }
 
-    cors <- stats::cor(X)
+    cors <- stats::cor(data)
     cors <- cors[upper.tri(cors, diag = TRUE)]
 
     cors

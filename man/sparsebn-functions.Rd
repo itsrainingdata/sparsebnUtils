@@ -70,7 +70,7 @@ recode_levels(x)
 
 convert_factor_to_discrete(x)
 
-cor_vector(X)
+cor_vector(data)
 
 cor_vector_ivn(data, ivn)
 
@@ -94,6 +94,10 @@ zero_threshold()
 \item{X}{a matrix.}
 
 \item{string}{a \code{character} string.}
+
+\item{data}{a \code{data.frame}.}
+
+\item{ivn}{list of interventions (see \code{\link{sparsebnData}}).}
 }
 \description{
 Various utility functions for packages in the \code{sparsebn} family
