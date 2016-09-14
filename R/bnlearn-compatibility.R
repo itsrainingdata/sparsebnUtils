@@ -2,12 +2,12 @@
 #  bnlearn-compatibility.R
 #  sparsebnUtils
 #
-#  Created by Bryon Aragam (local) on 4/25/16.
+#  Created by Bryon Aragam (local) on 3/18/16.
 #  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
 #
 
 #
-# Various utility functions for enforcing compatibility with the 'bnelarn' package.
+# Various utility functions for enforcing compatibility with the 'bnlearn' package.
 #
 
 #' Conversion to bnlearn object

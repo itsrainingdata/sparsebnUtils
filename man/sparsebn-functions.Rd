@@ -15,6 +15,7 @@
 \alias{col_classes}
 \alias{convert_factor_to_discrete}
 \alias{cor_vector}
+\alias{cor_vector_ivn}
 \alias{count_nas}
 \alias{default_alpha}
 \alias{default_max_iters}
@@ -63,13 +64,15 @@ check_list_names(li, check.names)
 
 col_classes(X)
 
-cor_vector(X)
-
 capitalize(string)
 
 recode_levels(x)
 
 convert_factor_to_discrete(x)
+
+cor_vector(data)
+
+cor_vector_ivn(data, ivn)
 
 zero_threshold()
 }
@@ -91,6 +94,10 @@ zero_threshold()
 \item{X}{a matrix.}
 
 \item{string}{a \code{character} string.}
+
+\item{data}{a \code{data.frame}.}
+
+\item{ivn}{list of interventions (see \code{\link{sparsebnData}}).}
 }
 \description{
 Various utility functions for packages in the \code{sparsebn} family

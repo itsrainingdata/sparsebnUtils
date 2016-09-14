@@ -40,6 +40,8 @@
 #' @param check.class \code{character} class name to compare against.
 #' @param check.names \code{character} names to compare against.
 #' @param X a matrix.
+#' @param data a \code{data.frame}.
+#' @param ivn list of interventions (see \code{\link{sparsebnData}}).
 #' @param string a \code{character} string.
 #' @param numnode \code{integer} number of nodes.
 #'
@@ -169,33 +171,13 @@ check_list_names <- function(li, check.names){
 #' @rdname sparsebn-functions
 #' @export
 col_classes <- function(X){
-    if( !check_if_data_matrix(X)){
-        stop("Input must be a data.frame or a matrix!")
-    }
+    # if( !check_if_data_matrix(X)){
+    #     stop("Input must be a data.frame or a matrix!")
+    # }
+    stopifnot(is.data.frame(X))
 
-    apply(X, 2, class)
+    unlist(lapply(X, class))
 } # END .COL_CLASSES
-
-# Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
-#  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
-#' @rdname sparsebn-functions
-#' @export
-cor_vector <- function(X){
-    check.numeric <- (col_classes(X) != "numeric")
-    if( any(check.numeric)){
-        not.numeric <- which(check.numeric)
-        stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
-    }
-
-    if( any(dim(X) < 2)){
-        stop("Input must have at least 2 rows and columns!") # 2-8-15: Why do we check this here?
-    }
-
-    cors <- stats::cor(X)
-    cors <- cors[upper.tri(cors, diag = TRUE)]
-
-    cors
-} # END COR_VECTOR
 
 # Utility to capitalize the first letter in a string
 #  Borrowed verbatim from the 'Hmisc' package
@@ -257,3 +239,78 @@ format_list <- function(x){
 
     list.out
 }
+
+# Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
+#  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
+#
+# NOTE: Should be deprecated at this point, but needs further testing.
+#' @rdname sparsebn-functions
+#' @export
+cor_vector <- function(data){
+    # .Deprecated()
+
+    check.numeric <- (col_classes(data) != "numeric")
+    if( any(check.numeric)){
+        not.numeric <- which(check.numeric)
+        stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
+    }
+
+    if( any(dim(data) < 2)){
+        stop("Input must have at least 2 rows and columns!") # 2-8-15: Why do we check this here?
+    }
+
+    cors <- stats::cor(data)
+    cors <- cors[upper.tri(cors, diag = TRUE)]
+
+    cors
+} # END COR_VECTOR
+
+# Migrated from ccdrAlgorithm package
+#' @rdname sparsebn-functions
+#' @export
+cor_vector_ivn <- function(data, ivn){
+    check.numeric <- (col_classes(data) != "numeric")
+    if( any(check.numeric)){
+        not.numeric <- which(check.numeric)
+        stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
+    }
+
+    if( any(dim(data) < 2)){
+        stop("Input must have at least 2 rows and columns!") # 2-8-15: Why do we check this here?
+    }
+
+    pp <- ncol(data)
+    ## unique(unlist(list(NULL, NULL, ...))) returns NULL without error
+    ## so checking list(NULL, NULL, ...) is equivalent to checking if ivnlabels is NULL
+    ivnlabels <- unique(unlist(ivn))
+    if(is.null(ivnlabels)) {
+        ## i.e. purely observational
+        cors <- stats::cor(data)
+        cors <- cors[upper.tri(cors, diag = TRUE)]
+        return(list(cors = cors, indexj = rep(0L, pp + 1)))
+    } else {
+        ## so there are at least some interventions
+        ivnj <- as.integer(c(ivnlabels, pp + 1))
+        # get all the j's that has interventions
+        # including pp+1 for observational rows (compatible with purely observational data)
+        # is this necessary if most are balanced designs where all nodes get intervention?
+        # any possible optimization?
+        len <- length(ivnj)
+        cors <- vector("list", len)
+        indexj <- as.integer(rep(len - 1, pp + 1)) # zero-based index for C compatibility
+        for(j in 1:(len - 1)) {
+            jj <- ivnj[j]
+            indexj[jj] <- j - 1
+            ## extract rows where node jj has no intervetion
+            corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, jj), any), , drop = FALSE])
+            cors[[j]] <- corsjj[upper.tri(corsjj, diag = TRUE)]
+        }
+        corsjj <- stats::cor(data[!sapply(lapply(ivn, is.element, pp + 1), any), , drop = FALSE])
+        ## do not change above line to cor(data[sapply(ivn, is.null), ])
+        ## why?
+        cors[[len]] <- corsjj[upper.tri(corsjj, diag = TRUE)]
+        cors <- unlist(cors)
+        return(list(cors = cors, indexj = indexj))
+    }
+} # END COR_VECTOR_IVN
+
