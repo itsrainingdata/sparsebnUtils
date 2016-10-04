@@ -11,15 +11,21 @@
 #
 #   CONTENTS:
 #       random.dag
-#       random.psd
+#       random.spd
 #       random_householder
 #
 
-#' Generate a random DAG with fixed number of edges
+#' Generate random DAGs
+#'
+#' Generate a random DAG with fixed number of edges.
+#'
+#' FUN can be any function whose first argument is called \code{n}. This
+#' allows for both random and deterministic outputs.
 #'
 #' @param nnode Number of nodes in the DAG
 #' @param nedge Number of edges in the DAG
-#' @param call Optional function to be used as a random number generator
+#' @param FUN Optional function to be used as a random number generator
+#' @param ... Additional arguments to \code{FUN}.
 #'
 #' @export
 random.dag <- function(nnode, nedge, FUN = NULL, ...){
@@ -71,7 +77,7 @@ random.dag <- function(nnode, nedge, FUN = NULL, ...){
 #' @param num.ortho Number of random Householder reflections to compose
 #'
 #' @export
-random.psd <- function(nnode,
+random.spd <- function(nnode,
                        eigenvalues = NULL,
                        num.ortho = 10){
     stopifnot(nnode > 1)
