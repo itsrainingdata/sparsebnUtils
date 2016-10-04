@@ -121,6 +121,14 @@ get.lambdas.sparsebnPath <- function(x){
     lambdas
 } # END GET.LAMBDAS.SPARSEBNPATH
 
+#' Extract node names from solution path
+#'
+#' @describeIn get.nodes Returns the node names from a \code{\link{sparsebnPath}} object.
+#' @export
+get.nodes.sparsebnPath <- function(x){
+    x[[1]]$nodes
+} # END GET.NODES.SPARSEBNPATH
+
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
 #' @export
 get.adjacency.matrix.sparsebnPath <- function(x){

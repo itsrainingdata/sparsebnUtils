@@ -172,6 +172,12 @@ get.adjacency.matrix.sparsebnFit <- function(x){
     adj
 } # END GET.ADJACENCY.MATRIX.SPARSEBNFIT
 
+#' @describeIn get.nodes Returns the node names from a \code{\link{sparsebnFit}} object.
+#' @export
+get.nodes.sparsebnFit <- function(x){
+    x$nodes
+} # END GET.NODES.SPARSEBNFIT
+
 #' @describeIn num.nodes Extracts the number of nodes of \link{sparsebnFit} object.
 #' @export
 num.nodes.sparsebnFit <- function(x){
