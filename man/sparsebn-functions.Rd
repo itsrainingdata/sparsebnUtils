@@ -21,6 +21,7 @@
 \alias{default_max_iters}
 \alias{list_classes}
 \alias{pick_family}
+\alias{pmatch_numeric}
 \alias{reIndexC}
 \alias{reIndexR}
 \alias{recode_levels}
@@ -73,6 +74,8 @@ convert_factor_to_discrete(x)
 cor_vector(data)
 
 cor_vector_ivn(data, ivn)
+
+pmatch_numeric(x, table, tol = 0.1)
 
 zero_threshold()
 }
