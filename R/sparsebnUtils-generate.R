@@ -22,7 +22,7 @@
 #' @param call Optional function to be used as a random number generator
 #'
 #' @export
-random.dag <- function(nnode, nedge, call = NULL){
+random.dag <- function(nnode, nedge, FUN = NULL, ...){
 
     #
     # Works by randomly sampling elements of the lower triangular
@@ -34,14 +34,15 @@ random.dag <- function(nnode, nedge, call = NULL){
     m <- matrix(0, nrow = nnode, ncol = nnode)
     vals <- rep(0, nnode*(nnode-1)/2)
 
-    ### randomly sample indices for nonzero coefs
+    ### Randomly sample indices for nonzero coefs
     nonzero_coefs <- sample(seq_along(vals), size = nedge)
 
-    ### randomly sample values for nonzero coefs
-    if(is.null(call)){
+    ### Randomly sample values for nonzero coefs
+    if(is.null(FUN)){
         coefs <- stats::runif(nedge)
     } else{
-        coefs <- replicate(nedge, call())
+        FUN <- match.fun(FUN)
+        coefs <- replicate(nedge, FUN(n = 1))
     }
 
     ### given these indices, update the values in m with random values
