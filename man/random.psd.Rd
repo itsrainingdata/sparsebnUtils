@@ -9,7 +9,8 @@ random.psd(nnode, eigenvalues = NULL, num.ortho = 10)
 \arguments{
 \item{nnode}{Number of nodes in the matrix}
 
-\item{eigenvalues}{Vector of eigenvalues desired in output}
+\item{eigenvalues}{Vector of eigenvalues desired in output. If this
+has fewer than nnode values, the remainder are filled in as zero.}
 
 \item{num.ortho}{Number of random Householder reflections to compose}
 }
