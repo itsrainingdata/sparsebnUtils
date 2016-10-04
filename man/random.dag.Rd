@@ -4,7 +4,7 @@
 \alias{random.dag}
 \title{Generate a random DAG with fixed number of edges}
 \usage{
-random.dag(nnode, nedge, call = NULL)
+random.dag(nnode, nedge, FUN = NULL, ...)
 }
 \arguments{
 \item{nnode}{Number of nodes in the DAG}
