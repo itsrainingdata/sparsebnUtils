@@ -20,6 +20,11 @@ Choose solutions from a solution path based on number of edges, value of
 regularization parameter lambda, or index.
 }
 \details{
+For \code{edges} (resp. \code{lambda}), the solution with the closest number
+of edges (resp. regularization parameter) is returned. If there is no match
+within a tolerance of 0.1 for \code{lambda}, nothing is returned. Fuzzy matching
+is not used for when selecting by \code{index}.
+
 If there is more than one match (for example, by number of edges), then
 the first such estimate is returned. Note that \code{select(x, index = j)}
 is equivalent to (but slightly slower than) \code{x[[j]]}.
