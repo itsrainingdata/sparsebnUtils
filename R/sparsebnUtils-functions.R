@@ -45,6 +45,8 @@
 #' @param ivn list of interventions (see \code{\link{sparsebnData}}).
 #' @param string a \code{character} string.
 #' @param numnode \code{integer} number of nodes.
+#' @param table table of values to compare against.
+#' @param tol maximum tolerance used for matching.
 #'
 #' @title Utility functions
 #'

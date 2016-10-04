@@ -101,6 +101,10 @@ zero_threshold()
 \item{data}{a \code{data.frame}.}
 
 \item{ivn}{list of interventions (see \code{\link{sparsebnData}}).}
+
+\item{table}{table of values to compare against.}
+
+\item{tol}{maximum tolerance used for matching.}
 }
 \description{
 Various utility functions for packages in the \code{sparsebn} family
