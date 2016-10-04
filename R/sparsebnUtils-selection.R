@@ -96,7 +96,7 @@ select <- function(x, edges, lambda, index){
 select.parameter <- function(x,
                              data,
                              type = "profile",
-                             alpha = 0.05){
+                             alpha = 0.1){
     ### Check args
     stopifnot(is.sparsebnPath(x))
     stopifnot(is.sparsebnData(data))
