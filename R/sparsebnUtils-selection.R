@@ -10,8 +10,65 @@
 # PACKAGE SPARSEBNUTILS: Methods for model / parameter selection
 #
 #   CONTENTS:
+#       select
 #       select.parameter
 #
+
+#' Select solutions from a solution path
+#'
+#' Choose solutions from a solution path based on number of edges, value of
+#' regularization parameter lambda, or index.
+#'
+#' For \code{edges} (resp. \code{lambda}), the solution with the closest number
+#' of edges (resp. regularization parameter) is returned. If there is no match
+#' within a tolerance of 0.1 for \code{lambda}, nothing is returned. Fuzzy matching
+#' is not used for when selecting by \code{index}.
+#'
+#' If there is more than one match (for example, by number of edges), then
+#' the first such estimate is returned. Note that \code{select(x, index = j)}
+#' is equivalent to (but slightly slower than) \code{x[[j]]}.
+#'
+#' @param x a \code{\link{sparsebnPath}} object.
+#' @param edges number of edges to search for.
+#' @param lambda value of regularization parameter to search for.
+#' @param index integer index to select.
+#'
+#' @export
+select <- function(x, edges, lambda, index){
+    stopifnot(is.sparsebnPath(x))
+
+    which.idx <- integer(0)
+    if(!missing(edges)){
+        if(!missing(lambda) || !missing(index)){
+            stop("'edges' cannot be specified with 'lambda' or 'index'! Select only one.")
+        }
+
+        ### Note the use of partial matching here
+        which.idx <- pmatch_numeric(edges, num.edges(x), tol = Inf)
+        # which.idx <- which(num.edges(x) == edges)
+    } else if(!missing(lambda)){
+        if(!missing(edges) || !missing(index)){
+            stop("'lambda' cannot be specified with 'edges' or 'index'! Select only one.")
+        }
+
+        ### Note the use of partial matching here
+        which.idx <- pmatch_numeric(lambda, get.lambdas(x), tol = 0.1)
+    } else if(!missing(index)){
+        if(!missing(edges) || !missing(lambda)){
+            stop("'index' cannot be specified with 'edges' or 'lambda'! Select only one.")
+        }
+
+        which.idx <- index
+    } else{
+        stop("Must specify something to select! Choose 'edges', 'lambda', or 'index'.")
+    }
+
+    if(length(which.idx) == 0){
+        NULL # return NULL if nothing found (mimics default behaviour of lists in R)
+    } else{
+        x[[min(which.idx)]] # return minimum index by default
+    }
+}
 
 #' Tuning parameter selection
 #'

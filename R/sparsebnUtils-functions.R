@@ -28,6 +28,7 @@
 #       recode_levels
 #       convert_factor_to_discrete
 #       format_list
+#       pmatch_numeric
 #
 
 #' @name sparsebn-functions
@@ -44,6 +45,8 @@
 #' @param ivn list of interventions (see \code{\link{sparsebnData}}).
 #' @param string a \code{character} string.
 #' @param numnode \code{integer} number of nodes.
+#' @param table table of values to compare against.
+#' @param tol maximum tolerance used for matching.
 #'
 #' @title Utility functions
 #'
@@ -313,4 +316,21 @@ cor_vector_ivn <- function(data, ivn){
         return(list(cors = cors, indexj = indexj))
     }
 } # END COR_VECTOR_IVN
+
+# Partial matching for numeric values
+#  Returns the value in table closest to x, unless the minimum absolute distance
+#  exceeds tol (in which case NA is returned).
+#
+#' @rdname sparsebn-functions
+#' @export
+pmatch_numeric <- function(x, table, tol = 0.1){
+    absdiff <- abs(table - x)
+    idx <- which.min(absdiff)
+
+    if(absdiff[idx] < tol){
+        idx
+    } else{
+        NA
+    }
+} # END PMATCH_NUMERIC
 

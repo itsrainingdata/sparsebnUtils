@@ -134,55 +134,6 @@ get.adjacency.matrix.sparsebnPath <- function(x){
     sparsebnPath(as.list(x)[i])
 }
 
-#' Select solutions from a solution path
-#'
-#' Choose solutions from a solution path based on number of edges, value of
-#' regularization parameter lambda, or index.
-#'
-#' If there is more than one match (for example, by number of edges), then
-#' the first such estimate is returned. Note that \code{get.solution(x, index = j)}
-#' is equivalent to (but slightly slower than) \code{x[[j]]}.
-#'
-#' @param x a \code{\link{sparsebnPath}} object.
-#' @param edges number of edges to search for.
-#' @param lambda value of regularization parameter to search for.
-#' @param index integer index to select.
-#'
-#' @export
-get.solution <- function(x, edges, lambda, index){
-    stopifnot(is.sparsebnPath(x))
-
-    ### NOTE: Consider adding fuzzy matching in a future release
-
-    if(!missing(edges)){
-        if(!missing(lambda) || !missing(index)){
-            stop("'edges' cannot be specified with 'lambda' or 'index'! Select only one.")
-        }
-
-        which.idx <- which(num.edges(x) == edges)
-    } else if(!missing(lambda)){
-        if(!missing(edges) || !missing(index)){
-            stop("'lambda' cannot be specified with 'edges' or 'index'! Select only one.")
-        }
-
-        which.idx <- which(get.lambdas(x) == lambda)
-    } else if(!missing(index)){
-        if(!missing(edges) || !missing(lambda)){
-            stop("'index' cannot be specified with 'edges' or 'lambda'! Select only one.")
-        }
-
-        which.idx <- index
-    } else{
-        stop("Must specify something to select! Choose 'edges', 'lambda', or 'index'.")
-    }
-
-    if(length(which.idx) == 0){
-        NULL # return NULL if nothing found (mimics default behaviour of lists in R)
-    } else{
-        x[[min(which.idx)]] # return minimum index by default
-    }
-}
-
 #' @rdname plot.edgeList
 #' @method plot sparsebnPath
 #' @export
