@@ -16,6 +16,16 @@ test_that("Selection by lambda works", {
     expect_equal(select(sbp, lambda = 0.57), sbp[[4]])
 })
 
+test_that("Partial matching for lambda works", {
+    ### This tests the case where the absolute difference is == tol (see pmatch_numeric)
+    expect_true(is.null(select(sbp, lambda = 2)))
+
+    expect_equal(select(sbp, lambda = 2.05), sbp[[1]])
+    expect_equal(select(sbp, lambda = 1.5), sbp[[2]])
+    expect_equal(select(sbp, lambda = 0.9), sbp[[3]])
+    expect_equal(select(sbp, lambda = 0.5), sbp[[4]])
+})
+
 test_that("Selection by index works", {
     expect_equal(select(sbp, index = 1), sbp[[1]])
     expect_equal(select(sbp, index = 2), sbp[[2]])

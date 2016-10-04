@@ -10,7 +10,7 @@
 # PACKAGE SPARSEBNUTILS: Methods for model / parameter selection
 #
 #   CONTENTS:
-#       select.fit
+#       select
 #       select.parameter
 #
 
@@ -32,20 +32,22 @@
 select <- function(x, edges, lambda, index){
     stopifnot(is.sparsebnPath(x))
 
-    ### NOTE: Consider adding fuzzy matching in a future release
-
+    which.idx <- integer(0)
     if(!missing(edges)){
         if(!missing(lambda) || !missing(index)){
             stop("'edges' cannot be specified with 'lambda' or 'index'! Select only one.")
         }
 
-        which.idx <- which(num.edges(x) == edges)
+        ### Note the use of partial matching here
+        which.idx <- pmatch_numeric(edges, num.edges(x), tol = Inf)
+        # which.idx <- which(num.edges(x) == edges)
     } else if(!missing(lambda)){
         if(!missing(edges) || !missing(index)){
             stop("'lambda' cannot be specified with 'edges' or 'index'! Select only one.")
         }
 
-        which.idx <- which(get.lambdas(x) == lambda)
+        ### Note the use of partial matching here
+        which.idx <- pmatch_numeric(lambda, get.lambdas(x), tol = 0.1)
     } else if(!missing(index)){
         if(!missing(edges) || !missing(lambda)){
             stop("'index' cannot be specified with 'edges' or 'lambda'! Select only one.")
