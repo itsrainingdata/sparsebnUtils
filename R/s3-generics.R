@@ -95,6 +95,18 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 #' @export
 get.lambdas <- function(x) UseMethod("get.lambdas", x)
 
+#' get.nodes
+#'
+#' Returns the node names associated with a fitted object.
+#'
+#' @param x a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Vector of \code{character} names.
+#'
+#' @export
+get.nodes <- function(x) UseMethod("get.nodes", x)
+
 #' num.nodes
 #'
 #' Extracts the number of nodes of the associated graph object.
