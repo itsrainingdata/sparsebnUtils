@@ -135,6 +135,10 @@ get.adjacency.matrix.edgeList <- function(x){
     numnode <- length(x)
     Matrix.out <- Matrix::Matrix(0, nrow = numnode, ncol = numnode)
 
+    ### Set column and row names for output
+    node_names <- names(x)
+    colnames(Matrix.out) <- rownames(Matrix.out) <- node_names
+
     ### This loop is pretty slow!
     for(j in seq_along(x)){
         for(i in x[[j]]){
