@@ -28,7 +28,7 @@ graph is printed to screen, otherwise a short summary is displayed instead.}
 Main class for representing DAG estimates. Represents a single DAG estimate in a solution path.
 }
 \details{
-This is the main class for storing and manipulating the output of \code{\link{estimate.dag}}.
+This is the main class for storing and manipulating the output of \code{\link[sparsebn]{estimate.dag}}.
 The main slot of interest is \code{edges}, which stores the graph as an \code{\link{edgeList}}
 object. If desired, this slot can be changed to hold a \code{\link[graph]{graphNEL}},
 \code{\link[igraph]{igraph}}, or \code{\link[network]{network}} object if desired (see
