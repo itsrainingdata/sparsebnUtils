@@ -239,6 +239,7 @@ format_list <- function(x){
     }, row_names, x)
     list.out <- unlist(list.out)
     list.out <- paste(list.out, collapse = " \n")
+    list.out <- paste0(list.out, "\n") # add trailing newline
 
     list.out
 }
