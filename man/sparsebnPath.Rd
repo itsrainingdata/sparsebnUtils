@@ -33,10 +33,29 @@ from \code{\link{list}}.
 Each value of lambda in the (discrete) solution path corresponds to a single DAG estimate (see \href{http://jmlr.org/papers/v16/aragam15a.html}{Aragam and Zhou (2015)} for details).
 Internally, this estimate is represented by a \code{\link{sparsebnFit}} object. The full solution
 path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit}} objects: This class is essentially a wrapper for this list.
+
+Most methods for \code{\link{sparsebnPath}} objects simply apply \code{\link{lapply}} to the
+object in question. The exceptions to this rule apply when the output will always be the same
+for every component; e.g. \code{\link{num.nodes}} and \code{\link{num.samples}}.
 }
 \section{Methods}{
 
 \code{\link{get.adjacency.matrix}}, \code{\link{get.lambdas}},
 \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
+}
+\examples{
+
+\dontrun{
+### Learn the cytometry network
+data(cytometryContinuous)
+cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
+cyto.learn <- estimate.dag(cyto.data)
+
+### Inspect the output
+class(cyto.learn)
+print(cyto.learn)
+plot(cyto.learn)
+}
+
 }
 

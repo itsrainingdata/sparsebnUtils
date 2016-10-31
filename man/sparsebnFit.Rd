@@ -35,6 +35,17 @@ object. If desired, this slot can be changed to hold a \code{\link[graph]{graphN
 \code{\link{setGraphPackage}}). For anything beyond simply inspecting the graph, it is recommended
 to use one of these packages.
 
+Since \code{edgeList}s do not contain information on the node names, the second slot
+\code{nodes} stores this information. The indices in \code{edges} are in one-to-one
+correspondence with the names in the \code{nodes} vector. The \code{lambda} slot stores
+ the regularization parameter used to estinate the graph.
+
+Other slots include \code{nedge}, for the number of edges; \code{pp}, for p = number of nodes;
+\code{nn}, for n = number of samples, and \code{time}, for the time in seconds needed to
+estimate this graph. Note that these slots are mainly for internal use, and in particular
+it is best to query the number of nodes via \code{\link{num.nodes}}, the number of edges
+via \code{\link{num.edges}}, and the number of samples via \code{\link{num.samples}}.
+
 By default, only small graphs are printed, but this behaviour can be overridden via the
 \code{maxsize} argument to \code{print}. To view a list of parents for a specific subset of
 nodes, use \code{\link{show.parents}}.
@@ -47,6 +58,7 @@ object, but can be handled separately if desired (be careful!).
 
 \describe{
 \item{\code{edges}}{(\code{\link{edgeList}}) Edge list of estimated DAG (see \code{\link{edgeList}}).}
+\item{\code{nodes}}{(\code{\link{character}}) Vector of node names.}
 \item{\code{lambda}}{(\code{\link{numeric}}) Value of lambda for this estimate.}
 \item{\code{nedge}}{(\code{\link{integer}}) Number of edges in this estimate.}
 \item{\code{pp}}{(\code{\link{integer}}) Number of nodes.}
