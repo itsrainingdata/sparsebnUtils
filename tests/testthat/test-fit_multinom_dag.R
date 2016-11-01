@@ -37,32 +37,32 @@ test_that("fit_multinom_dag can run", {
   expect_error(fit_multinom_dag(final.dag, data))
 })
 
-test_that("fit_multinom_dag output the right result", {
-  out <- fit_multinom_dag(edge_list, data) # input a data frame
-  out_matrix <- fit_multinom_dag(edge_list, data_matrix) # input a matrix
-
-  ### length of output should be the number of variables
-  expect_equal(length(out), node)
-  expect_equal(length(out_matrix), node)
-  ### legnth of each element should be the number of parents
-  for (i in 1:node) {
-    expect_equal(length(out[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
-  }
-  for (i in 1:node) {
-      expect_equal(length(out_matrix[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
-  }
-  ### randomly check some entries
-  expect_equal(dim(out[[1]][[1]]$coef), c(1, 1))
-  expect_equal(out[[1]][[1]]$parent, "y")
-  expect_equal(dim(out[[1]][[2]]$coef), c(1, 1))
-  expect_equal(out[[1]][[2]]$parent, "a")
-  expect_equal(dim(out[[3]][[1]]$coef), c(2, 1))
-  expect_equal(out[[3]][[1]]$parent, "y")
-  expect_equal(dim(out[[3]][[2]]$coef), c(2, 1))
-  expect_equal(out[[3]][[2]]$parent, "b")
-
-  expect_equal(dim(out_matrix[[1]][[1]]$coef), c(1, 1))
-  expect_equal(out_matrix[[1]][[1]]$parent, "V2")
-  expect_equal(dim(out_matrix[[1]][[2]]$coef), c(1, 1))
-  expect_equal(out_matrix[[1]][[2]]$parent, "V4")
-})
+# test_that("fit_multinom_dag output the right result", {
+#   out <- fit_multinom_dag(edge_list, data) # input a data frame
+#   out_matrix <- fit_multinom_dag(edge_list, data_matrix) # input a matrix
+#
+#   ### length of output should be the number of variables
+#   expect_equal(length(out), node)
+#   expect_equal(length(out_matrix), node)
+#   ### legnth of each element should be the number of parents
+#   for (i in 1:node) {
+#     expect_equal(length(out[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
+#   }
+#   for (i in 1:node) {
+#       expect_equal(length(out_matrix[[i]]), length(edge_list[[i]])+(length(edge_list[[i]])!=0))
+#   }
+#   ### randomly check some entries
+#   expect_equal(dim(out[[1]][[1]]$coef), c(1, 1))
+#   expect_equal(out[[1]][[1]]$parent, "y")
+#   expect_equal(dim(out[[1]][[2]]$coef), c(1, 1))
+#   expect_equal(out[[1]][[2]]$parent, "a")
+#   expect_equal(dim(out[[3]][[1]]$coef), c(2, 1))
+#   expect_equal(out[[3]][[1]]$parent, "y")
+#   expect_equal(dim(out[[3]][[2]]$coef), c(2, 1))
+#   expect_equal(out[[3]][[2]]$parent, "b")
+#
+#   expect_equal(dim(out_matrix[[1]][[1]]$coef), c(1, 1))
+#   expect_equal(out_matrix[[1]][[1]]$parent, "V2")
+#   expect_equal(dim(out_matrix[[1]][[2]]$coef), c(1, 1))
+#   expect_equal(out_matrix[[1]][[2]]$parent, "V4")
+# })

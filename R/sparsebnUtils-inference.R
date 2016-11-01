@@ -108,31 +108,31 @@ fit_glm_dag <- function(parents,
 }
 
 # a function to convert the coefficient vector into a list of coefficients
-get_coef_matrix <- function(coef_vec, node_name, n_levels) {
-    # a vector to index each independant varibles
-    node <- 1:length(n_levels)
-    # a vector to index each coefficient in coef_vec
-    node_index <- rep(node, (n_levels-1))
-    # if (!is.matrix(coef_vec)) {coef_vec <- matrix(coef_vec, nrow=1)}
-    # check if number of columns of coef_vec is compatible with n_levels
-    if (ncol(coef_vec)!=sum(n_levels-1)) stop("number of columns of coef_vec is not compatible with n_levels")
-    if (length(n_levels) >=2) {
-        coef_matrix <- lapply(node, function(x, node_index, coef_vec, node_name){
-            coef_sub <- coef_vec[, which(node_index==x), drop=FALSE]
-            coef_names <- colnames(coef_sub)
-            coef_names <- gsub(node_name[x], "", coef_names)
-            colnames(coef_sub) <- coef_names
-            coef_sub
-            }, node_index, coef_vec, node_name)
-    } else {
-        coef_names <- colnames(coef_vec)
-        coef_names <- gsub(node_name[1], "", coef_names)
-        colnames(coef_vec) <- coef_names
-        coef_matrix <- list(coef_vec)
-    }
-
-    return(coef_matrix)
-}
+# get_coef_matrix <- function(coef_vec, node_name, n_levels) {
+#     # a vector to index each independant varibles
+#     node <- 1:length(n_levels)
+#     # a vector to index each coefficient in coef_vec
+#     node_index <- rep(node, (n_levels-1))
+#     # if (!is.matrix(coef_vec)) {coef_vec <- matrix(coef_vec, nrow=1)}
+#     # check if number of columns of coef_vec is compatible with n_levels
+#     if (ncol(coef_vec)!=sum(n_levels-1)) stop("number of columns of coef_vec is not compatible with n_levels")
+#     if (length(n_levels) >=2) {
+#         coef_matrix <- lapply(node, function(x, node_index, coef_vec, node_name){
+#             coef_sub <- coef_vec[, which(node_index==x), drop=FALSE]
+#             coef_names <- colnames(coef_sub)
+#             coef_names <- gsub(node_name[x], "", coef_names)
+#             colnames(coef_sub) <- coef_names
+#             coef_sub
+#             }, node_index, coef_vec, node_name)
+#     } else {
+#         coef_names <- colnames(coef_vec)
+#         coef_names <- gsub(node_name[1], "", coef_names)
+#         colnames(coef_vec) <- coef_names
+#         coef_matrix <- list(coef_vec)
+#     }
+#
+#     return(coef_matrix)
+# }
 
 #' Inference in discrete Bayesian networks
 #'
@@ -215,22 +215,24 @@ fit_multinom_dag <- function(parents,
         if (length(x_ind)!=0) { # do nothing if a node has no parents
             fit <- nnet::multinom(data[, c(i, x_ind)], trace = FALSE) # Why does this work / should we do this?
             coef_vec <- coef(fit)
-            if(!is.matrix(coef_vec)) {
-                coef_name <- names(coef_vec)
-                coef_vec <- matrix(coef_vec, nrow=1)
-                colnames(coef_vec) <- coef_name
-                }
-            temp_n_levels <- n_levels[x_ind]
-            intercept <- coef_vec[, 1, drop = FALSE]
-            coef_vec <- coef_vec[, -1, drop = FALSE]
-            node_name <- as.character(colnames(data[, x_ind]))
-            coef_seq <- get_coef_matrix(coef_vec, node_name, temp_n_levels)
-            node_index <- 1:length(x_ind)
-            # coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=x_ind[x], coef=coef_seq[[x]])}, coef_seq, x_ind)
-            coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=colnames(data)[x_ind[x]], coef=coef_seq[[x]])}, coef_seq, x_ind)
-            coef[[i]][[length(x_ind)+1]] <- list(intercept=intercept)
+            # if(!is.matrix(coef_vec)) {
+            #     coef_name <- names(coef_vec)
+            #     coef_vec <- matrix(coef_vec, nrow=1)
+            #     colnames(coef_vec) <- coef_name
+            #     }
+            # temp_n_levels <- n_levels[x_ind]
+            # intercept <- coef_vec[, 1, drop = FALSE]
+            # coef_vec <- coef_vec[, -1, drop = FALSE]
+            # node_name <- as.character(colnames(data[, x_ind, drop = FALSE]))
+            # coef_seq <- get_coef_matrix(coef_vec, node_name, temp_n_levels)
+            # node_index <- 1:length(x_ind)
+            # # coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=x_ind[x], coef=coef_seq[[x]])}, coef_seq, x_ind)
+            # coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=colnames(data)[x_ind[x]], coef=coef_seq[[x]])}, coef_seq, x_ind)
+            # coef[[i]][[length(x_ind)+1]] <- list(intercept=intercept)
+            coef[[i]] <- coef_vec
         }
     }
+    names(coef) <- colnames(dat)
     return(coef)
 }
 
