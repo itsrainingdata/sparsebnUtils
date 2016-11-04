@@ -141,10 +141,12 @@ sparse.matrix <- function(x, index = "R", ...){
     vals <- double(length(nnz))
     rows <- integer(length(nnz))
     cols <- integer(length(nnz))
+
+    x <- as.vector(x)
     for(k in seq_along(nnz)){
         col <- trunc(nnz[k] / pp)
         row <- nnz[k] - (pp * col)
-        vals[k] <- as.vector(x)[nnz[k] + 1]
+        vals[k] <- x[nnz[k] + 1]
         rows[k] <- row
         cols[k] <- col
     }
