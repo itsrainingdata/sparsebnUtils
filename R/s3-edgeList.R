@@ -54,6 +54,11 @@ is.edgeList <- function(x){
 } # END IS.EDGELIST
 
 #' @export
+as.edgeList <- function(x){
+    edgeList(x) # NOTE: S3 delegation is implicitly handled by the constructor here
+}
+
+#' @export
 edgeList.list <- function(x){
     if(!is.list(x)){
         stop("Input must be a list!")
@@ -91,6 +96,35 @@ edgeList.list <- function(x){
 
     structure(x, class = c("edgeList", "list"))
 } # END EDGELIST.LIST
+
+#' @export
+edgeList.sparse <- function(x, ...){
+    stopifnot(x$dim[1] == x$dim[2])
+
+    out <- lapply(vector("list", length = x$dim[1]), as.integer) # need as.integer to convert NULLs into integer(0)
+    for(j in seq_along(x$cols)){
+        child <- x$cols[[j]]
+        parent <- x$rows[[j]]
+        out[[child]] <- c(out[[child]], parent) # !!! THIS IS SLOW
+    }
+
+    edgeList(out)
+}
+
+#' @export
+edgeList.matrix <- function(x){
+    out <- edgeList(as.sparse(x))
+
+    if(!all(colnames(x) == rownames(x))){
+        warning("Row names do not match column names! Defaulting to use column names only.")
+    }
+
+    if(!is.null(colnames(x))){
+        names(out) <- colnames(x)
+    }
+
+    out
+}
 
 #' @method print edgeList
 #' @export

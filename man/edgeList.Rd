@@ -2,7 +2,6 @@
 % Please edit documentation in R/s3-edgeList.R, R/s3-generics.R
 \docType{class}
 \name{edgeList}
-\alias{as.edgeList}
 \alias{edgeList}
 \alias{is.edgeList}
 \title{edgeList class}
@@ -10,8 +9,6 @@
 is.edgeList(x)
 
 edgeList(x)
-
-as.edgeList(x)
 }
 \arguments{
 \item{x}{A list containing parents for each node in a graph. The length of this list

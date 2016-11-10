@@ -50,6 +50,11 @@ is.sparse <- function(x){
     inherits(x, "sparse")
 } # END IS.SPARSE
 
+#' @export
+as.sparse <- function(x, index = "R", ...){
+    sparse(x, index = "R", ...) # NOTE: S3 delegation is implicitly handled by the constructor here
+}
+
 #------------------------------------------------------------------------------#
 # reIndexC.sparse
 #  Re-indexing TO C for sparse objects
@@ -160,24 +165,43 @@ sparse.matrix <- function(x, index = "R", ...){
     }
 } # END SPARSE.MATRIX
 
-#------------------------------------------------------------------------------#
-# as.sparse.list
-#  Convert FROM list TO sparse
-#
 #' @export
-as.sparse.list <- function(x, ...){
-    sparse.list(x)
-} # END AS.SPARSE.LIST
+sparse.edgeList <- function(x, ...){
+    nnode <- num.nodes(x)
+    out <- list(rows = c(), cols = c(), vals = c(), dim = c(nnode, nnode), start = 1) # enforce R-style indexing since edgeLists are never passed to C++ (at least for the time being)
+    for(j in seq_along(x)){
+        child <- j
+        parset <- x[[child]] # parent set of j
+        out$rows <- c(out$rows, parset) # set parents of child
+        out$cols <- c(out$cols, rep(child, length(parset))) # children
+    }
 
-#------------------------------------------------------------------------------#
-# as.sparse.matrix
-#  Convert FROM matrix TO sparse
-#  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
-#    index = "C".
-#' @export
-as.sparse.matrix <- function(x, index = "R", ...){
-    sparse.matrix(x, index)
-} # END AS.SPARSE.MATRIX
+    if(length(out$rows) != length(out$cols))
+        stop("Error!")
+
+    out$vals <- as.numeric(rep(NA, length(out$cols))) # edgeLists do not carry weight information
+
+    sparse(out)
+}
+
+# #------------------------------------------------------------------------------#
+# # as.sparse.list
+# #  Convert FROM list TO sparse
+# #
+# #' @export
+# as.sparse.list <- function(x, ...){
+#     sparse.list(x)
+# } # END AS.SPARSE.LIST
+#
+# #------------------------------------------------------------------------------#
+# # as.sparse.matrix
+# #  Convert FROM matrix TO sparse
+# #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
+# #    index = "C".
+# #' @export
+# as.sparse.matrix <- function(x, index = "R", ...){
+#     sparse.matrix(x, index)
+# } # END AS.SPARSE.MATRIX
 
 #------------------------------------------------------------------------------#
 # as.matrix.sparse

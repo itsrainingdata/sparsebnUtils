@@ -2,15 +2,12 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnPath.R
 \docType{class}
 \name{sparsebnPath}
-\alias{as.sparsebnPath}
 \alias{is.sparsebnPath}
 \alias{print.sparsebnPath}
 \alias{sparsebnPath}
 \title{sparsebnPath class}
 \usage{
 sparsebnPath(x)
-
-as.sparsebnPath(x)
 
 is.sparsebnPath(x)
 

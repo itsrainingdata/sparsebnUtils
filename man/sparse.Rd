@@ -2,14 +2,11 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparse.R
 \docType{class}
 \name{sparse}
-\alias{as.sparse}
 \alias{is.sparse}
 \alias{sparse}
 \title{sparse class}
 \usage{
 sparse(x, ...)
-
-as.sparse(x, ...)
 
 is.sparse(x)
 }
