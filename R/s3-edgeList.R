@@ -53,6 +53,15 @@ is.edgeList <- function(x){
     inherits(x, "edgeList")
 } # END IS.EDGELIST
 
+#' as.edgeList
+#'
+#' Methods for coercing other \code{R} objects to \code{\link{edgeList}} objects.
+#'
+#' @param x A compatible \code{R} object.
+#'
+#' @return
+#' \code{\link{edgeList}}
+#'
 #' @export
 as.edgeList <- function(x){
     edgeList(x) # NOTE: S3 delegation is implicitly handled by the constructor here

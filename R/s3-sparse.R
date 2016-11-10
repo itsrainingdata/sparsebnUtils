@@ -28,7 +28,7 @@
 
 #' sparse class
 #'
-#' Low-level representation of sparse matrices
+#' Low-level representation of sparse matrices.
 #'
 #' An alternative data structure for storing sparse matrices in R using the (row, column, value)
 #' format. Internally it is stored as a list with three components, each vectors, that contain
@@ -50,6 +50,17 @@ is.sparse <- function(x){
     inherits(x, "sparse")
 } # END IS.SPARSE
 
+#' as.sparse
+#'
+#' Methods for coercing other \code{R} objects to \code{\link{sparse}} objects.
+#'
+#' @param x A compatible \code{R} object.
+#' @param index \code{"R"} or \code{"C"}, depending on whether to use R- or C-style indexing.
+#' @param ... other parameters.
+#'
+#' @return
+#' \code{\link{sparse}}
+#'
 #' @export
 as.sparse <- function(x, index = "R", ...){
     sparse(x, index = "R", ...) # NOTE: S3 delegation is implicitly handled by the constructor here
