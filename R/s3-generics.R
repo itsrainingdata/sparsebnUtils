@@ -53,9 +53,9 @@ as.sparse <- function(x, ...) UseMethod("as.sparse", x)
 #' @export
 edgeList <- function(x) UseMethod("edgeList", x)
 
-#' @rdname edgeList
-#' @export
-as.edgeList <- function(x) UseMethod("as.edgeList", x) # NOTE: Right now this is extended (only) in ccdrAlgorithm,
+# # ' @rdname edgeList
+# # ' @export
+# as.edgeList <- function(x) UseMethod("as.edgeList", x)
 
 #' Conversion to edgeList object
 #'

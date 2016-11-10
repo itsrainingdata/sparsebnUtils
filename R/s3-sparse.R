@@ -160,6 +160,25 @@ sparse.matrix <- function(x, index = "R", ...){
     }
 } # END SPARSE.MATRIX
 
+#' @export
+sparse.edgeList <- function(x, ...){
+    nnode <- num.nodes(x)
+    out <- list(rows = c(), cols = c(), vals = c(), dim = c(nnode, nnode), start = 1) # enforce R-style indexing since edgeLists are never passed to C++ (at least for the time being)
+    for(j in seq_along(x)){
+        child <- j
+        parset <- x[[child]] # parent set of j
+        out$rows <- c(out$rows, parset) # set parents of child
+        out$cols <- c(out$cols, rep(child, length(parset))) # children
+    }
+
+    if(length(out$rows) != length(out$cols))
+        stop("Error!")
+
+    out$vals <- as.numeric(rep(NA, length(out$cols))) # edgeLists do not carry weight information
+
+    sparse(out)
+}
+
 #------------------------------------------------------------------------------#
 # as.sparse.list
 #  Convert FROM list TO sparse
