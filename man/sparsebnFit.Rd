@@ -2,15 +2,12 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnFit.R
 \docType{class}
 \name{sparsebnFit}
-\alias{as.sparsebnFit}
 \alias{is.sparsebnFit}
 \alias{print.sparsebnFit}
 \alias{sparsebnFit}
 \title{sparsebnFit class}
 \usage{
 sparsebnFit(x)
-
-as.sparsebnFit(x)
 
 is.sparsebnFit(x)
 

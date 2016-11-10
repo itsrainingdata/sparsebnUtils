@@ -12,50 +12,28 @@
 #   CONTENTS:
 #
 
-### Generics for sparsebnData ----------------------------------------
+### Constructors ----------------------------------------
 #' @rdname sparsebnData
 #' @export
 sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
-#' @rdname sparsebnData
-#' @export
-as.sparsebnData <- function(x, ...) UseMethod("as.sparsebnData", x)
-
-### Generics for sparsebnPath ----------------------------------------
 #' @rdname sparsebnPath
 #' @export
 sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
 
-#' @rdname sparsebnPath
-#' @export
-as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
-
-### Generics for sparsebnFit ----------------------------------------
 #' @rdname sparsebnFit
 #' @export
 sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
 
-#' @rdname sparsebnFit
-#' @export
-as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
-
-### Generics for sparse ---------------------------------------------
 #' @rdname sparse
 #' @export
 sparse <- function(x, ...) UseMethod("sparse", x)
 
-#' @rdname sparse
-#' @export
-as.sparse <- function(x, ...) UseMethod("as.sparse", x)
-
-### Generics for edgeList ---------------------------------------------
 #' @rdname edgeList
 #' @export
 edgeList <- function(x) UseMethod("edgeList", x)
 
-# # ' @rdname edgeList
-# # ' @export
-# as.edgeList <- function(x) UseMethod("as.edgeList", x)
+### User methods ----------------------------------------
 
 #' Conversion to edgeList object
 #'
@@ -172,28 +150,6 @@ estimate.parameters <- function(fit, data, ...){
     stopifnot(is.sparsebnData(data))
     UseMethod("estimate.parameters", fit)
 }
-
-# #' @rdname estimate.covariance
-# #' @export
-# estimate.covariance <- function(data, ...){
-#     stopifnot(is.sparsebnData(data))
-#     if(data$type != "continuous"){
-#         stop(feature_not_supported("Covariance estimation for discrete models"))
-#     }
-#
-#     UseMethod("estimate.covariance", data)
-# }
-
-# #' @rdname estimate.covariance
-# #' @export
-# estimate.precision <- function(data, ...){
-#     stopifnot(is.sparsebnData(data))
-#     if(data$type != "continuous"){
-#         stop(feature_not_supported("Precision matrix estimation for discrete models"))
-#     }
-#
-#     UseMethod("estimate.precision", data)
-# }
 
 #' Covariance and precision matrices
 #'
