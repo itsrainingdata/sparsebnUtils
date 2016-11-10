@@ -16,7 +16,7 @@ is.sparse(x)
 \item{...}{(optional) additional arguments.}
 }
 \description{
-Low-level representation of sparse matrices
+Low-level representation of sparse matrices.
 }
 \details{
 An alternative data structure for storing sparse matrices in R using the (row, column, value)
