@@ -51,10 +51,9 @@ is.sparse <- function(x){
 } # END IS.SPARSE
 
 #' @export
-as.sparse <- function(x){
-    sparse(x) # NOTE: S3 delegation is implicitly handled by the constructor here
+as.sparse <- function(x, index = "R", ...){
+    sparse(x, index = "R", ...) # NOTE: S3 delegation is implicitly handled by the constructor here
 }
-
 
 #------------------------------------------------------------------------------#
 # reIndexC.sparse
