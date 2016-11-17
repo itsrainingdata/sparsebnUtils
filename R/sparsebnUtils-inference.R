@@ -107,33 +107,6 @@ fit_glm_dag <- function(parents,
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
 }
 
-# a function to convert the coefficient vector into a list of coefficients
-get_coef_matrix <- function(coef_vec, node_name, n_levels) {
-    # a vector to index each independant varibles
-    node <- 1:length(n_levels)
-    # a vector to index each coefficient in coef_vec
-    node_index <- rep(node, (n_levels-1))
-    # if (!is.matrix(coef_vec)) {coef_vec <- matrix(coef_vec, nrow=1)}
-    # check if number of columns of coef_vec is compatible with n_levels
-    if (ncol(coef_vec)!=sum(n_levels-1)) stop("number of columns of coef_vec is not compatible with n_levels")
-    if (length(n_levels) >=2) {
-        coef_matrix <- lapply(node, function(x, node_index, coef_vec, node_name){
-            coef_sub <- coef_vec[, which(node_index==x), drop=FALSE]
-            coef_names <- colnames(coef_sub)
-            coef_names <- gsub(node_name[x], "", coef_names)
-            colnames(coef_sub) <- coef_names
-            coef_sub
-            }, node_index, coef_vec, node_name)
-    } else {
-        coef_names <- colnames(coef_vec)
-        coef_names <- gsub(node_name[1], "", coef_names)
-        colnames(coef_vec) <- coef_names
-        coef_matrix <- list(coef_vec)
-    }
-
-    return(coef_matrix)
-}
-
 #' Inference in discrete Bayesian networks
 #'
 #' Given the structure of a Bayesian network, estimate the parameters
@@ -145,17 +118,8 @@ get_coef_matrix <- function(coef_vec, node_name, n_levels) {
 #' @param dat Data, a dataframe or matrix
 #'
 #' @return
-#' A list with with one component for each node in the graph. The
-#' \eqn{i}th entry is a list containing information on the \eqn{i}th
-#' regression, last element for the \eqn{i}th regression is the
-#' intercept coefficient (always a scalar). For each parent \eqn{j} of
-#' node \eqn{i}, there is a list consisting of the index of parent \eqn{j}
-#' and a coefficient matrix \eqn{C_{ij}} for the influence parent \eqn{j}
-#' has on node \eqn{i} (the coefficient matrix is of size
-#' \eqn{(r_i-1)\times (r_j-1)}, where \eqn{r_i} is the number of levels
-#' of ith node). Note that the \eqn{(h,k)}th entry of the coefficient
-#' matrix \eqn{C_{ij}}, is the coefficient for level \eqn{k} of parent
-#' \eqn{j} has on level \eqn{h} of node \eqn{i}.
+#' A list with with one component for each node in the graph.
+#' Each node is a coefficient matrix for the parents of that node.
 #'
 #' @examples
 #'
@@ -180,14 +144,6 @@ get_coef_matrix <- function(coef_vec, node_name, n_levels) {
 #'
 #' ### run fit_multinom_dag
 #' fit.multinom <- fit_multinom_dag(edgeL, dat)
-#'
-#' ### interpret the output
-#' fit.multinom # a list of length 5
-#' fit.multinom[[1]] # the first variable has 2 parents,
-#'  thus the first entry has 3 slots. The last slot is the intercept coefficient.
-#'  And the first two slots each represent for a parent
-#' fit.multinom[[1]][[1]] # the first parent for the first node is "y"
-#' and the coefficient is -19.44
 #' }
 #'
 #' @export
@@ -215,22 +171,25 @@ fit_multinom_dag <- function(parents,
         if (length(x_ind)!=0) { # do nothing if a node has no parents
             fit <- nnet::multinom(data[, c(i, x_ind)], trace = FALSE) # Why does this work / should we do this?
             coef_vec <- coef(fit)
-            if(!is.matrix(coef_vec)) {
-                coef_name <- names(coef_vec)
-                coef_vec <- matrix(coef_vec, nrow=1)
-                colnames(coef_vec) <- coef_name
-                }
-            temp_n_levels <- n_levels[x_ind]
-            intercept <- coef_vec[, 1, drop = FALSE]
-            coef_vec <- coef_vec[, -1, drop = FALSE]
-            node_name <- as.character(colnames(data[, x_ind]))
-            coef_seq <- get_coef_matrix(coef_vec, node_name, temp_n_levels)
-            node_index <- 1:length(x_ind)
-            # coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=x_ind[x], coef=coef_seq[[x]])}, coef_seq, x_ind)
-            coef[[i]] <- lapply(node_index, function(x, coef_seq, x_ind){list(parent=colnames(data)[x_ind[x]], coef=coef_seq[[x]])}, coef_seq, x_ind)
-            coef[[i]][[length(x_ind)+1]] <- list(intercept=intercept)
+            subname <- names(data)[x_ind]
+            subn_levels <- n_levels[x_ind] - 1
+            if (is.matrix(coef_vec)) {
+                coef_names <- colnames(coef_vec)
+            }
+            else
+                coef_names <- names(coef_vec)
+            name_ind <- c(0, rep(x_ind, subn_levels))
+            coef_names_new <- lapply(1:length(x_ind), function(x){gsub(subname[x], paste0(subname[x], "_"), coef_names[which(name_ind==x_ind[x])])})
+            coef_names_new <- c(coef_names[1], unlist(coef_names_new))
+            if (is.matrix(coef_vec)) {
+                colnames(coef_vec) <- coef_names_new
+            }
+            else
+                names(coef_vec) <- coef_names_new
+            coef[[i]] <- coef_vec
         }
     }
+    names(coef) <- colnames(dat)
     return(coef)
 }
 
