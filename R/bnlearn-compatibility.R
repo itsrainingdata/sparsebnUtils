@@ -76,6 +76,9 @@ to_edgeList.bn <- function(x){
 # Helper function to convert a graphNEL object to an edgeList compatible list
 #
 bn_to_edgeList_list <- function(bn){
+    ### This is a slicker version of this function that we might consider switching to in the future
+    # lapply(bn$nodes, function(x) as.integer(x$parents))
+
     bn.numnode <- bnlearn::nnodes(bn)
     bn.nedge <- bnlearn::narcs(bn)
 
