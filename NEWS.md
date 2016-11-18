@@ -9,6 +9,7 @@
 * Added a `NEWS.md` file to track changes to the package
 * `select()` now uses fuzzy matching by default
 * Added new method `get.nodes()` to return node names from a `sparsebn` object
+* Improved output and print method for `estimate.parameters()` when using discrete data
 
 ## Bug fixes
 
