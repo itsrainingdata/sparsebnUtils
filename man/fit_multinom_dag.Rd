@@ -12,17 +12,8 @@ fit_multinom_dag(parents, dat)
 \item{dat}{Data, a dataframe or matrix}
 }
 \value{
-A list with with one component for each node in the graph. The
-\eqn{i}th entry is a list containing information on the \eqn{i}th
-regression, last element for the \eqn{i}th regression is the
-intercept coefficient (always a scalar). For each parent \eqn{j} of
-node \eqn{i}, there is a list consisting of the index of parent \eqn{j}
-and a coefficient matrix \eqn{C_{ij}} for the influence parent \eqn{j}
-has on node \eqn{i} (the coefficient matrix is of size
-\eqn{(r_i-1)\times (r_j-1)}, where \eqn{r_i} is the number of levels
-of ith node). Note that the \eqn{(h,k)}th entry of the coefficient
-matrix \eqn{C_{ij}}, is the coefficient for level \eqn{k} of parent
-\eqn{j} has on level \eqn{h} of node \eqn{i}.
+A list with with one component for each node in the graph.
+Each node is a coefficient matrix for the parents of that node.
 }
 \description{
 Given the structure of a Bayesian network, estimate the parameters
@@ -53,14 +44,6 @@ edgeL <- edgeList(li)
 
 ### run fit_multinom_dag
 fit.multinom <- fit_multinom_dag(edgeL, dat)
-
-### interpret the output
-fit.multinom # a list of length 5
-fit.multinom[[1]] # the first variable has 2 parents,
- thus the first entry has 3 slots. The last slot is the intercept coefficient.
- And the first two slots each represent for a parent
-fit.multinom[[1]][[1]] # the first parent for the first node is "y"
-and the coefficient is -19.44
 }
 
 }
