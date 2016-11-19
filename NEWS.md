@@ -1,4 +1,4 @@
-# sparsebnUtils 0.0.2
+# sparsebnUtils 0.0.3
 
 ## Major changes
 
@@ -16,7 +16,7 @@
 * Graphics layout for `plot.sparsebnPath()` now accounts for ommitted null graph
 * `random.dag()` now correctly accepts `FUN` for user-specification of RNG
 
-# sparsebnUtils 0.0.1
+# sparsebnUtils 0.0.2
 
-* Initial release
+* Initial stable release
 
