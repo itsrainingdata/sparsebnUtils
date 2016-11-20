@@ -13,7 +13,7 @@
 
 ## Bug fixes
 
-* Graphics layout for `plot.sparsebnPath()` now accounts for ommitted null graph
+* Graphics layout for `plot.sparsebnPath()` now accounts for omitted null graph
 * `random.dag()` now correctly accepts `FUN` for user-specification of RNG
 
 # sparsebnUtils 0.0.2
