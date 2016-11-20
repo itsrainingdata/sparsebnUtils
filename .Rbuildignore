@@ -4,3 +4,8 @@
 ^sparsebnUtils\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+inst/db
+man-roxygen
+^\.httr-oauth$
+^revdep$
+^codecov\.yml$

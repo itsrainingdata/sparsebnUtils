@@ -1,4 +1,4 @@
-# sparsebnUtils 0.0.2
+# sparsebnUtils 0.0.3
 
 ## Major changes
 
@@ -9,13 +9,14 @@
 * Added a `NEWS.md` file to track changes to the package
 * `select()` now uses fuzzy matching by default
 * Added new method `get.nodes()` to return node names from a `sparsebn` object
+* Improved output and print method for `estimate.parameters()` when using discrete data
 
 ## Bug fixes
 
-* Graphics layout for `plot.sparsebnPath()` now accounts for ommitted null graph
+* Graphics layout for `plot.sparsebnPath()` now accounts for omitted null graph
 * `random.dag()` now correctly accepts `FUN` for user-specification of RNG
 
-# sparsebnUtils 0.0.1
+# sparsebnUtils 0.0.2
 
-* Initial release
+* Initial stable release
 
