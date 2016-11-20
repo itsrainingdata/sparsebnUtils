@@ -39,7 +39,7 @@ resetGraphPackage <- function(coerce = TRUE){
 #'
 #' @param pkg The desired package; default value is \code{NULL} corresponding to \link{edgeList}. Possible values are \code{"sparsebn"}, \code{"igraph"}, \code{"graph"}, \code{"bnlearn"}, and \code{"network"}.
 #' @param matchPlot Force the underlying plotting mechanism to match the selected package (see \link{setPlotPackage}).
-#' @param coerce If \code{TRUE}, then all of the fitted objects in the global environment will be coerced to be compatible with the selected package. This will overwrite your existing data.
+#' @param coerce If \code{TRUE}, then all \code{\link{sparsebnFit}} and \code{\link{sparsebnPath}} objects in the global environment will be coerced to be compatible with the selected package. This will overwrite your existing data.
 #'
 #' @seealso \code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
 #'

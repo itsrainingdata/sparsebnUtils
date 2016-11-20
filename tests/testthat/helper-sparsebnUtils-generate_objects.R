@@ -48,6 +48,10 @@ generate_empty_edgeList <- function(){
     edgeList(list(integer(0)))
 }
 
+generate_empty_sparse <- function(){
+    sparse(list(rows = integer(0), cols = integer(0), vals = numeric(0), dim = c(1, 1), start = 1))
+}
+
 generate_empty_SparseBlockMatrixR <- function(){
     li <- list(rows = list(), vals = list(), blocks = list(), sigmas = c(), start = 1)
     SparseBlockMatrixR(li)
@@ -88,6 +92,13 @@ generate_fixed_edgeList <- function(){
     edgeL <- edgeList(li)
 
     edgeL
+}
+
+generate_fixed_sparse <- function(){
+    rows <- c(2, 4, 4, 5)
+    cols <- c(1, 1, 2, 2)
+    vals <- c(1, 5, 4, 3)
+    sparse(list(rows = as.integer(rows), cols = as.integer(cols), vals = vals, dim = c(5, 5), start = 1))
 }
 
 generate_fixed_graphNEL <- function(){
@@ -153,6 +164,17 @@ generate_fixed_sparsebnPath <- function(sbf = generate_fixed_sparsebnFit()){
     sbp <- sparsebnPath(list(sbf, sbf, sbf, sbf))
 
     sbp
+}
+
+generate_fixed_matrix <- function(){
+    ### Not the same as adjacency matrix!
+    m <- rbind(c(0, 0, 0, 0, 0),
+               c(1, 0, 0, 0, 0),
+               c(0, 0, 0, 0, 0),
+               c(5, 4, 0, 0, 0),
+               c(0, 3, 0, 0, 0))
+    m
+    # Matrix::Matrix(m)
 }
 
 generate_fixed_adjacency_matrix <- function(){

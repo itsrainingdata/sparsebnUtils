@@ -21,6 +21,7 @@
 \alias{default_max_iters}
 \alias{list_classes}
 \alias{pick_family}
+\alias{pmatch_numeric}
 \alias{reIndexC}
 \alias{reIndexR}
 \alias{recode_levels}
@@ -74,6 +75,8 @@ cor_vector(data)
 
 cor_vector_ivn(data, ivn)
 
+pmatch_numeric(x, table, tol = 0.1)
+
 zero_threshold()
 }
 \arguments{
@@ -98,6 +101,10 @@ zero_threshold()
 \item{data}{a \code{data.frame}.}
 
 \item{ivn}{list of interventions (see \code{\link{sparsebnData}}).}
+
+\item{table}{table of values to compare against.}
+
+\item{tol}{maximum tolerance used for matching.}
 }
 \description{
 Various utility functions for packages in the \code{sparsebn} family

@@ -4,7 +4,7 @@
 \alias{select.parameter}
 \title{Tuning parameter selection}
 \usage{
-select.parameter(x, data, type = "profile", alpha = 0.05)
+select.parameter(x, data, type = "profile", alpha = 0.1)
 }
 \arguments{
 \item{x}{\code{\link{sparsebnPath}} object.}

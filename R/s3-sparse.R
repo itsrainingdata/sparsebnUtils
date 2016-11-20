@@ -28,7 +28,7 @@
 
 #' sparse class
 #'
-#' Low-level representation of sparse matrices
+#' Low-level representation of sparse matrices.
 #'
 #' An alternative data structure for storing sparse matrices in R using the (row, column, value)
 #' format. Internally it is stored as a list with three components, each vectors, that contain
@@ -49,6 +49,22 @@ NULL
 is.sparse <- function(x){
     inherits(x, "sparse")
 } # END IS.SPARSE
+
+#' as.sparse
+#'
+#' Methods for coercing other \code{R} objects to \code{\link{sparse}} objects.
+#'
+#' @param x A compatible \code{R} object.
+#' @param index \code{"R"} or \code{"C"}, depending on whether to use R- or C-style indexing.
+#' @param ... other parameters.
+#'
+#' @return
+#' \code{\link{sparse}}
+#'
+#' @export
+as.sparse <- function(x, index = "R", ...){
+    sparse(x, index = "R", ...) # NOTE: S3 delegation is implicitly handled by the constructor here
+}
 
 #------------------------------------------------------------------------------#
 # reIndexC.sparse
@@ -141,10 +157,12 @@ sparse.matrix <- function(x, index = "R", ...){
     vals <- double(length(nnz))
     rows <- integer(length(nnz))
     cols <- integer(length(nnz))
+
+    x <- as.vector(x)
     for(k in seq_along(nnz)){
         col <- trunc(nnz[k] / pp)
         row <- nnz[k] - (pp * col)
-        vals[k] <- as.vector(x)[nnz[k] + 1]
+        vals[k] <- x[nnz[k] + 1]
         rows[k] <- row
         cols[k] <- col
     }
@@ -158,24 +176,43 @@ sparse.matrix <- function(x, index = "R", ...){
     }
 } # END SPARSE.MATRIX
 
-#------------------------------------------------------------------------------#
-# as.sparse.list
-#  Convert FROM list TO sparse
-#
 #' @export
-as.sparse.list <- function(x, ...){
-    sparse.list(x)
-} # END AS.SPARSE.LIST
+sparse.edgeList <- function(x, ...){
+    nnode <- num.nodes(x)
+    out <- list(rows = c(), cols = c(), vals = c(), dim = c(nnode, nnode), start = 1) # enforce R-style indexing since edgeLists are never passed to C++ (at least for the time being)
+    for(j in seq_along(x)){
+        child <- j
+        parset <- x[[child]] # parent set of j
+        out$rows <- c(out$rows, parset) # set parents of child
+        out$cols <- c(out$cols, rep(child, length(parset))) # children
+    }
 
-#------------------------------------------------------------------------------#
-# as.sparse.matrix
-#  Convert FROM matrix TO sparse
-#  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
-#    index = "C".
-#' @export
-as.sparse.matrix <- function(x, index = "R", ...){
-    sparse.matrix(x, index)
-} # END AS.SPARSE.MATRIX
+    if(length(out$rows) != length(out$cols))
+        stop("Error!")
+
+    out$vals <- as.numeric(rep(NA, length(out$cols))) # edgeLists do not carry weight information
+
+    sparse(out)
+}
+
+# #------------------------------------------------------------------------------#
+# # as.sparse.list
+# #  Convert FROM list TO sparse
+# #
+# #' @export
+# as.sparse.list <- function(x, ...){
+#     sparse.list(x)
+# } # END AS.SPARSE.LIST
+#
+# #------------------------------------------------------------------------------#
+# # as.sparse.matrix
+# #  Convert FROM matrix TO sparse
+# #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
+# #    index = "C".
+# #' @export
+# as.sparse.matrix <- function(x, index = "R", ...){
+#     sparse.matrix(x, index)
+# } # END AS.SPARSE.MATRIX
 
 #------------------------------------------------------------------------------#
 # as.matrix.sparse

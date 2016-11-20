@@ -13,7 +13,7 @@ setGraphPackage(pkg, matchPlot = TRUE, coerce = FALSE)
 getGraphPackage()
 }
 \arguments{
-\item{coerce}{If \code{TRUE}, then all of the fitted objects in the global environment will be coerced to be compatible with the selected package. This will overwrite your existing data.}
+\item{coerce}{If \code{TRUE}, then all \code{\link{sparsebnFit}} and \code{\link{sparsebnPath}} objects in the global environment will be coerced to be compatible with the selected package. This will overwrite your existing data.}
 
 \item{pkg}{The desired package; default value is \code{NULL} corresponding to \link{edgeList}. Possible values are \code{"sparsebn"}, \code{"igraph"}, \code{"graph"}, \code{"bnlearn"}, and \code{"network"}.}
 

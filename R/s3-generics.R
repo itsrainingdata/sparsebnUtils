@@ -12,50 +12,28 @@
 #   CONTENTS:
 #
 
-### Generics for sparsebnData ----------------------------------------
+### Constructors ----------------------------------------
 #' @rdname sparsebnData
 #' @export
 sparsebnData <- function(x, ...) UseMethod("sparsebnData", x)
 
-#' @rdname sparsebnData
-#' @export
-as.sparsebnData <- function(x, ...) UseMethod("as.sparsebnData", x)
-
-### Generics for sparsebnPath ----------------------------------------
 #' @rdname sparsebnPath
 #' @export
 sparsebnPath <- function(x) UseMethod("sparsebnPath", x)
 
-#' @rdname sparsebnPath
-#' @export
-as.sparsebnPath <- function(x) UseMethod("as.sparsebnPath", x)
-
-### Generics for sparsebnFit ----------------------------------------
 #' @rdname sparsebnFit
 #' @export
 sparsebnFit <- function(x) UseMethod("sparsebnFit", x)
 
-#' @rdname sparsebnFit
-#' @export
-as.sparsebnFit <- function(x) UseMethod("as.sparsebnFit", x)
-
-### Generics for sparse ---------------------------------------------
 #' @rdname sparse
 #' @export
 sparse <- function(x, ...) UseMethod("sparse", x)
 
-#' @rdname sparse
-#' @export
-as.sparse <- function(x, ...) UseMethod("as.sparse", x)
-
-### Generics for edgeList ---------------------------------------------
 #' @rdname edgeList
 #' @export
 edgeList <- function(x) UseMethod("edgeList", x)
 
-#' @rdname edgeList
-#' @export
-as.edgeList <- function(x) UseMethod("as.edgeList", x) # NOTE: Right now this is extended (only) in ccdrAlgorithm,
+### User methods ----------------------------------------
 
 #' Conversion to edgeList object
 #'
@@ -94,6 +72,18 @@ get.adjacency.matrix <- function(x) UseMethod("get.adjacency.matrix", x)
 #'
 #' @export
 get.lambdas <- function(x) UseMethod("get.lambdas", x)
+
+#' get.nodes
+#'
+#' Returns the node names associated with a fitted object.
+#'
+#' @param x a \code{\link{sparsebnFit}} or \code{\link{sparsebnPath}} object.
+#'
+#' @return
+#' Vector of \code{character} names.
+#'
+#' @export
+get.nodes <- function(x) UseMethod("get.nodes", x)
 
 #' num.nodes
 #'
@@ -160,28 +150,6 @@ estimate.parameters <- function(fit, data, ...){
     stopifnot(is.sparsebnData(data))
     UseMethod("estimate.parameters", fit)
 }
-
-# #' @rdname estimate.covariance
-# #' @export
-# estimate.covariance <- function(data, ...){
-#     stopifnot(is.sparsebnData(data))
-#     if(data$type != "continuous"){
-#         stop(feature_not_supported("Covariance estimation for discrete models"))
-#     }
-#
-#     UseMethod("estimate.covariance", data)
-# }
-
-# #' @rdname estimate.covariance
-# #' @export
-# estimate.precision <- function(data, ...){
-#     stopifnot(is.sparsebnData(data))
-#     if(data$type != "continuous"){
-#         stop(feature_not_supported("Precision matrix estimation for discrete models"))
-#     }
-#
-#     UseMethod("estimate.precision", data)
-# }
 
 #' Covariance and precision matrices
 #'

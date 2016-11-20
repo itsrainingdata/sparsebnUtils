@@ -2,18 +2,24 @@
 % Please edit documentation in R/sparsebnUtils-generate.R
 \name{random.dag}
 \alias{random.dag}
-\title{Generate a random DAG with fixed number of edges}
+\title{Generate random DAGs}
 \usage{
-random.dag(nnode, nedge, call = NULL)
+random.dag(nnode, nedge, FUN = NULL, ...)
 }
 \arguments{
 \item{nnode}{Number of nodes in the DAG}
 
 \item{nedge}{Number of edges in the DAG}
 
-\item{call}{Optional function to be used as a random number generator}
+\item{FUN}{Optional function to be used as a random number generator}
+
+\item{...}{Additional arguments to \code{FUN}.}
 }
 \description{
-Generate a random DAG with fixed number of edges
+Generate a random DAG with fixed number of edges.
+}
+\details{
+FUN can be any function whose first argument is called \code{n}. This
+allows for both random and deterministic outputs.
 }
 

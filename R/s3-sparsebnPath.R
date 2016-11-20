@@ -38,12 +38,30 @@
 #' Internally, this estimate is represented by a \code{\link{sparsebnFit}} object. The full solution
 #' path is then represented as a \code{\link{list}} of \code{\link{sparsebnFit}} objects: This class is essentially a wrapper for this list.
 #'
+#' Most methods for \code{\link{sparsebnPath}} objects simply apply \code{\link{lapply}} to the
+#' object in question. The exceptions to this rule apply when the output will always be the same
+#' for every component; e.g. \code{\link{num.nodes}} and \code{\link{num.samples}}.
+#'
 #' @param x Only used internally.
 #' @param ... (optional) additional arguments.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}}, \code{\link{get.lambdas}},
 #' \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
+#'
+#' @examples
+#'
+#' \dontrun{
+#' ### Learn the cytometry network
+#' data(cytometryContinuous)
+#' cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
+#' cyto.learn <- estimate.dag(cyto.data)
+#'
+#' ### Inspect the output
+#' class(cyto.learn)
+#' print(cyto.learn)
+#' plot(cyto.learn)
+#' }
 #'
 #' @docType class
 #' @name sparsebnPath
@@ -121,6 +139,14 @@ get.lambdas.sparsebnPath <- function(x){
     lambdas
 } # END GET.LAMBDAS.SPARSEBNPATH
 
+#' Extract node names from solution path
+#'
+#' @describeIn get.nodes Returns the node names from a \code{\link{sparsebnPath}} object.
+#' @export
+get.nodes.sparsebnPath <- function(x){
+    x[[1]]$nodes
+} # END GET.NODES.SPARSEBNPATH
+
 #' @describeIn get.adjacency.matrix Retrieves all \code{edges} slots in the solution path, converts to an adjacency matrix, and returns as a list
 #' @export
 get.adjacency.matrix.sparsebnPath <- function(x){
@@ -134,67 +160,18 @@ get.adjacency.matrix.sparsebnPath <- function(x){
     sparsebnPath(as.list(x)[i])
 }
 
-#' Select solutions from a solution path
-#'
-#' Choose solutions from a solution path based on number of edges, value of
-#' regularization parameter lambda, or index.
-#'
-#' If there is more than one match (for example, by number of edges), then
-#' the first such estimate is returned. Note that \code{get.solution(x, index = j)}
-#' is equivalent to (but slightly slower than) \code{x[[j]]}.
-#'
-#' @param x a \code{\link{sparsebnPath}} object.
-#' @param edges number of edges to search for.
-#' @param lambda value of regularization parameter to search for.
-#' @param index integer index to select.
-#'
-#' @export
-get.solution <- function(x, edges, lambda, index){
-    stopifnot(is.sparsebnPath(x))
-
-    ### NOTE: Consider adding fuzzy matching in a future release
-
-    if(!missing(edges)){
-        if(!missing(lambda) || !missing(index)){
-            stop("'edges' cannot be specified with 'lambda' or 'index'! Select only one.")
-        }
-
-        which.idx <- which(num.edges(x) == edges)
-    } else if(!missing(lambda)){
-        if(!missing(edges) || !missing(index)){
-            stop("'lambda' cannot be specified with 'edges' or 'index'! Select only one.")
-        }
-
-        which.idx <- which(get.lambdas(x) == lambda)
-    } else if(!missing(index)){
-        if(!missing(edges) || !missing(lambda)){
-            stop("'index' cannot be specified with 'edges' or 'lambda'! Select only one.")
-        }
-
-        which.idx <- index
-    } else{
-        stop("Must specify something to select! Choose 'edges', 'lambda', or 'index'.")
-    }
-
-    if(length(which.idx) == 0){
-        NULL # return NULL if nothing found (mimics default behaviour of lists in R)
-    } else{
-        x[[min(which.idx)]] # return minimum index by default
-    }
-}
-
 #' @rdname plot.edgeList
 #' @method plot sparsebnPath
 #' @export
 plot.sparsebnPath <- function(x, ...){
+    ### Issues when plotting null DAG, so remove it
+    x <- x[-1] # Do this BEFORE setting the grid layout below!
+
     ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
     par.default <- par()[c("mfrow", "mai")] # Only re-set what we change here
     par(mfrow = n2mfrow(length(x)),         # Automatically choose a sensible grid to use
         mai = rep(0,4)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
         )
-
-    ### Issues when plotting null DAG, so remove it
-    x <- x[-1]
 
     tryCatch({
         # lapply(x, plot)

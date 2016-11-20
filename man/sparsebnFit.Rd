@@ -2,7 +2,6 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnFit.R
 \docType{class}
 \name{sparsebnFit}
-\alias{as.sparsebnFit}
 \alias{is.sparsebnFit}
 \alias{print.sparsebnFit}
 \alias{sparsebnFit}
@@ -10,14 +9,12 @@
 \usage{
 sparsebnFit(x)
 
-as.sparsebnFit(x)
-
 is.sparsebnFit(x)
 
 \method{print}{sparsebnFit}(x, maxsize = 20, ...)
 }
 \arguments{
-\item{x}{Only used internally.}
+\item{x}{An \code{R} object.}
 
 \item{maxsize}{If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
 graph is printed to screen, otherwise a short summary is displayed instead.}
@@ -25,16 +22,40 @@ graph is printed to screen, otherwise a short summary is displayed instead.}
 \item{...}{(optional) additional arguments.}
 }
 \description{
-Main class for representing DAG estimates: Represents a single DAG estimate in the solution path.
+Main class for representing DAG estimates. Represents a single DAG estimate in a solution path.
 }
 \details{
-Generally speaking, these estimates should be wrapped up in a \code{\link{sparsebnPath}} object, but
-can be handled separately if desired (be careful!).
+This is the main class for storing and manipulating the output of \code{\link[sparsebn]{estimate.dag}}.
+The main slot of interest is \code{edges}, which stores the graph as an \code{\link{edgeList}}
+object. If desired, this slot can be changed to hold a \code{\link[graph]{graphNEL}},
+\code{\link[igraph]{igraph}}, or \code{\link[network]{network}} object if desired (see
+\code{\link{setGraphPackage}}). For anything beyond simply inspecting the graph, it is recommended
+to use one of these packages.
+
+Since \code{edgeList}s do not contain information on the node names, the second slot
+\code{nodes} stores this information. The indices in \code{edges} are in one-to-one
+correspondence with the names in the \code{nodes} vector. The \code{lambda} slot stores
+ the regularization parameter used to estinate the graph.
+
+Other slots include \code{nedge}, for the number of edges; \code{pp}, for p = number of nodes;
+\code{nn}, for n = number of samples, and \code{time}, for the time in seconds needed to
+estimate this graph. Note that these slots are mainly for internal use, and in particular
+it is best to query the number of nodes via \code{\link{num.nodes}}, the number of edges
+via \code{\link{num.edges}}, and the number of samples via \code{\link{num.samples}}.
+
+By default, only small graphs are printed, but this behaviour can be overridden via the
+\code{maxsize} argument to \code{print}. To view a list of parents for a specific subset of
+nodes, use \code{\link{show.parents}}.
+
+Generally speaking, it should not be necessary to construct a \code{sparsebnFit} object
+manually. Furthermore, these estimates should always be wrapped up in a \code{\link{sparsebnPath}}
+object, but can be handled separately if desired (be careful!).
 }
 \section{Slots}{
 
 \describe{
 \item{\code{edges}}{(\code{\link{edgeList}}) Edge list of estimated DAG (see \code{\link{edgeList}}).}
+\item{\code{nodes}}{(\code{\link{character}}) Vector of node names.}
 \item{\code{lambda}}{(\code{\link{numeric}}) Value of lambda for this estimate.}
 \item{\code{nedge}}{(\code{\link{integer}}) Number of edges in this estimate.}
 \item{\code{pp}}{(\code{\link{integer}}) Number of nodes.}
@@ -45,7 +66,38 @@ can be handled separately if desired (be careful!).
 
 \section{Methods}{
 
-\code{\link{get.adjacency.matrix}}
-\code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
+\code{\link{get.adjacency.matrix}},
+\code{\link{num.nodes}},
+\code{\link{num.edges}},
+\code{\link{num.samples}},
+\code{\link{show.parents}}
+}
+\examples{
+
+\dontrun{
+### Learn the cytometry network
+data(cytometryContinuous)
+cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
+cyto.learn <- estimate.dag(cyto.data)
+
+### Inspect the output
+class(cyto.learn[[1]])
+print(cyto.learn[[2]])
+show.parents(cyto.learn[[1]], c("raf", "mek", "plc"))
+
+### Manipulate a particular graph
+cyto.fit <- cyto.learn[[7]]
+num.nodes(cyto.fit)
+num.edges(cyto.fit)
+show.parents(cyto.fit, c("raf", "mek", "plc"))
+plot(cyto.fit)
+
+### Use graph package instead of edgeLists
+setGraphPackage("graph", coerce = TRUE) # set sparsebn to use graph package
+cyto.edges <- cyto.fit$edges
+degree(cyto.edges)       # only available with graph package
+isConnected(cyto.edges)  # only available with graph package
+}
+
 }
 

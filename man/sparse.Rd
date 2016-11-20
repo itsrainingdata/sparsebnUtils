@@ -2,14 +2,11 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparse.R
 \docType{class}
 \name{sparse}
-\alias{as.sparse}
 \alias{is.sparse}
 \alias{sparse}
 \title{sparse class}
 \usage{
 sparse(x, ...)
-
-as.sparse(x, ...)
 
 is.sparse(x)
 }
@@ -19,7 +16,7 @@ is.sparse(x)
 \item{...}{(optional) additional arguments.}
 }
 \description{
-Low-level representation of sparse matrices
+Low-level representation of sparse matrices.
 }
 \details{
 An alternative data structure for storing sparse matrices in R using the (row, column, value)
