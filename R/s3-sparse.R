@@ -147,33 +147,15 @@ sparse.list <- function(x, ...){
 #
 #' @export
 sparse.matrix <- function(x, index = "R", ...){
-    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+    matrix_to_sparse(x, index = "R", ...)
+} # END SPARSE.MATRIX
 
-    if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
-
-    pp <- nrow(x)
-
-    nnz <- which(abs(x) > zero_threshold()) - 1
-    vals <- double(length(nnz))
-    rows <- integer(length(nnz))
-    cols <- integer(length(nnz))
-
-    x <- as.vector(x)
-    for(k in seq_along(nnz)){
-        col <- trunc(nnz[k] / pp)
-        row <- nnz[k] - (pp * col)
-        vals[k] <- x[nnz[k] + 1]
-        rows[k] <- row
-        cols[k] <- col
-    }
-
-    sp <- sparse.list(list(rows = as.integer(rows), cols = as.integer(cols), vals = as.numeric(vals), dim = c(pp, pp), start = 0))
-
-    if(index == "R"){
-        reIndexR(sp)
-    } else{
-        sp
-    }
+#------------------------------------------------------------------------------#
+# sparse.Matrix
+#
+#' @export
+sparse.Matrix <- function(x, index = "R", ...){
+    matrix_to_sparse(x, index = "R", ...)
 } # END SPARSE.MATRIX
 
 #' @export
@@ -291,3 +273,46 @@ is.zero.sparse <- function(x){
 
     length(which(abs(x$vals) > zero_threshold()))
 } # END .NUM_EDGES.SPARSE
+
+matrix_to_sparse <- function(x, index = "R", ...){
+    stopifnot(check_if_matrix(x))
+
+    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+
+    if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
+
+    pp <- nrow(x)
+
+    nnz <- Matrix::which(abs(x) > zero_threshold(), arr.ind = TRUE)
+    vals <- double(nrow(nnz))
+    rows <- integer(nrow(nnz))
+    cols <- integer(nrow(nnz))
+
+    for(k in seq_len(nrow(nnz))){
+        rows[k] <- nnz[k, 1]
+        cols[k] <- nnz[k, 2]
+        vals[k] <- x[rows[k], cols[k]]
+    }
+
+    # nnz <- Matrix::which(abs(x) > zero_threshold()) - 1
+    # vals <- double(length(nnz))
+    # rows <- integer(length(nnz))
+    # cols <- integer(length(nnz))
+    #
+    # x <- as.vector(x)
+    # for(k in seq_along(nnz)){
+    #     col <- trunc(nnz[k] / pp)
+    #     row <- nnz[k] - (pp * col)
+    #     vals[k] <- x[nnz[k] + 1]
+    #     rows[k] <- row
+    #     cols[k] <- col
+    # }
+
+    sp <- sparse.list(list(rows = as.integer(rows), cols = as.integer(cols), vals = as.numeric(vals), dim = c(pp, pp), start = 1))
+
+    if(index == "R"){
+        suppressWarnings(reIndexR(sp))
+    } else{
+        suppressWarnings(reIndexC(sp))
+    }
+} # END MATRIX_TO_SPARSE

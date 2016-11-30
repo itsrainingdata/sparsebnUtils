@@ -1,3 +1,10 @@
+# sparsebnUtils 0.0.4
+
+# Minor notes
+
+* `as.sparse()` now accepts `Matrix` input
+* Conversion from `matrix` to `sparse` now uses `arr.ind = TRUE`
+
 # sparsebnUtils 0.0.3
 
 ## Major changes
