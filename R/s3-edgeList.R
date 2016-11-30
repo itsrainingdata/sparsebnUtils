@@ -122,17 +122,12 @@ edgeList.sparse <- function(x, ...){
 
 #' @export
 edgeList.matrix <- function(x){
-    out <- edgeList(as.sparse(x))
+    matrix_to_edgeList(x)
+}
 
-    if(!all(colnames(x) == rownames(x))){
-        warning("Row names do not match column names! Defaulting to use column names only.")
-    }
-
-    if(!is.null(colnames(x))){
-        names(out) <- colnames(x)
-    }
-
-    out
+#' @export
+edgeList.Matrix <- function(x){
+    matrix_to_edgeList(x)
 }
 
 #' @method print edgeList
@@ -268,3 +263,19 @@ edgelist_mat_to_edgeList_list <- function(x, numnode){
 
     edgeL
 } # END EDGELIST_MAT_TO_EDGELIST_LIST
+
+matrix_to_edgeList <- function(x){
+    stopifnot(check_if_matrix(x))
+
+    out <- edgeList(as.sparse(x))
+
+    if(!all(colnames(x) == rownames(x))){
+        warning("Row names do not match column names! Defaulting to use column names only.")
+    }
+
+    if(!is.null(colnames(x))){
+        names(out) <- colnames(x)
+    }
+
+    out
+} # END MATRIX_TO_EDGELIST
