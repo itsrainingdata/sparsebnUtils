@@ -1,9 +1,8 @@
 # sparsebnUtils 0.0.4
 
-# Minor notes
+# Notes
 
-* `as.sparse()` now accepts `Matrix` input
-* Conversion from `matrix` to `sparse` now uses `arr.ind = TRUE`
+* Conversion to and from sparse matrices using `as.sparse` is now significantly faster and supports `Matrix` input
 
 # sparsebnUtils 0.0.3
 
