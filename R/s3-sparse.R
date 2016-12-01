@@ -278,15 +278,20 @@ t.sparse <- function(x){
 # .num_edges
 # Internal function for returning the number of edges in a sparse object
 #
-.num_edges <- function(x){
+.num_edges <- function(x, threshold = FALSE){
     stopifnot(is.sparse(x))
 
-    ### Testing only for now
-    if(length(which(abs(x$vals) > zero_threshold())) != length(x$rows)){
-        stop("Error in .num_edges.sparse! Please check source code.")
+    if(!threshold){
+        length(x$rows)
+    } else{
+        ### Testing only for now
+        if(length(which(abs(x$vals) > zero_threshold())) != length(x$rows)){
+            stop("Error in .num_edges.sparse! Please check source code.")
+        }
+
+        length(which(abs(x$vals) > zero_threshold()))
     }
 
-    length(which(abs(x$vals) > zero_threshold()))
 } # END .NUM_EDGES
 
 matrix_to_sparse <- function(x, index = "R", ...){
