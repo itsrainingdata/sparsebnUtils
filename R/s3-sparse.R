@@ -243,17 +243,51 @@ is.zero.sparse <- function(x){
 } # END IS.ZERO.SPARSE
 
 #------------------------------------------------------------------------------#
-# .num_edges.sparse
+# num.nodes.sparse
+#
+#' @export
+num.nodes.sparse <- function(x){
+    x$dim[2]
+} # NUM.NODES.SPARSE
+
+#------------------------------------------------------------------------------#
+# num.edges.sparse
+#
+#' @export
+num.edges.sparse <- function(x){
+    ### What to do about this special case...
+    # length(x$rows) # Ignores potentially very small edge weights which may be zero
+
+    .num_edges(x)
+} # NUM.EDGES.SPARSE
+
+#------------------------------------------------------------------------------#
+# t.sparse
+#  Take implicit transpose by swapping rows <-> cols
+#
+#' @export
+t.sparse <- function(x){
+    temp <- x$rows
+    x$rows <- x$cols
+    x$cols <- temp
+
+    x
+}
+
+#------------------------------------------------------------------------------#
+# .num_edges
 # Internal function for returning the number of edges in a sparse object
 #
-.num_edges.sparse <- function(x){
+.num_edges <- function(x){
+    stopifnot(is.sparse(x))
+
     ### Testing only for now
     if(length(which(abs(x$vals) > zero_threshold())) != length(x$rows)){
         stop("Error in .num_edges.sparse! Please check source code.")
     }
 
     length(which(abs(x$vals) > zero_threshold()))
-} # END .NUM_EDGES.SPARSE
+} # END .NUM_EDGES
 
 matrix_to_sparse <- function(x, index = "R", ...){
     stopifnot(check_if_matrix(x))

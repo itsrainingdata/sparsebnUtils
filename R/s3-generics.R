@@ -207,6 +207,6 @@ reIndexC <- function(x) UseMethod("reIndexC", x)
 reIndexR <- function(x) UseMethod("reIndexR", x)
 
 # Internal generics --------------------------------------
-.num_edges <- function(x) UseMethod(".num_edges", x)
+# .num_edges <- function(x) UseMethod(".num_edges", x)
 # to_B <- function(x) UseMethod("to_B", x)
 
