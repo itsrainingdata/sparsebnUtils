@@ -147,33 +147,15 @@ sparse.list <- function(x, ...){
 #
 #' @export
 sparse.matrix <- function(x, index = "R", ...){
-    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+    matrix_to_sparse(x, index = "R", ...)
+} # END SPARSE.MATRIX
 
-    if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
-
-    pp <- nrow(x)
-
-    nnz <- which(abs(x) > zero_threshold()) - 1
-    vals <- double(length(nnz))
-    rows <- integer(length(nnz))
-    cols <- integer(length(nnz))
-
-    x <- as.vector(x)
-    for(k in seq_along(nnz)){
-        col <- trunc(nnz[k] / pp)
-        row <- nnz[k] - (pp * col)
-        vals[k] <- x[nnz[k] + 1]
-        rows[k] <- row
-        cols[k] <- col
-    }
-
-    sp <- sparse.list(list(rows = as.integer(rows), cols = as.integer(cols), vals = as.numeric(vals), dim = c(pp, pp), start = 0))
-
-    if(index == "R"){
-        reIndexR(sp)
-    } else{
-        sp
-    }
+#------------------------------------------------------------------------------#
+# sparse.Matrix
+#
+#' @export
+sparse.Matrix <- function(x, index = "R", ...){
+    Matrix_to_sparse(x, index = "R", ...)
 } # END SPARSE.MATRIX
 
 #' @export
@@ -194,25 +176,6 @@ sparse.edgeList <- function(x, ...){
 
     sparse(out)
 }
-
-# #------------------------------------------------------------------------------#
-# # as.sparse.list
-# #  Convert FROM list TO sparse
-# #
-# #' @export
-# as.sparse.list <- function(x, ...){
-#     sparse.list(x)
-# } # END AS.SPARSE.LIST
-#
-# #------------------------------------------------------------------------------#
-# # as.sparse.matrix
-# #  Convert FROM matrix TO sparse
-# #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
-# #    index = "C".
-# #' @export
-# as.sparse.matrix <- function(x, index = "R", ...){
-#     sparse.matrix(x, index)
-# } # END AS.SPARSE.MATRIX
 
 #------------------------------------------------------------------------------#
 # as.matrix.sparse
@@ -291,3 +254,70 @@ is.zero.sparse <- function(x){
 
     length(which(abs(x$vals) > zero_threshold()))
 } # END .NUM_EDGES.SPARSE
+
+matrix_to_sparse <- function(x, index = "R", ...){
+    stopifnot(check_if_matrix(x))
+
+    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+
+    if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
+
+    pp <- nrow(x)
+
+    # t1 <- proc.time()[3] ################################################
+    nnz <- Matrix::which(is.na(x) | (abs(x) > zero_threshold()), arr.ind = TRUE)
+    # t2 <- proc.time()[3] ################################################
+    # cat(sprintf("as.sparse nnz via which(...): %f\n", t2-t1))
+
+    ### This is a weird hack that is surprisingly fast:
+    ###  Note that the output of which is in the same order as as.vector,
+    ###  in the sense that the first element in as.vector(x[x != 0])
+    ###  corresponds exactly to the first row of nnz (which is the output
+    ###  of which).
+    ###
+    ### This is _substantially_ faster than either Matrix::Matrix
+    ###  and an Rcpp implementation of the loop that was previously used.
+    vals <- as.vector(x[x != 0])
+    rows <- nnz[, 1]
+    cols <- nnz[, 2]
+
+    sp <- sparse.list(list(rows = as.integer(rows), cols = as.integer(cols), vals = as.numeric(vals),
+                           dim = c(pp, pp),
+                           start = 1
+                           )
+                      )
+
+    if(index == "R"){
+        suppressWarnings(reIndexR(sp))
+    } else{
+        suppressWarnings(reIndexC(sp))
+    }
+} # END MATRIX_TO_SPARSE
+
+Matrix_to_sparse <- function(x, index = "R", ...){
+    stopifnot(check_if_matrix(x))
+
+    if( nrow(x) != ncol(x)) stop("Input matrix must be square!") # 2-7-15: Why does it need to be square?
+
+    if(index != "R" && index != "C") stop("Invalid entry for index parameter: Must be either 'R' or 'C'!")
+
+    pp <- nrow(x)
+
+    ### If already a Matrix object, just pull out the corresponding slots
+    Tx <- as(x, "dgTMatrix") # needs to be in triplet form, see ?dgCMatrix vs ?dgTMatrix
+    vals <- Tx@x
+    rows <- Tx@i
+    cols <- Tx@j
+
+    sp <- sparse.list(list(rows = as.integer(rows), cols = as.integer(cols), vals = as.numeric(vals),
+                           dim = c(pp, pp),
+                           start = 0 # NOTE: dgTMatrix uses C-style indexing, so this is different from matrix_to_sparse!
+                           )
+                      )
+
+    if(index == "R"){
+        suppressWarnings(reIndexR(sp))
+    } else{
+        suppressWarnings(reIndexC(sp))
+    }
+} # END MATRIX_TO_SPARSE
