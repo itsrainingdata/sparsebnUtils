@@ -71,7 +71,3 @@ test_that("checks types for rows / cols / vals", {
     li <- list(rows = c(0L), cols = c(0L), vals = c("a"), dim = c(1,1), start = 0)
     expect_error(sparse.list(li))
 })
-
-# test_that("constructor", {
-#     expect_is(sparse(list()))
-# })

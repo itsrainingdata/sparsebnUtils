@@ -177,25 +177,6 @@ sparse.edgeList <- function(x, ...){
     sparse(out)
 }
 
-# #------------------------------------------------------------------------------#
-# # as.sparse.list
-# #  Convert FROM list TO sparse
-# #
-# #' @export
-# as.sparse.list <- function(x, ...){
-#     sparse.list(x)
-# } # END AS.SPARSE.LIST
-#
-# #------------------------------------------------------------------------------#
-# # as.sparse.matrix
-# #  Convert FROM matrix TO sparse
-# #  By default, return the object using R indexing. If desired, the method can return C-style indexing by setting
-# #    index = "C".
-# #' @export
-# as.sparse.matrix <- function(x, index = "R", ...){
-#     sparse.matrix(x, index)
-# } # END AS.SPARSE.MATRIX
-
 #------------------------------------------------------------------------------#
 # as.matrix.sparse
 #  Convert FROM sparse TO matrix
