@@ -33,6 +33,19 @@ test_that("Conversion between edgeList <-> matrix works", {
     expect_equivalent(edgeL, as.edgeList(as.matrix(edgeL)))
 })
 
+test_that("Conversion between edgeList <-> graphNEL/igraph/network <-> matrix works", {
+    ### Check null graph
+    expect_equivalent(edgeL0, as.edgeList(as(mat0, "graphNEL")))
+    expect_equivalent(edgeL0, as.edgeList(igraph::graph.adjacency(mat0, weighted = TRUE)))
+    expect_equivalent(edgeL0, as.edgeList(network::network(mat0)))
+    # MISSING TEST FOR BN
+
+    expect_equivalent(edgeL, as.edgeList(as(mat, "graphNEL")))
+    expect_equivalent(edgeL, as.edgeList(igraph::graph.adjacency(mat, weighted = TRUE)))
+    expect_equivalent(edgeL, as.edgeList(network::network(mat)))
+    # MISSING TEST FOR BN
+})
+
 test_that("Conversion between sparse <-> matrix works", {
     ### Check null graph
     expect_equivalent(mat0, as.matrix(as.sparse(mat0)))
