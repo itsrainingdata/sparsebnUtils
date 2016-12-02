@@ -130,6 +130,26 @@ edgeList.Matrix <- function(x){
     matrix_to_edgeList(x)
 }
 
+#' @export
+edgeList.graphNEL <- function(x){
+    to_edgeList(x)
+}
+
+#' @export
+edgeList.network <- function(x){
+    to_edgeList(x)
+}
+
+#' @export
+edgeList.igraph <- function(x){
+    to_edgeList(x)
+}
+
+#' @export
+edgeList.bn <- function(x){
+    to_edgeList(x)
+}
+
 #' @method print edgeList
 #' @export
 print.edgeList <- function(x, maxsize = 20, ...){
