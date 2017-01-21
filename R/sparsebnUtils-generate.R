@@ -61,6 +61,12 @@ random.dag <- function(nnode, nedge, FUN = NULL, ...){
     vals[nonzero_coefs] <- coefs
     m[lower.tri(m)] <- vals
 
+    ### Name the cols/rows according to the current top sort
+    ### This is useful since it gives quick access to a
+    ###  top sort for the graph even after permuting
+    colnames(m) <- rownames(m) <- paste0("V", 1:nnode)
+
+
     ### shuffle the rows and columns
     shuffle <- sample(1:nnode)
     m <- m[shuffle, shuffle]
