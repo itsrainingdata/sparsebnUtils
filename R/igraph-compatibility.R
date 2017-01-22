@@ -48,7 +48,11 @@ to_igraph.edgeList <- function(x){
     #     igraph::graph.empty(n = num.nodes(x), directed = TRUE)
     # }
 
-    to_igraph(to_graphNEL(x))
+    ### to_graphNEL loses node names
+    # to_igraph(to_graphNEL(x))
+
+    ### Slow, but keeps node names
+    igraph::graph.adjacency(as.matrix(x))
 }
 
 #' @export
