@@ -110,6 +110,8 @@ gen_params <- function(graph, FUN = NULL, ...){
 #' @param FUN Optional function to be used as a random number generator
 #' @param ... Additional arguments to \code{FUN}.
 #'
+#' @return An (weighted) adjacency matrix.
+#'
 #' @export
 random.dag <- function(nnode, nedge, FUN = NULL, ...){
 
