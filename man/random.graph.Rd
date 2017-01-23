@@ -12,6 +12,8 @@ random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE)
 \item{nedge}{Number of edges in the graph.}
 
 \item{acyclic}{If \code{TRUE}, output will be an acyclic graph.}
+
+\item{loops}{If \code{TRUE}, output may include self-loops.}
 }
 \value{
 An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for each node.

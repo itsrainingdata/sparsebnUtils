@@ -23,6 +23,7 @@
 #' @param nnode Number of nodes in the graph.
 #' @param nedge Number of edges in the graph.
 #' @param acyclic If \code{TRUE}, output will be an acyclic graph.
+#' @param loops If \code{TRUE}, output may include self-loops.
 #'
 #' @return An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for each node.
 #'
@@ -44,7 +45,7 @@ random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
     node_order <- 1:nnode
 
     ### Get all pairs of off-diagonal indices in a pxp matrix
-    indices <- sparsebnUtils:::allBlocks(node_order)
+    indices <- allBlocks(node_order)
 
     ### Eliminate self-loops
     if(!loops){
