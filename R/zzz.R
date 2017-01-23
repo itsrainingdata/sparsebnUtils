@@ -11,6 +11,7 @@
 
 #' @importFrom grDevices dev.off n2mfrow
 #' @importFrom graphics par plot
+#' @importFrom methods as
 
 .onAttach <- function(libname, pkgname){
     ### Only sparsebn needs a package startup message

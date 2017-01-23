@@ -15,6 +15,9 @@ random.dag(nnode, nedge, FUN = NULL, ...)
 
 \item{...}{Additional arguments to \code{FUN}.}
 }
+\value{
+An (weighted) adjacency matrix.
+}
 \description{
 Generate a random DAG with fixed number of edges.
 }

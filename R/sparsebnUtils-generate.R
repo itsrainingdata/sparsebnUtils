@@ -13,7 +13,91 @@
 #       random.dag
 #       random.spd
 #       random_householder
+#       allBlocks
 #
+
+#' Generate random DAGs
+#'
+#' Generate a random graph with fixed number of edges.
+#'
+#' @param nnode Number of nodes in the graph.
+#' @param nedge Number of edges in the graph.
+#' @param acyclic If \code{TRUE}, output will be an acyclic graph.
+#' @param loops If \code{TRUE}, output may include self-loops.
+#'
+#' @return An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for each node.
+#'
+#' @export
+random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
+
+    max_nnz <- nnode*(nnode-1)/2
+    if(nedge > max_nnz){
+        stop(sprintf("A DAG with p = %d nodes can have at most p*(p-1)/2 = %d edges! Please check your input for nedge.", nnode, max_nnz))
+    }
+
+    #
+    # Sample a random edgeList
+    #
+    # nnode <- 10
+    # nedge <- nnode*(nnode-1)/2
+
+    ### First use natural ordering 1,...,p
+    node_order <- 1:nnode
+
+    ### Get all pairs of off-diagonal indices in a pxp matrix
+    indices <- allBlocks(node_order)
+
+    ### Eliminate self-loops
+    if(!loops){
+        indices <- indices[indices[,1] != indices[,2], ]
+    }
+
+    ### If acyclic, select pairs in the lower triangular portion
+    if(acyclic){
+        indices <- indices[indices[,1] > indices[,2], ]
+    }
+
+    ### Randomly sample nedge of these pairs
+    edges <- sample(1:nrow(indices), size = nedge)
+    indices <- indices[edges, ]
+
+    ### Convert from sparse representation to child-parent edge list
+    edgeL <- lapply(1:nnode, function(x) unname(indices[indices[,2] == x, 1, drop = TRUE]))
+
+    ### Name the cols/rows according to the current top sort
+    ### This is useful since it gives quick access to a
+    ###  top sort for the graph even after permuting
+    names(edgeL) <- paste0("V", 1:nnode)
+
+
+    ### Permute the nodes
+    # 1) Get a random ordering
+    # 2) Re-assign all parents to their new values (node_order[x])
+    # 3) Permute the order of the nodes to match the new ordering
+    #     using the inverse permutation of node_order (Matrix::invPerm(node_order))
+    #
+    node_order <- sample(1:nnode)
+    edgeL <- lapply(edgeL, function(x) node_order[x])[Matrix::invPerm(node_order)]
+
+    edgeList(edgeL)
+}
+
+### Generate a vector of parameters compatible with generate_mvn_data
+gen_params <- function(graph, FUN = NULL, ...){
+    nedge <- num.edges(graph)
+    nnode <- num.nodes(graph)
+
+    if(is.null(FUN)){
+        coefs <- stats::runif(nedge)
+        vars <- stats::runif(nnode)
+    } else{
+        FUN <- match.fun(FUN)
+        coefs <- replicate(nedge, FUN(n = 1))
+        vars <- replicate(nnode, FUN(n = 1))
+    }
+
+    c(coefs, vars)
+}
 
 #' Generate random DAGs
 #'
@@ -27,26 +111,13 @@
 #' @param FUN Optional function to be used as a random number generator
 #' @param ... Additional arguments to \code{FUN}.
 #'
+#' @return An (weighted) adjacency matrix.
+#'
 #' @export
 random.dag <- function(nnode, nedge, FUN = NULL, ...){
 
-    #
-    # Works by randomly sampling elements of the lower triangular
-    #  portion of a square matrix, and filling in these elements
-    #  with random values
-    #
-
-    max_nnz <- nnode*(nnode-1)/2
-    if(nedge > max_nnz){
-        stop(sprintf("A DAG with p = %d nodes can have at most p*(p-1)/2 = %d edges! Please check your input for nedge.", nnode, max_nnz))
-    }
-
-    ### Initialize parameters
-    m <- matrix(0, nrow = nnode, ncol = nnode)
-    vals <- rep(0, nnode*(nnode-1)/2)
-
-    ### Randomly sample indices for nonzero coefs
-    nonzero_coefs <- sample(seq_along(vals), size = nedge)
+    graph <- random.graph(nnode, nedge, acyclic = TRUE)
+    amat <- as.matrix(graph)
 
     ### Randomly sample values for nonzero coefs
     if(is.null(FUN)){
@@ -56,23 +127,11 @@ random.dag <- function(nnode, nedge, FUN = NULL, ...){
         coefs <- replicate(nedge, FUN(n = 1))
     }
 
-    ### given these indices, update the values in m with random values
-    ### Note that we are only changing the lower triangular portion
-    vals[nonzero_coefs] <- coefs
-    m[lower.tri(m)] <- vals
-
-    ### Name the cols/rows according to the current top sort
-    ### This is useful since it gives quick access to a
-    ###  top sort for the graph even after permuting
-    colnames(m) <- rownames(m) <- paste0("V", 1:nnode)
-
-
-    ### shuffle the rows and columns
-    shuffle <- sample(1:nnode)
-    m <- m[shuffle, shuffle]
+    ### given these indices, update the values in amat with random values
+    amat[amat!=0] <- coefs
 
     ### Final output
-    m
+    amat
 }
 
 #' Generate a random positive definite matrix
@@ -111,4 +170,15 @@ random_householder <- function(nnode){
     v <- v / sqrt(sum(v^2))
     householder <- diag(rep(1, nnode)) - 2 * v %*% t(v)
     householder
+}
+
+allBlocks <- function(nodes){
+    blocks <- lapply(nodes, function(x){
+            row <- (nodes)[nodes != x]
+            col <- rep(x, length(col))
+            cbind(row, col)
+        })
+    blocks <- do.call("rbind", blocks)
+
+    blocks
 }
