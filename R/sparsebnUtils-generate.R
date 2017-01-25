@@ -84,6 +84,8 @@ random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
 
 ### Generate a vector of parameters compatible with generate_mvn_data
 gen_params <- function(graph, FUN = NULL, ...){
+    stopifnot(is.edgeList(graph))
+
     nedge <- num.edges(graph)
     nnode <- num.nodes(graph)
 
