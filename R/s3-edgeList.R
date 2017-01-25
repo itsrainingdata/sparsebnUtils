@@ -225,6 +225,33 @@ is.zero.edgeList <- function(x){
     (num.edges(x) == 0)
 } # END IS.ZERO.EDGELIST
 
+#' Permute the order of nodes in a graph
+#'
+#' Randomize the order of the nodes in a graph.
+#'
+#' Useful for obfuscating the
+#' topological sort in a DAG, which is often the default output of methods
+#' that generate a random DAG. Output is graph isomorphic to input
+#'
+#' @param x Graph as \code{\link{edgeList}} object.
+#' @return Permuted graph as \code{\link{edgeList}} object.
+#'
+#' @export
+permute.nodes <- function(x){
+    stopifnot(is.edgeList(x))
+
+    ### Permute the nodes
+    # 1) Get a random ordering
+    # 2) Re-assign all parents to their new values (node_order[x])
+    # 3) Permute the order of the nodes to match the new ordering
+    #     using the inverse permutation of node_order (Matrix::invPerm(node_order))
+    #
+    node_order <- sample(1:num.nodes(x))
+    permuted <- lapply(x, function(x) node_order[x])[Matrix::invPerm(node_order)]
+
+    edgeList(permuted)
+}
+
 #' Plot a fitted Bayesian network object
 #'
 #' Plots the graph object associated with the output of a learning algorithm.

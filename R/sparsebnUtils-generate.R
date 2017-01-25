@@ -69,17 +69,11 @@ random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
     ###  top sort for the graph even after permuting
     names(edgeL) <- paste0("V", 1:nnode)
 
+    ### Create edgeList object
+    edgeL <- edgeList(edgeL)
 
-    ### Permute the nodes
-    # 1) Get a random ordering
-    # 2) Re-assign all parents to their new values (node_order[x])
-    # 3) Permute the order of the nodes to match the new ordering
-    #     using the inverse permutation of node_order (Matrix::invPerm(node_order))
-    #
-    node_order <- sample(1:nnode)
-    edgeL <- lapply(edgeL, function(x) node_order[x])[Matrix::invPerm(node_order)]
-
-    edgeList(edgeL)
+    ### Permute the nodes and return result
+    permute.nodes(edgeL)
 }
 
 ### Generate a vector of parameters compatible with generate_mvn_data
