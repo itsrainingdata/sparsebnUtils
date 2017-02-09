@@ -140,8 +140,8 @@ graphNEL_to_edgeList_list <- function(gr){
     ### Use inEdges to invert the parent-child relationships and coerce the indices to integers
     gr.edgeL <- lapply(graph::inEdges(gr), as.integer)
 
-    ### Eliminate node names
-    names(gr.edgeL) <- NULL
+    ### Eliminate node names <-- 1/27/17: Why?
+    names(gr.edgeL) <- NULL # 1/27/17: Could use gr@nodes instead
 
     gr.edgeL
 }

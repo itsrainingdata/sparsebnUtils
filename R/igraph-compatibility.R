@@ -148,6 +148,7 @@ to_edgeList.igraph <- function(x){
 # Helper function to convert a igraph object to an edgeList compatible list
 #
 igraph_to_edgeList_list <- function(igr){
+    ### NOTE: Consider using igraph::as_edgelist here instead
     igr.edgeL <- igraph::as_adj_list(igr, mode = "in")
     igr.edgeL <- lapply(igr.edgeL, as.integer)
 
