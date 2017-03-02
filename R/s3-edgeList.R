@@ -231,13 +231,14 @@ is.zero.edgeList <- function(x){
 #'
 #' Useful for obfuscating the
 #' topological sort in a DAG, which is often the default output of methods
-#' that generate a random DAG. Output is graph isomorphic to input
+#' that generate a random DAG. Output is graph isomorphic to input.
 #'
 #' @param x Graph as \code{\link{edgeList}} object.
+#' @param perm Permutation to use.
 #' @return Permuted graph as \code{\link{edgeList}} object.
 #'
 #' @export
-permute.nodes <- function(x){
+permute.nodes <- function(x, perm = NULL){
     stopifnot(is.edgeList(x))
 
     ### Permute the nodes
@@ -246,7 +247,13 @@ permute.nodes <- function(x){
     # 3) Permute the order of the nodes to match the new ordering
     #     using the inverse permutation of node_order (Matrix::invPerm(node_order))
     #
-    node_order <- sample(1:num.nodes(x))
+    if(is.null(perm)){
+        node_order <- sample(1:num.nodes(x))
+    } else{
+        stopifnot(length(perm) != num.nodes(x))
+        stopifnot(sort(perm) != 1:num.nodes(x))
+        node_order <- perm
+    }
     permuted <- lapply(x, function(x) node_order[x])[Matrix::invPerm(node_order)]
 
     edgeList(permuted)

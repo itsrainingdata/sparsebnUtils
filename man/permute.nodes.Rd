@@ -4,10 +4,12 @@
 \alias{permute.nodes}
 \title{Permute the order of nodes in a graph}
 \usage{
-permute.nodes(x)
+permute.nodes(x, perm = NULL)
 }
 \arguments{
 \item{x}{Graph as \code{\link{edgeList}} object.}
+
+\item{perm}{Permutation to use.}
 }
 \value{
 Permuted graph as \code{\link{edgeList}} object.
@@ -18,6 +20,6 @@ Randomize the order of the nodes in a graph.
 \details{
 Useful for obfuscating the
 topological sort in a DAG, which is often the default output of methods
-that generate a random DAG. Output is graph isomorphic to input
+that generate a random DAG. Output is graph isomorphic to input.
 }
 
