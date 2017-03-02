@@ -15,7 +15,6 @@
 \alias{check_null}
 \alias{col_classes}
 \alias{convert_factor_to_discrete}
-\alias{cor_vector}
 \alias{cor_vector_ivn}
 \alias{count_nas}
 \alias{default_alpha}
@@ -73,8 +72,6 @@ capitalize(string)
 recode_levels(x)
 
 convert_factor_to_discrete(x)
-
-cor_vector(data)
 
 cor_vector_ivn(data, ivn)
 

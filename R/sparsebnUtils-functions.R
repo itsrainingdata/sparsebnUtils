@@ -251,14 +251,9 @@ format_list <- function(x){
     list.out
 }
 
-# Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
-#  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
-#
-# NOTE: Should be deprecated at this point, but needs further testing.
-#' @rdname sparsebn-functions
-#' @export
+# NOTE: Deprecated as of 3/2/17
 cor_vector <- function(data){
-    # .Deprecated()
+    .Deprecated(new = "cor_vector_ivn")
 
     check.numeric <- (col_classes(data) != "numeric")
     if( any(check.numeric)){
@@ -276,6 +271,10 @@ cor_vector <- function(data){
     cors
 } # END COR_VECTOR
 
+# Compute the correlation matrix of a dataset, and return the unduplicated elements (i.e. upper-triangular portions) as a vector
+#  Used as the primary "carrier of information" in ccdr since the algorithms only depends on pairwise correlations
+#  Works with intervention data as well
+#
 # Migrated from ccdrAlgorithm package
 #' @rdname sparsebn-functions
 #' @export
