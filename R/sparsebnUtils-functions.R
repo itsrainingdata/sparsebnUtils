@@ -179,7 +179,7 @@ col_classes <- function(X){
     # }
     stopifnot(is.data.frame(X))
 
-    unlist(lapply(X, class))
+    sapply(X, class)
 } # END .COL_CLASSES
 
 # Utility to capitalize the first letter in a string
