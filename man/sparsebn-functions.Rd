@@ -7,6 +7,7 @@
 \alias{check_if_complete_data}
 \alias{check_if_data_matrix}
 \alias{check_if_matrix}
+\alias{check_if_numeric_data}
 \alias{check_list_class}
 \alias{check_list_names}
 \alias{check_list_numeric}
@@ -44,6 +45,8 @@ check_if_matrix(m)
 check_if_data_matrix(df)
 
 check_if_complete_data(df)
+
+check_if_numeric_data(df)
 
 check_null(x)
 

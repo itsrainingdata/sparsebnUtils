@@ -75,6 +75,13 @@ check_if_complete_data <- function(df){
     (count_nas(df) == 0)
 } # END .CHECK_IF_COMPLETE_DATA
 
+# Check if a dataset contains only numeric (including integer) values
+#' @rdname sparsebn-functions
+#' @export
+check_if_numeric_data <- function(df){
+    all(col_classes(df) %in% c("numeric", "integer"))
+} # END .CHECK_IF_NUMERIC_DATA
+
 # Check if an object contains any null values
 #' @rdname sparsebn-functions
 #' @export
@@ -273,10 +280,11 @@ cor_vector <- function(data){
 #' @rdname sparsebn-functions
 #' @export
 cor_vector_ivn <- function(data, ivn){
-    check.numeric <- (col_classes(data) != "numeric")
-    if( any(check.numeric)){
-        not.numeric <- which(check.numeric)
-        stop(paste0("Input columns must be numeric! Columns ", paste(not.numeric, collapse = ", "), " are non-numeric."))
+    check.numeric <- check_if_numeric_data(data)
+    if(!check.numeric){
+        check.numeric <- (col_classes(data) %in% c("numeric", "integer"))
+        not.numeric <- which(!check.numeric)
+        stop(data_not_numeric(not.numeric))
     }
 
     if( any(dim(data) < 2)){

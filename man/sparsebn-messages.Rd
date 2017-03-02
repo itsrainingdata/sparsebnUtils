@@ -3,6 +3,7 @@
 \name{sparsebn-messages}
 \alias{alg_input_data_frame}
 \alias{dag_summary}
+\alias{data_not_numeric}
 \alias{empty_dag_summary}
 \alias{feature_not_supported}
 \alias{global_coerce_warning}
@@ -33,6 +34,8 @@ invalid_class(actual, expected)
 dag_summary(nnode, nedge)
 
 empty_dag_summary(nnode)
+
+data_not_numeric(indices)
 }
 \arguments{
 \item{data}{data object.}
@@ -50,6 +53,8 @@ empty_dag_summary(nnode)
 \item{nnode}{number of nodes in a DAG.}
 
 \item{nedge}{number of edges in a DAG.}
+
+\item{indices}{invalid indices}
 }
 \description{
 Warning and error messages for use in the \code{sparsebn} family

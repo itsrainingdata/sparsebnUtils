@@ -2,13 +2,25 @@ context("cor_vector")
 
 ### New tests w/ cor_vector_ivn
 test_that("cor_vector only accepts numeric values", {
+    ### Integer OK
     m <- data.frame(matrix(c(1L, 2L, 3L, 5L), ncol = 2))
-    expect_error(cor_vector_ivn(m, ivn = NULL), "must be numeric")
-    expect_error(cor_vector_ivn(m, ivn = list(2, 1)), "must be numeric")
+    expect_error(cor_vector_ivn(m, ivn = NULL), NA)
+    expect_error(cor_vector_ivn(m, ivn = list(2, 1)), NA)
 
+    ### Numeric OK
     m <- data.frame(matrix(c(1, 2, 3, 5), ncol = 2))
     expect_error(cor_vector_ivn(m, ivn = NULL), NA)
     expect_error(cor_vector_ivn(m, ivn = list(2, 1)), NA) ## outputs nonsense results but should still run!
+
+    ### Character not OK
+    m <- data.frame(list(int = c(1L, 2L), numeric = c(3, 5), char = c("abc", "abc")), stringsAsFactors = FALSE)
+    expect_error(cor_vector_ivn(m, ivn = NULL), "must be numeric")
+    expect_error(cor_vector_ivn(m, ivn = list(2, 1)), "must be numeric")
+
+    ### Factor not OK
+    m <- data.frame(list(int = c(1L, 2L), numeric = c(3, 5), char = c("abc", "abc")), stringsAsFactors = TRUE)
+    expect_error(cor_vector_ivn(m, ivn = NULL), "must be numeric")
+    expect_error(cor_vector_ivn(m, ivn = list(2, 1)), "must be numeric")
 })
 
 test_that("cor_vector_ivn treats NULL and list(NULL,...) the same", {
