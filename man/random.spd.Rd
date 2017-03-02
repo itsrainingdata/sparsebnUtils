@@ -17,4 +17,3 @@ has fewer than nnode values, the remainder are filled in as zero.}
 \description{
 Generate a random positive definite matrix
 }
-

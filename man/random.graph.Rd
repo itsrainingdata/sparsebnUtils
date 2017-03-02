@@ -21,4 +21,3 @@ An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for
 \description{
 Generate a random graph with fixed number of edges.
 }
-

@@ -32,4 +32,3 @@ an optimal parameter, this method computes successive difference ratios between 
 log-likelihood and the increase in number of edges and balances these quantities appropriately. For
 specific details, please see Section 3.4 in \href{http://www.stat.ucla.edu/~zhou/publications/Fu13-JASA.pdf}{Fu and Zhou (2013)}.
 }
-

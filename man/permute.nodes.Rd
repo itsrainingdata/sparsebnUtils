@@ -22,4 +22,3 @@ Useful for obfuscating the
 topological sort in a DAG, which is often the default output of methods
 that generate a random DAG. Output is graph isomorphic to input.
 }
-

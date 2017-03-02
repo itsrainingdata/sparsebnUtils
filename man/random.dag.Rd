@@ -25,4 +25,3 @@ Generate a random DAG with fixed number of edges.
 FUN can be any function whose first argument is called \code{n}. This
 allows for both random and deterministic outputs.
 }
-

@@ -31,4 +31,3 @@ parameters in graphical models:
 Internally, all graph objects may be stored as \code{\link{edgeList}s} (default),
 or using \code{graphNEL}, \code{igraph}, \code{bnlearn}, or \code{network} objects.
 }
-

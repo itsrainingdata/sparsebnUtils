@@ -29,4 +29,3 @@ If there is more than one match (for example, by number of edges), then
 the first such estimate is returned. Note that \code{select(x, index = j)}
 is equivalent to (but slightly slower than) \code{x[[j]]}.
 }
-

@@ -47,4 +47,3 @@ fit.multinom <- fit_multinom_dag(edgeL, dat)
 }
 
 }
-

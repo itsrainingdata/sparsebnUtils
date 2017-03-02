@@ -2,9 +2,10 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnPath.R
 \docType{class}
 \name{sparsebnPath}
+\alias{sparsebnPath}
+\alias{sparsebnPath}
 \alias{is.sparsebnPath}
 \alias{print.sparsebnPath}
-\alias{sparsebnPath}
 \title{sparsebnPath class}
 \usage{
 sparsebnPath(x)
@@ -40,6 +41,7 @@ for every component; e.g. \code{\link{num.nodes}} and \code{\link{num.samples}}.
 \code{\link{get.adjacency.matrix}}, \code{\link{get.lambdas}},
 \code{\link{num.nodes}}, \code{\link{num.edges}}, \code{\link{num.samples}}
 }
+
 \examples{
 
 \dontrun{
@@ -55,4 +57,3 @@ plot(cyto.learn)
 }
 
 }
-

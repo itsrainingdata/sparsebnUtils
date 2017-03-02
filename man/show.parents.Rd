@@ -19,4 +19,3 @@ by children, with the parents of each node listed to the right of each child.
 \details{
 Uses partial matching, duplicates are OK and will be duplicated in output.
 }
-

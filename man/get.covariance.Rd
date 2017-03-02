@@ -27,4 +27,3 @@ For Gaussian data, the precision matrix corresponds to an undirected graphical m
 distribution. This undirected graph can be tied to the corresponding directed graphical model;
 see Sections 2.1 and 2.2 (equation (6)) of Aragam and Zhou (2015) for more details.
 }
-

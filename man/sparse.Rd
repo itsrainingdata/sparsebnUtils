@@ -2,8 +2,9 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparse.R
 \docType{class}
 \name{sparse}
-\alias{is.sparse}
 \alias{sparse}
+\alias{sparse}
+\alias{is.sparse}
 \title{sparse class}
 \usage{
 sparse(x, ...)
@@ -23,4 +24,3 @@ An alternative data structure for storing sparse matrices in R using the (row, c
 format. Internally it is stored as a list with three components, each vectors, that contain
 the rows / columns / values of the nonzero elements.
 }
-

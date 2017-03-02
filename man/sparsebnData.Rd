@@ -2,11 +2,12 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnData.R
 \docType{class}
 \name{sparsebnData}
-\alias{is.sparsebnData}
-\alias{print.sparsebnData}
 \alias{sparsebnData}
+\alias{sparsebnData}
+\alias{is.sparsebnData}
 \alias{sparsebnData.data.frame}
 \alias{sparsebnData.matrix}
+\alias{print.sparsebnData}
 \title{sparsebnData class}
 \usage{
 sparsebnData(x, ...)
@@ -76,6 +77,7 @@ Also inherits from \code{\link{list}}.
 \code{\link{count.interventions}}
 \code{\link{as.data.frame}}
 }
+
 \examples{
 
 \dontrun{
@@ -102,4 +104,3 @@ dat <- sparsebnData(mat,
 }
 
 }
-

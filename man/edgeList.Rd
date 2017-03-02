@@ -4,6 +4,7 @@
 \name{edgeList}
 \alias{edgeList}
 \alias{is.edgeList}
+\alias{edgeList}
 \title{edgeList class}
 \usage{
 is.edgeList(x)
