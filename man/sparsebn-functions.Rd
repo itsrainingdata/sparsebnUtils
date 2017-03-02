@@ -73,7 +73,7 @@ recode_levels(x)
 
 convert_factor_to_discrete(x)
 
-cor_vector_ivn(data, ivn)
+cor_vector_ivn(data, ivn = NULL)
 
 pmatch_numeric(x, table, tol = 0.1)
 
