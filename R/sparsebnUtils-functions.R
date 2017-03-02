@@ -278,7 +278,7 @@ cor_vector <- function(data){
 # Migrated from ccdrAlgorithm package
 #' @rdname sparsebn-functions
 #' @export
-cor_vector_ivn <- function(data, ivn){
+cor_vector_ivn <- function(data, ivn = NULL){
     check.numeric <- check_if_numeric_data(data)
     if(!check.numeric){
         check.numeric <- (col_classes(data) %in% c("numeric", "integer"))
