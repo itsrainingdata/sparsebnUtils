@@ -7,6 +7,7 @@
 \alias{check_if_complete_data}
 \alias{check_if_data_matrix}
 \alias{check_if_matrix}
+\alias{check_if_numeric_data}
 \alias{check_list_class}
 \alias{check_list_names}
 \alias{check_list_numeric}
@@ -14,7 +15,6 @@
 \alias{check_null}
 \alias{col_classes}
 \alias{convert_factor_to_discrete}
-\alias{cor_vector}
 \alias{cor_vector_ivn}
 \alias{count_nas}
 \alias{default_alpha}
@@ -45,6 +45,8 @@ check_if_data_matrix(df)
 
 check_if_complete_data(df)
 
+check_if_numeric_data(df)
+
 check_null(x)
 
 check_na(x)
@@ -70,8 +72,6 @@ capitalize(string)
 recode_levels(x)
 
 convert_factor_to_discrete(x)
-
-cor_vector(data)
 
 cor_vector_ivn(data, ivn)
 
