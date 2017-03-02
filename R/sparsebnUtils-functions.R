@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
