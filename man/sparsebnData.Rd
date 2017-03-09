@@ -80,8 +80,6 @@ Also inherits from \code{\link{list}}.
 
 \examples{
 
-\dontrun{
-
 ### Generate a random continuous dataset
 mat <- matrix(rnorm(1000), nrow = 20)
 dat <- sparsebnData(mat, type = "continuous") # purely observational data with continuous variables
@@ -100,7 +98,5 @@ dat <- sparsebnData(mat,
                     type = "discrete",
                     levels = dat.levels,
                     ivn = dat.ivn) # specify intervention rows
-
-}
 
 }

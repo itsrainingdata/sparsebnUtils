@@ -78,7 +78,8 @@ object, but can be handled separately if desired (be careful!).
 
 \dontrun{
 ### Learn the cytometry network
-data(cytometryContinuous)
+library(sparsebn)
+data(cytometryContinuous) # from the sparsebn package
 cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
 cyto.learn <- estimate.dag(cyto.data)
 
