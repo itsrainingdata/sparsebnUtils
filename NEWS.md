@@ -1,6 +1,10 @@
 # sparsebnUtils 0.0.4
 
-# Notes
+## Features
+
+* Added new `random.graph` method to generate random `edgeList`s
+
+## Notes
 
 * Conversion to and from sparse matrices using `as.sparse` is now significantly faster and supports `Matrix` input
 
