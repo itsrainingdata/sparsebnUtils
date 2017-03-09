@@ -46,7 +46,8 @@ for every component; e.g. \code{\link{num.nodes}} and \code{\link{num.samples}}.
 
 \dontrun{
 ### Learn the cytometry network
-data(cytometryContinuous)
+library(sparsebn)
+data(cytometryContinuous) # from the sparsebn package
 cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
 cyto.learn <- estimate.dag(cyto.data)
 
