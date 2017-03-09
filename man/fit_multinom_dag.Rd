@@ -23,7 +23,6 @@ in package \code{\link{nnet}}.
 }
 \examples{
 
-\dontrun{
 ### construct a random data set
 x <- c(0,1,0,1,0)
 y <- c(1,0,1,0,1)
@@ -44,7 +43,5 @@ edgeL <- edgeList(li)
 
 ### run fit_multinom_dag
 fit.multinom <- fit_multinom_dag(edgeL, dat)
-}
 
 }
-

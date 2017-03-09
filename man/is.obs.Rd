@@ -12,4 +12,3 @@ is.obs(data)
 \description{
 Returns TRUE if the data contains no interventions, i.e. is purely observational
 }
-

@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 3/29/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
@@ -36,6 +36,7 @@
 #' @param expected class input expected by function.
 #' @param nnode number of nodes in a DAG.
 #' @param nedge number of edges in a DAG.
+#' @param indices invalid indices
 #'
 NULL
 
@@ -111,4 +112,11 @@ dag_summary <- function(nnode, nedge){
 #' @export
 empty_dag_summary <- function(nnode){
     sprintf("<Empty graph on %d nodes.>", nnode)
+}
+
+### Notify user that some columns are non-numeric in a dataset
+#' @rdname sparsebn-messages
+#' @export
+data_not_numeric <- function(indices){
+    paste0("Input columns must be numeric or integer! Columns ", paste(indices, collapse = ", "), " are invalid.")
 }

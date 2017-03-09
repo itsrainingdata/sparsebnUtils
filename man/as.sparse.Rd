@@ -19,4 +19,3 @@ as.sparse(x, index = "R", ...)
 \description{
 Methods for coercing other \code{R} objects to \code{\link{sparse}} objects.
 }
-

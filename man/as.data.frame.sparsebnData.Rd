@@ -14,4 +14,3 @@
 \description{
 Convert a sparsebnData object back to a data.frame
 }
-

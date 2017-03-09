@@ -1,7 +1,7 @@
 Package: sparsebnUtils
 Title: Utilities for Learning Sparse Bayesian Networks
-Version: 0.0.3
-Date: 2016-11-18
+Version: 0.0.4
+Date: 2017-03-08
 Authors@R: c(
     person("Bryon", "Aragam", email = "sparsebn@gmail.com", role = c("aut", "cre")),
     person("Jiaying", "Gu", role = c("aut"))
@@ -14,6 +14,7 @@ Imports:
     Matrix,
     stats,
     utils,
+    methods,
     nnet
 Suggests:
     bnlearn,
@@ -24,4 +25,4 @@ Suggests:
 URL: https://github.com/itsrainingdata/sparsebnUtils
 BugReports: https://github.com/itsrainingdata/sparsebnUtils/issues
 License: GPL (>= 2)
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

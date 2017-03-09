@@ -15,4 +15,3 @@ to_bn(x)
 objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
 \code{\link[bnlearn]{bn-class}}. In the second, the conversion applies directly to the object.
 }
-

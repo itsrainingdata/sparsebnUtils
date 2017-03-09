@@ -12,4 +12,3 @@ count.levels(data)
 \description{
 Returns the number of levels per variable as an ordered vector.
 }
-

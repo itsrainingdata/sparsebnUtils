@@ -15,4 +15,3 @@ to_network(x)
 objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
 \code{\link[network]{network}}. In the second, the conversion applies directly to the object.
 }
-

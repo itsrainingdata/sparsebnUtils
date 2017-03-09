@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 7/26/15.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
@@ -140,8 +140,8 @@ graphNEL_to_edgeList_list <- function(gr){
     ### Use inEdges to invert the parent-child relationships and coerce the indices to integers
     gr.edgeL <- lapply(graph::inEdges(gr), as.integer)
 
-    ### Eliminate node names
-    names(gr.edgeL) <- NULL
+    ### Eliminate node names <-- 1/27/17: Why?
+    names(gr.edgeL) <- NULL # 1/27/17: Could use gr@nodes instead
 
     gr.edgeL
 }

@@ -67,10 +67,22 @@ generate_empty_sparsebnPath <- function(){
     sparsebnPath(list(sbf, sbf, sbf, sbf))
 }
 
+generate_empty_matrix <- function(){
+    m <- matrix(0, nrow = 1, ncol = 1)
+    m
+}
+
+generate_empty_Matrix <- function(){
+    Matrix::Matrix(generate_empty_matrix())
+}
+
 generate_empty_adjacency_matrix <- function(){
     m <- matrix(0, nrow = 1, ncol = 1)
     m
-    # Matrix::Matrix(m)
+}
+
+generate_empty_adjacency_Matrix <- function(){
+    Matrix::Matrix(generate_empty_adjacency_matrix())
 }
 
 ### Generate fixed objects for the following toy DAG
@@ -177,6 +189,10 @@ generate_fixed_matrix <- function(){
     # Matrix::Matrix(m)
 }
 
+generate_fixed_Matrix <- function(){
+    Matrix::Matrix(generate_fixed_matrix())
+}
+
 generate_fixed_adjacency_matrix <- function(){
     ### CCDr output is unweighted adjacency matrix by default
     m <- rbind(c(0, 0, 0, 0, 0),
@@ -185,7 +201,10 @@ generate_fixed_adjacency_matrix <- function(){
                c(1, 1, 0, 0, 0),
                c(0, 1, 0, 0, 0))
     m
-    # Matrix::Matrix(m)
+}
+
+generate_fixed_adjacency_Matrix <- function(){
+    Matrix::Matrix(generate_fixed_adjacency_matrix())
 }
 
 generate_nontrivial_sparsebnPath <- function(){

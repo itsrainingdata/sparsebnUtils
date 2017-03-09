@@ -15,4 +15,3 @@ as.edgeList(x)
 \description{
 Methods for coercing other \code{R} objects to \code{\link{edgeList}} objects.
 }
-

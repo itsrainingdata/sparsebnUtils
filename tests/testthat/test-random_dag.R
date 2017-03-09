@@ -26,3 +26,9 @@ test_that("random.dag runs as expected", {
     expect_error(random.dag(3,2,function(n) rgamma(n, shape = 10)), NA)
     expect_error(random.dag(10,10,function(n) rgamma(n, shape = 10)), NA)
 })
+
+test_that("random.dag always produces a DAG", {
+    m <- random.dag(5,5)
+    m[m!=0] <- 1
+    expect_warning(igraph::topo_sort(igraph::graph.adjacency(m)), NA)
+})

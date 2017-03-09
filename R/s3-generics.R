@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
@@ -207,6 +207,6 @@ reIndexC <- function(x) UseMethod("reIndexC", x)
 reIndexR <- function(x) UseMethod("reIndexR", x)
 
 # Internal generics --------------------------------------
-.num_edges <- function(x) UseMethod(".num_edges", x)
+# .num_edges <- function(x) UseMethod(".num_edges", x)
 # to_B <- function(x) UseMethod("to_B", x)
 

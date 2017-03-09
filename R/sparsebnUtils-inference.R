@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 3/17/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
@@ -123,7 +123,6 @@ fit_glm_dag <- function(parents,
 #'
 #' @examples
 #'
-#' \dontrun{
 #' ### construct a random data set
 #' x <- c(0,1,0,1,0)
 #' y <- c(1,0,1,0,1)
@@ -144,7 +143,6 @@ fit_glm_dag <- function(parents,
 #'
 #' ### run fit_multinom_dag
 #' fit.multinom <- fit_multinom_dag(edgeL, dat)
-#' }
 #'
 #' @export
 fit_multinom_dag <- function(parents,

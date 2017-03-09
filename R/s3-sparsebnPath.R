@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #------------------------------------------------------------------------------#
@@ -53,7 +53,8 @@
 #'
 #' \dontrun{
 #' ### Learn the cytometry network
-#' data(cytometryContinuous)
+#' library(sparsebn)
+#' data(cytometryContinuous) # from the sparsebn package
 #' cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
 #' cyto.learn <- estimate.dag(cyto.data)
 #'

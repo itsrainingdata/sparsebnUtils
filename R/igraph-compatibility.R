@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/30/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #
@@ -48,7 +48,11 @@ to_igraph.edgeList <- function(x){
     #     igraph::graph.empty(n = num.nodes(x), directed = TRUE)
     # }
 
-    to_igraph(to_graphNEL(x))
+    ### to_graphNEL loses node names
+    # to_igraph(to_graphNEL(x))
+
+    ### Slow, but keeps node names
+    igraph::graph.adjacency(as.matrix(x))
 }
 
 #' @export
@@ -144,6 +148,7 @@ to_edgeList.igraph <- function(x){
 # Helper function to convert a igraph object to an edgeList compatible list
 #
 igraph_to_edgeList_list <- function(igr){
+    ### NOTE: Consider using igraph::as_edgelist here instead
     igr.edgeL <- igraph::as_adj_list(igr, mode = "in")
     igr.edgeL <- lapply(igr.edgeL, as.integer)
 

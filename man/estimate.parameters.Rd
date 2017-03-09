@@ -21,4 +21,3 @@ squares (for Gaussian data) or logistic regression (for discrete data).
 The low-level fitting methods are \code{\link{fit_glm_dag}} (for continuous data)
 and \code{\link{fit_multinom_dag}} (for discrete data).
 }
-

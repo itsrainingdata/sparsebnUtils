@@ -25,4 +25,3 @@ Convenience function for creating a grid of lambdas.
 See Section 5.3 of \href{http://jmlr.org/papers/v16/aragam15a.html}{Aragam and Zhou (2015)}
 for a discussion of regularization paths (also, solution paths).
 }
-

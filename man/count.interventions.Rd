@@ -12,4 +12,3 @@ count.interventions(data)
 \description{
 Returns the number of rows with at least one intervention
 }
-

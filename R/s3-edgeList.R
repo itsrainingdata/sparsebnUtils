@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
-#  Copyright (c) 2014-2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 #------------------------------------------------------------------------------#
@@ -122,17 +122,32 @@ edgeList.sparse <- function(x, ...){
 
 #' @export
 edgeList.matrix <- function(x){
-    out <- edgeList(as.sparse(x))
+    matrix_to_edgeList(x)
+}
 
-    if(!all(colnames(x) == rownames(x))){
-        warning("Row names do not match column names! Defaulting to use column names only.")
-    }
+#' @export
+edgeList.Matrix <- function(x){
+    matrix_to_edgeList(x)
+}
 
-    if(!is.null(colnames(x))){
-        names(out) <- colnames(x)
-    }
+#' @export
+edgeList.graphNEL <- function(x){
+    to_edgeList(x)
+}
 
-    out
+#' @export
+edgeList.network <- function(x){
+    to_edgeList(x)
+}
+
+#' @export
+edgeList.igraph <- function(x){
+    to_edgeList(x)
+}
+
+#' @export
+edgeList.bn <- function(x){
+    to_edgeList(x)
 }
 
 #' @method print edgeList
@@ -210,6 +225,40 @@ is.zero.edgeList <- function(x){
     (num.edges(x) == 0)
 } # END IS.ZERO.EDGELIST
 
+#' Permute the order of nodes in a graph
+#'
+#' Randomize the order of the nodes in a graph.
+#'
+#' Useful for obfuscating the
+#' topological sort in a DAG, which is often the default output of methods
+#' that generate a random DAG. Output is graph isomorphic to input.
+#'
+#' @param x Graph as \code{\link{edgeList}} object.
+#' @param perm Permutation to use.
+#' @return Permuted graph as \code{\link{edgeList}} object.
+#'
+#' @export
+permute.nodes <- function(x, perm = NULL){
+    stopifnot(is.edgeList(x))
+
+    ### Permute the nodes
+    # 1) Get a random ordering
+    # 2) Re-assign all parents to their new values (node_order[x])
+    # 3) Permute the order of the nodes to match the new ordering
+    #     using the inverse permutation of node_order (Matrix::invPerm(node_order))
+    #
+    if(is.null(perm)){
+        node_order <- sample(1:num.nodes(x))
+    } else{
+        stopifnot(length(perm) != num.nodes(x))
+        stopifnot(sort(perm) != 1:num.nodes(x))
+        node_order <- perm
+    }
+    permuted <- lapply(x, function(x) node_order[x])[Matrix::invPerm(node_order)]
+
+    edgeList(permuted)
+}
+
 #' Plot a fitted Bayesian network object
 #'
 #' Plots the graph object associated with the output of a learning algorithm.
@@ -268,3 +317,19 @@ edgelist_mat_to_edgeList_list <- function(x, numnode){
 
     edgeL
 } # END EDGELIST_MAT_TO_EDGELIST_LIST
+
+matrix_to_edgeList <- function(x){
+    stopifnot(check_if_matrix(x))
+
+    out <- edgeList(as.sparse(x))
+
+    if(!all(colnames(x) == rownames(x))){
+        warning("Row names do not match column names! Defaulting to use column names only.")
+    }
+
+    if(!is.null(colnames(x))){
+        names(out) <- colnames(x)
+    }
+
+    out
+} # END MATRIX_TO_EDGELIST

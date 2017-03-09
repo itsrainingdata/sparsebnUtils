@@ -3,7 +3,7 @@
 #  sparsebnUtils
 #
 #  Created by Bryon Aragam (local) on 1/22/16.
-#  Copyright (c) 2016 Bryon Aragam. All rights reserved.
+#  Copyright (c) 2014-2017 Bryon Aragam. All rights reserved.
 #
 
 # Export everything in this package so the other packages can use all of the methods
@@ -11,6 +11,7 @@
 
 #' @importFrom grDevices dev.off n2mfrow
 #' @importFrom graphics par plot
+#' @importFrom methods as
 
 .onAttach <- function(libname, pkgname){
     ### Only sparsebn needs a package startup message

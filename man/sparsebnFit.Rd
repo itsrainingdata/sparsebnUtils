@@ -2,9 +2,10 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnFit.R
 \docType{class}
 \name{sparsebnFit}
+\alias{sparsebnFit}
+\alias{sparsebnFit}
 \alias{is.sparsebnFit}
 \alias{print.sparsebnFit}
-\alias{sparsebnFit}
 \title{sparsebnFit class}
 \usage{
 sparsebnFit(x)
@@ -72,11 +73,13 @@ object, but can be handled separately if desired (be careful!).
 \code{\link{num.samples}},
 \code{\link{show.parents}}
 }
+
 \examples{
 
 \dontrun{
 ### Learn the cytometry network
-data(cytometryContinuous)
+library(sparsebn)
+data(cytometryContinuous) # from the sparsebn package
 cyto.data <- sparsebnData(cytometryContinuous[["data"]], type = "continuous")
 cyto.learn <- estimate.dag(cyto.data)
 
@@ -100,4 +103,3 @@ isConnected(cyto.edges)  # only available with graph package
 }
 
 }
-

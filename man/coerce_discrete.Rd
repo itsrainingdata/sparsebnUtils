@@ -2,11 +2,11 @@
 % Please edit documentation in R/s3-generics.R, R/s3-sparsebnData.R
 \name{coerce_discrete}
 \alias{coerce_discrete}
+\alias{coerce_discrete.factor}
+\alias{coerce_discrete.numeric}
+\alias{coerce_discrete.integer}
 \alias{coerce_discrete.character}
 \alias{coerce_discrete.data.frame}
-\alias{coerce_discrete.factor}
-\alias{coerce_discrete.integer}
-\alias{coerce_discrete.numeric}
 \alias{coerce_discrete.sparsebnData}
 \title{Recode discrete data}
 \usage{
@@ -42,4 +42,3 @@ x <- c("high", "normal", "high", "low")
 coerce_discrete(x) # output: 0 2 0 1
 
 }
-
