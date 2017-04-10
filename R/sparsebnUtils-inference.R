@@ -228,3 +228,50 @@ gaussian_profile_loglikelihood <- function(dat, coefs){
 
     -pll ### Need to take negative output loglikelihood (vs NLL)
 }
+
+# a function that calculate log-likelihood of a single graph
+# parents is an edgeList object
+# dat is a data.frame
+multinom_loglikelihood <- function(parents,
+                                   data
+) {
+    # check parents
+    if(!sparsebnUtils::is.edgeList(parents)) stop("parents should be a edgeList object!")
+
+    # check data
+    if(!is.data.frame(data)) stop("dat should be a data.frame object!")
+
+    # data <- as.data.frame(data)
+    n_levels <- unlist(sparsebnUtils::auto_count_levels(data))
+
+    node <- ncol(data)
+    # check that the number of node and the what has been input in parents are consistent
+    if (length(parents) != ncol(data)) {stop(sprintf("Incompatible graph and data! Data has %d columns but graph has %d nodes.", ncol(data), length(parents)))}
+
+    # factorize each observation
+    for (i in 1:node){
+        data[,i] <- factor(data[,i])
+    }
+
+    # subtract dependent and independent variables for each regression
+    loglikelihood <- 0
+    loglikelihood_path <- rep(0, node)
+    for (i in 1:node){
+        x_ind <- parents[[i]] # if inputs are only edgeList object
+        if (length(x_ind)!=0) { # do nothing if a node has no parents
+            sub_dat <- cbind(data[, c(i, x_ind)])
+            fu <- stats::as.formula(paste0(colnames(sub_dat)[1], "~", paste(colnames(sub_dat)[c(-1)], collapse = "+")))
+            fit <- nnet::multinom(fu, data = sub_dat, trace = FALSE)
+            loglikelihood_path[i] <- as.numeric(stats::logLik(fit))
+            loglikelihood <- loglikelihood + as.numeric(stats::logLik(fit))
+        }
+        else {
+            sub_dat <- data[, i, drop = FALSE]
+            fu <- stats::as.formula(paste0(colnames(sub_dat)[1], "~ 1"))
+            fit <- nnet::multinom(fu, data = sub_dat, trace = FALSE)
+            # loglikelihood_path[i] <- as.numeric(stats::logLik(fit))
+            loglikelihood <- loglikelihood + as.numeric(stats::logLik(fit))
+        }
+    }
+    return(loglikelihood)
+}
