@@ -13,6 +13,7 @@
 \alias{dag_summary}
 \alias{empty_dag_summary}
 \alias{data_not_numeric}
+\alias{invalid_type_input}
 \title{Messages}
 \usage{
 input_not_sparsebnData(data)
@@ -36,6 +37,8 @@ dag_summary(nnode, nedge)
 empty_dag_summary(nnode)
 
 data_not_numeric(indices)
+
+invalid_type_input(types)
 }
 \arguments{
 \item{data}{data object.}

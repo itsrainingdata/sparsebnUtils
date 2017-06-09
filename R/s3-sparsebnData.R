@@ -128,14 +128,16 @@ is.sparsebnData <- function(x){
 #' @export
 sparsebnData.list <- function(x, ...){
 
+    type_list <- c("continuous", "discrete")
+
     if( !is.list(x)){
         stop("Input must be a list!")
     } else if( length(x) != 4 || !setequal(names(x), c("data", "type", "levels", "ivn"))){
         stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
     } else if( !check_if_data_matrix(x$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(x$data)))
-    } else if(!(x$type %in% c("continuous", "discrete", "mixed"))){
-        stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
+    } else if(!(x$type %in% type_list)){
+        stop(invalid_type_input(type_list))
     } else if(!is.null(x$levels)){
         if(ncol(x$data) != length(x$levels)){
             stop("The length of the levels list must equal the number of columns in the data!")
@@ -163,12 +165,12 @@ sparsebnData.data.frame <- function(x, type, levels = NULL, ivn = NULL, ...){
 
     ### User must specify type
     if(missing(type)){
-        stop("The data type (continuous or discrete?) was not specified: Must choose type = 'continuous' or type = 'discrete'.")
+        stop(invalid_type_input(type_list))
         ivn <- vector("list", length = nrow(x))
     } else{
         match_string <- pmatch(type, type_list) # use partial matching to select type
         if(is.na(match_string)){ # if there was no match, error
-            stop("Invalid 'type' entered: Must match one of \'continuous\', \'discrete\', \'mixed\'.")
+            stop(invalid_type_input(type_list))
         } else{ # if match was found, use it
             type <- type_list[match_string]
         }

@@ -120,3 +120,10 @@ empty_dag_summary <- function(nnode){
 data_not_numeric <- function(indices){
     paste0("Input columns must be numeric or integer! Columns ", paste(indices, collapse = ", "), " are invalid.")
 }
+
+### Notify user that an invalid type input to sparsebnData has been entered
+#' @rdname sparsebn-messages
+#' @export
+invalid_type_input <- function(types){
+    sprintf("Invalid type entered! Must be one of the following: %s.", paste(shQuote(types), collapse = ", "))
+}
