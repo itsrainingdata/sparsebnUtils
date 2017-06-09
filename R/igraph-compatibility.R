@@ -10,15 +10,8 @@
 # Various utility functions for enforcing compatibility with the 'igraph' package.
 #
 
-#' Conversion to igraph object
-#'
-#' \code{to_igraph} converts an object to a \code{\link[igraph]{igraph}} object. Works on both fitted
-#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
-#' \code{\link[igraph]{igraph}}. In the second, the conversion applies directly to the object.
-#'
-#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-#' \code{\link[graph]{graphNEL-class}}, or \code{\link[network]{network}}.
-#'
+### Conversion to igraph object
+#' @rdname sparsebn-compat
 #' @export
 to_igraph <- function(x){
     ### This function requires the 'igraph' package to be installed

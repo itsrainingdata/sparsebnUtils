@@ -10,15 +10,8 @@
 # Various utility functions for enforcing compatibility with the 'bnlearn' package.
 #
 
-#' Conversion to bnlearn object
-#'
-#' \code{to_bn} converts an object to a \code{\link[bnlearn]{bn-class}} object. Works on both fitted
-#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
-#' \code{\link[bnlearn]{bn-class}}. In the second, the conversion applies directly to the object.
-#'
-#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-#' \code{\link[bnlearn]{bn-class}}, \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
-#'
+### Conversion to bnlearn object
+#' @rdname sparsebn-compat
 #' @export
 to_bn <- function(x){
     ### This function require the 'bnlearn' package to be installed
