@@ -37,6 +37,7 @@
 #' @param nnode number of nodes in a DAG.
 #' @param nedge number of edges in a DAG.
 #' @param indices invalid indices
+#' @param types valid input types
 #'
 NULL
 

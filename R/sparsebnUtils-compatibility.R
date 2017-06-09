@@ -52,7 +52,10 @@
 #' objects.
 #'
 #' @examples
+#' \dontrun{
 #' ### Learn the cytometry network
+#' library(sparsebn)
+#' data(cytometryContinuous)
 #' cyto.data <- sparsebnData(cytometryContinuous[["data"]],
 #'                           type = "continuous",
 #'                           ivn = cytometryContinuous[["ivn"]])
@@ -72,5 +75,6 @@
 #' edgeL <- cyto.learn[[1]]$edges
 #' gr <- to_igraph(edgeL) # input is edgeList, not sparsebnFit or sparsebnPath
 #' class(gr)              # igraph object
+#' }
 #'
 NULL

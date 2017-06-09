@@ -58,6 +58,8 @@ invalid_type_input(types)
 \item{nedge}{number of edges in a DAG.}
 
 \item{indices}{invalid indices}
+
+\item{types}{valid input types}
 }
 \description{
 Warning and error messages for use in the \code{sparsebn} family
