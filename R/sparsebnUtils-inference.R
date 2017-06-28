@@ -79,29 +79,41 @@ fit_glm_dag <- function(parents,
     coefs <- Matrix::Diagonal(pp, 0)
     vars <- numeric(pp)
 
-    # print(parents)
+    warn <- FALSE
     for(j in 1:pp){
         select.vars <- parents[[j]]
 
-        if(length(select.vars) > nn){
-            stop(sprintf("Node %d has too many parents! <%d > %d>\n", j, length(select.vars), nn))
+        num.parents <- length(select.vars)
+        if(num.parents <= nn){
+            # lm.fit is much faster than glm.fit!
+            #         lm.fit, p = 200, n = 1000
+            #         elapsed
+            #           2.898
+            #         glm.fit, p = 200, n = 1000
+            #         elapsed
+            #           5.289
+            #         if(opt == 1) ols.fit <- lm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j])
+            #         if(opt == 2) ols.fit <- glm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian())
+            dag.fit <- do.call(what = call, args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], ...))
+            # if(opt == 2) ols.fit <- do.call("glm.fit", args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian()))
+
+            coefs[select.vars, j] <- dag.fit$coefficients
+            vars[j] <- stats::var(dag.fit$residuals)
+        } else{
+            ### If singularity encountered, simply return NA for these nodes and
+            ### emit a warning
+            coefs[select.vars, j] <- NA
+            vars[j] <- NA
+
+            if(!warn){
+                msg <- "NAs returned due to overfitting: In order to estimate the parameters for a node, there must be at least as many observations as parents in the graph. To avoid this warning, pick a larger value of lambda so that every node has at most n = %d parents, or increase the sample size. (This warning will only be displayed once.)"
+                warning(sprintf(msg, nn))
+                warn <- TRUE
+            }
+
+            msg <- "NAs returned due to overfitting: Node %d has %d parents but there are only n = %d observations in the data."
+            warning(sprintf(msg, j, num.parents, nn))
         }
-
-        # lm.fit is much faster than glm.fit!
-        #         lm.fit, p = 200, n = 1000
-        #         elapsed
-        #           2.898
-        #         glm.fit, p = 200, n = 1000
-        #         elapsed
-        #           5.289
-#         if(opt == 1) ols.fit <- lm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j])
-#         if(opt == 2) ols.fit <- glm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian())
-        dag.fit <- do.call(what = call, args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], ...))
-        # if(opt == 2) ols.fit <- do.call("glm.fit", args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian()))
-
-        coefs[select.vars, j] <- dag.fit$coefficients
-
-        vars[j] <- stats::var(dag.fit$residuals)
     }
 
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
