@@ -193,30 +193,65 @@ as.list.sparsebnFit <- function(x, ...){
 #' @method print sparsebnFit
 #' @export
 print.sparsebnFit <- function(x, maxsize = 20, ...){
-    ### Print pre-amble
-    cat("CCDr estimate\n",
-        x$nn, " observations\n",
-        "lambda = ", x$lambda, "\n",
-        sep = "")
+    # ### Print pre-amble
+    # cat("CCDr estimate\n",
+    #     x$nn, " observations\n",
+    #     "lambda = ", x$lambda, "\n",
+    #     sep = "")
+    #
+    # cat("\nDAG: \n")
+    #
+    # ### Truncate node names, convert edge list to reference names instead of indices, generate output
+    # # node_names_trunc <- substr(x$nodes, 1, 4)
+    # # edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    #
+    # if(is.edgeList(x$edges)){
+    #     edgeL_names <- edgeList_to_node_names(x, 4)
+    #     edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
+    #
+    #     ### Print DAG output
+    #     cat(edgeL.out, "\n", sep = "")
+    # } else{
+    #     ### Use default print method for whichever data structure user has selected
+    #     print(x$edges)
+    # }
 
-    cat("\nDAG: \n")
+    cat(.str_sparsebnFit(x, maxsize, ...))
 
-    ### Truncate node names, convert edge list to reference names instead of indices, generate output
-    # node_names_trunc <- substr(x$nodes, 1, 4)
-    # edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+} # END PRINT.SPARSEBNFIT
+
+.str_sparsebnFit <- function(x, maxsize, ...){
+    sbf.out <- ""
+    sbf.out <- paste0(sbf.out,
+                      "CCDr estimate\n",
+                      x$nn, " observations\n",
+                      "lambda = ", x$lambda, "\n")
+
+    sbf.out <- paste0(sbf.out,
+                      "\nDAG: \n")
 
     if(is.edgeList(x$edges)){
         edgeL_names <- edgeList_to_node_names(x, 4)
         edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
 
         ### Print DAG output
-        cat(edgeL.out, "\n", sep = "")
+        sbf.out <- paste0(sbf.out, edgeL.out, "\n", sep = "")
     } else{
         ### Use default print method for whichever data structure user has selected
-        print(x$edges)
+        # print(x$edges)
+        edgeL.out <- paste(capture.output(print(x$edges)), collapse = "\n")
+        sbf.out <- paste0(sbf.out, edgeL.out)
     }
 
-} # END PRINT.SPARSEBNFIT
+    sbf.out
+} # END .STR_SPARSEBNFIT
+
+#' @rdname sparsebnFit
+#' @method summary sparsebnFit
+#' @export
+summary.sparsebnFit <- function(object, ...){
+    print(object)
+} # END SUMMARY.SPARSEBNFIT
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export

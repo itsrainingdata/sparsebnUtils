@@ -6,6 +6,7 @@
 \alias{sparsebnFit}
 \alias{is.sparsebnFit}
 \alias{print.sparsebnFit}
+\alias{summary.sparsebnFit}
 \title{sparsebnFit class}
 \usage{
 sparsebnFit(x)
@@ -13,6 +14,8 @@ sparsebnFit(x)
 is.sparsebnFit(x)
 
 \method{print}{sparsebnFit}(x, maxsize = 20, ...)
+
+\method{summary}{sparsebnFit}(object, ...)
 }
 \arguments{
 \item{x}{An \code{R} object.}
