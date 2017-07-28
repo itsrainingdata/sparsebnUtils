@@ -63,7 +63,7 @@
 #' manually. Furthermore, these estimates should always be wrapped up in a \code{\link{sparsebnPath}}
 #' object, but can be handled separately if desired (be careful!).
 #'
-#' @param x An \code{R} object.
+#' @param x A \code{list} or an object of type \code{sparsebnFit}. Should only be used internally.
 #' @param maxsize If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
 #' graph is printed to screen, otherwise a short summary is displayed instead.
 #' @param ... (optional) additional arguments.
@@ -189,6 +189,32 @@ as.list.sparsebnFit <- function(x, ...){
     list(edges = x$edges, nodes = x$nodes, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
 } # END AS.LIST.SPARSEBNFIT
 
+.str_sparsebnFit <- function(x, maxsize, ...){
+    sbf.out <- ""
+    sbf.out <- paste0(sbf.out,
+                      "CCDr estimate\n",
+                      x$nn, " observations\n",
+                      "lambda = ", x$lambda, "\n")
+
+    sbf.out <- paste0(sbf.out,
+                      "\nDAG: \n")
+
+    if(is.edgeList(x$edges)){
+        edgeL_names <- edgeList_to_node_names(x, 4)
+        edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
+
+        ### Print DAG output
+        sbf.out <- paste0(sbf.out, edgeL.out, "\n", sep = "")
+    } else{
+        ### Use default print method for whichever data structure user has selected
+        # print(x$edges)
+        edgeL.out <- paste(capture.output(print(x$edges)), collapse = "\n")
+        sbf.out <- paste0(sbf.out, edgeL.out)
+    }
+
+    sbf.out
+} # END .STR_SPARSEBNFIT
+
 #' @rdname sparsebnFit
 #' @method print sparsebnFit
 #' @export
@@ -220,38 +246,39 @@ print.sparsebnFit <- function(x, maxsize = 20, ...){
 
 } # END PRINT.SPARSEBNFIT
 
-.str_sparsebnFit <- function(x, maxsize, ...){
-    sbf.out <- ""
-    sbf.out <- paste0(sbf.out,
-                      "CCDr estimate\n",
-                      x$nn, " observations\n",
-                      "lambda = ", x$lambda, "\n")
-
-    sbf.out <- paste0(sbf.out,
-                      "\nDAG: \n")
-
-    if(is.edgeList(x$edges)){
-        edgeL_names <- edgeList_to_node_names(x, 4)
-        edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
-
-        ### Print DAG output
-        sbf.out <- paste0(sbf.out, edgeL.out, "\n", sep = "")
-    } else{
-        ### Use default print method for whichever data structure user has selected
-        # print(x$edges)
-        edgeL.out <- paste(capture.output(print(x$edges)), collapse = "\n")
-        sbf.out <- paste0(sbf.out, edgeL.out)
-    }
-
-    sbf.out
-} # END .STR_SPARSEBNFIT
-
+#' @param object an object of type \code{sparsebnFit}
+#'
 #' @rdname sparsebnFit
 #' @method summary sparsebnFit
 #' @export
 summary.sparsebnFit <- function(object, ...){
     print(object)
 } # END SUMMARY.SPARSEBNFIT
+
+
+#' @rdname sparsebnFit
+#' @method plot sparsebnFit
+#' @export
+plot.sparsebnFit <- function(x, ...){
+    plot(x$edges, ...)
+
+    # pkg_plot <- getPlotPackage()
+    #
+    # if(!is.null(pkg_plot)){
+    #     if(pkg_plot == "igraph"){
+    #         ### Over-ride defaults for igraph.plot
+    #         circle_layout <- igraph::layout.circle(to_igraph(x$edges))
+    #         plot(x$edges,
+    #              layout = circle_layout,
+    #              vertex.label.color = gray(0),
+    #              vertex.color = gray(0.9),
+    #              edge.color = gray(0),
+    #              ...)
+    #     } else{
+    #         plot(x$edges, ...)
+    #     }
+    # }
+}
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export
@@ -285,30 +312,6 @@ num.edges.sparsebnFit <- function(x){
 num.samples.sparsebnFit <- function(x){
     x$nn
 } # END NUM.SAMPLES.SPARSEBNFIT
-
-#' @rdname sparsebnFit
-#' @method plot sparsebnFit
-#' @export
-plot.sparsebnFit <- function(x, ...){
-    plot(x$edges, ...)
-
-    # pkg_plot <- getPlotPackage()
-    #
-    # if(!is.null(pkg_plot)){
-    #     if(pkg_plot == "igraph"){
-    #         ### Over-ride defaults for igraph.plot
-    #         circle_layout <- igraph::layout.circle(to_igraph(x$edges))
-    #         plot(x$edges,
-    #              layout = circle_layout,
-    #              vertex.label.color = gray(0),
-    #              vertex.color = gray(0.9),
-    #              edge.color = gray(0),
-    #              ...)
-    #     } else{
-    #         plot(x$edges, ...)
-    #     }
-    # }
-}
 
 #' @describeIn to_edgeList description
 #' @export

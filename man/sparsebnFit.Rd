@@ -21,12 +21,14 @@ is.sparsebnFit(x)
 \method{plot}{sparsebnFit}(x, ...)
 }
 \arguments{
-\item{x}{An \code{R} object.}
+\item{x}{A \code{list} or an object of type \code{sparsebnFit}. Should only be used internally.}
 
 \item{maxsize}{If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
 graph is printed to screen, otherwise a short summary is displayed instead.}
 
 \item{...}{(optional) additional arguments.}
+
+\item{object}{an object of type \code{sparsebnFit}}
 }
 \description{
 Main class for representing DAG estimates. Represents a single DAG estimate in a solution path.

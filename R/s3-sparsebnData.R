@@ -209,6 +209,43 @@ sparsebnData.matrix <- function(x, type, levels = NULL, ivn = NULL, ...){
     sparsebnData.data.frame(as.data.frame(x), type, levels, ivn)
 } # END SPARSEBNDATA.MATRIX
 
+.str_sparsebnData <- function(x, n){
+    sbd.out <- ""
+    sbd.out <- paste0(sbd.out, sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
+    if(is.obs(x)){
+        sbd.out <- paste0(sbd.out, sprintf("Observational data with %s observations", x$type))
+    } else{
+        sbd.out <- paste0(sbd.out, sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
+    }
+} # END PRINT.SPARSEBNDATA
+
+# Default print method
+#' @rdname sparsebnData
+#' @method print sparsebnData
+#' @export
+print.sparsebnData <- function(x, n = 5L, ...){
+    # print(utils::head(data$data, n = n), row.names = FALSE)
+    .print_data_frame(x$data, topn = n)
+
+    # cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
+    # if(is.obs(x)){
+    #     cat(sprintf("Observational data with %s observations", x$type))
+    # } else{
+    #
+    #     cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
+    # }
+    cat(.str_sparsebnData(x, n))
+} # END PRINT.SPARSEBNDATA
+
+# Default summary method
+#' @rdname sparsebnData
+#' @method summary sparsebnData
+#' @export
+summary.sparsebnData <- function(object, n = 5L, ...){
+    print(summary(object$data))
+    cat(.str_sparsebnData(object, n = n))
+} # END SUMMARY.SPARSEBNDATA
+
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
 #' @export
 num.samples.sparsebnData <- function(x){
@@ -247,45 +284,6 @@ count.interventions <- function(data){
 count.levels <- function(data){
     unlist(lapply(data$levels, length))
 } # END COUNT.LEVELS
-
-.str_sparsebnData <- function(x, n){
-    sbd.out <- ""
-    sbd.out <- paste0(sbd.out, sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
-    if(is.obs(x)){
-        sbd.out <- paste0(sbd.out, sprintf("Observational data with %s observations", x$type))
-    } else{
-
-        sbd.out <- paste0(sbd.out, sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
-    }
-    ### Add a message about the interventions as well / if purely obs, etc.
-} # END PRINT.SPARSEBNDATA
-
-# Default print method
-#' @rdname sparsebnData
-#' @method print sparsebnData
-#' @export
-print.sparsebnData <- function(x, n = 5L, ...){
-    # print(utils::head(data$data, n = n), row.names = FALSE)
-    .print_data_frame(x$data, topn = n)
-
-    # cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
-    # if(is.obs(x)){
-    #     cat(sprintf("Observational data with %s observations", x$type))
-    # } else{
-    #
-    #     cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
-    # }
-    cat(.str_sparsebnData(x, n))
-} # END PRINT.SPARSEBNDATA
-
-# Default summary method
-#' @rdname sparsebnData
-#' @method summary sparsebnData
-#' @export
-summary.sparsebnData <- function(object, n = 5L, ...){
-    print(summary(object$data))
-    cat(.str_sparsebnData(object, n = n))
-} # END SUMMARY.SPARSEBNDATA
 
 #' Convert a sparsebnData object back to a data.frame
 #'
