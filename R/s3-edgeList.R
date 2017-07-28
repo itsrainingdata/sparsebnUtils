@@ -38,6 +38,7 @@
 #'
 #' @param x A list containing parents for each node in a graph. The length of this list
 #'          should be the same as the number of nodes in the graph.
+#' @param ... (optional) additional arguments.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}},
@@ -168,6 +169,10 @@ edgeList.bn <- function(x){
     edgeL.out
 } # END .STR_EDGELIST
 
+#' @param maxsize Maximum number of nodes to print out. If
+#' \code{num.nodes(x) > maxsize}, then a simple summary will be printed
+#' instead.
+#'
 #' @rdname edgeList
 #' @method print edgeList
 #' @export

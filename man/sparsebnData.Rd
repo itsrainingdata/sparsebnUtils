@@ -37,6 +37,8 @@ detected from \code{\link{unique}}.}
 purely observational.}
 
 \item{n}{(optional) number of rows from data matrix to print.}
+
+\item{object}{an object of type \code{sparsebnData}}
 }
 \description{
 This class stores data that may contain interventions on some or all of the observations. It also

@@ -238,6 +238,8 @@ print.sparsebnData <- function(x, n = 5L, ...){
 } # END PRINT.SPARSEBNDATA
 
 # Default summary method
+#' @param object an object of type \code{sparsebnData}
+#'
 #' @rdname sparsebnData
 #' @method summary sparsebnData
 #' @export
