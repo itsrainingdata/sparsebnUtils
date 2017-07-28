@@ -6,6 +6,8 @@
 \alias{sparsebnPath}
 \alias{is.sparsebnPath}
 \alias{print.sparsebnPath}
+\alias{summary.sparsebnPath}
+\alias{plot.sparsebnPath}
 \title{sparsebnPath class}
 \usage{
 sparsebnPath(x)
@@ -13,14 +15,20 @@ sparsebnPath(x)
 is.sparsebnPath(x)
 
 \method{print}{sparsebnPath}(x, verbose = FALSE, ...)
+
+\method{summary}{sparsebnPath}(object, ...)
+
+\method{plot}{sparsebnPath}(x, ...)
 }
 \arguments{
-\item{x}{Only used internally.}
+\item{x}{A \code{list} or an object of type \code{sparsebnPath}. Should only be used internally.}
 
 \item{verbose}{If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 large graphs or large solution paths. (default = \code{FALSE})}
 
 \item{...}{(optional) additional arguments.}
+
+\item{object}{an object of type \code{sparsebnPath}}
 }
 \description{
 Convenience wrapper class for solution paths of DAG learning algorithms: This class represents an entire

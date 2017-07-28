@@ -8,6 +8,7 @@
 \alias{sparsebnData.data.frame}
 \alias{sparsebnData.matrix}
 \alias{print.sparsebnData}
+\alias{summary.sparsebnData}
 \title{sparsebnData class}
 \usage{
 sparsebnData(x, ...)
@@ -19,6 +20,8 @@ is.sparsebnData(x)
 \method{sparsebnData}{matrix}(x, type, levels = NULL, ivn = NULL, ...)
 
 \method{print}{sparsebnData}(x, n = 5L, ...)
+
+\method{summary}{sparsebnData}(object, n = 5L, ...)
 }
 \arguments{
 \item{x}{a \code{\link{data.frame}} or \code{\link{matrix}} object.}
@@ -34,6 +37,8 @@ detected from \code{\link{unique}}.}
 purely observational.}
 
 \item{n}{(optional) number of rows from data matrix to print.}
+
+\item{object}{an object of type \code{sparsebnData}}
 }
 \description{
 This class stores data that may contain interventions on some or all of the observations. It also
