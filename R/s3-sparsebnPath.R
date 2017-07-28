@@ -85,6 +85,19 @@ sparsebnPath.list <- function(x){
     structure(x, class = c("sparsebnPath", "list"))
 } # END sparsebnPath.LIST
 
+.str_sparsebnPath <- function(x){
+    sbp.out <- ""
+    sbp.out <- paste0(sbp.out,
+                      "sparsebn Solution Path\n",
+                      " ", num.nodes(x), " nodes\n",
+                      " ", num.samples(x), " observations\n",
+                      " ", length(x), " estimates for lambda in [", round(min(get.lambdas(x)), 4), ", ", round(max(get.lambdas(x)), 4), "]\n",
+                      " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n"
+                )
+
+    sbp.out
+} # END .STR_SPARSEBNPATH
+
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
@@ -95,14 +108,26 @@ print.sparsebnPath <- function(x, verbose = FALSE, ...){
     if(verbose){
         print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
-        cat("sparsebn Solution Path\n",
-            " ", length(x), " estimates for lambda in [", min(get.lambdas(x)), ",", max(get.lambdas(x)), "]\n",
-            " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
-            " ", num.nodes(x), " nodes\n",
-            " ", num.samples(x), " observations\n",
-            sep = "")
+        cat(.str_sparsebnPath(x))
     }
 } # END PRINT.SPARSEBNPATH
+
+#' @rdname sparsebnPath
+#' @method summary sparsebnPath
+#' @export
+summary.sparsebnPath <- function(object, ...){
+    ### Print usual sparsebnPath output
+    cat(.str_sparsebnPath(object))
+    cat("\n")
+
+    ### Add summary for each lambda
+    lambdas <- get.lambdas(object)
+    nedges <- num.edges(object)
+    print(data.frame(lambda = lambdas, nedge = nedges))
+
+    # sbp.out <- sprintf("%10.4f %5d", round(lambdas, 4), nedges)
+    # cat(sbp.out, sep = "\n")
+} # END SUMMARY.SPARSEBNPATH
 
 #' @export
 as.list.sparsebnPath <- function(x, ...){
