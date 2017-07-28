@@ -18,7 +18,7 @@ is.sparsebnPath(x)
 
 \method{summary}{sparsebnPath}(object, ...)
 
-\method{plot}{sparsebnPath}(x, ...)
+\method{plot}{sparsebnPath}(x, labels = FALSE, ...)
 }
 \arguments{
 \item{x}{A \code{list} or an object of type \code{sparsebnPath}. Should only be used internally.}
@@ -29,6 +29,9 @@ large graphs or large solution paths. (default = \code{FALSE})}
 \item{...}{(optional) additional arguments.}
 
 \item{object}{an object of type \code{sparsebnPath}}
+
+\item{labels}{\code{TRUE} or \code{FALSE}. Whether or not to print out
+labels with summary information for each plot in the solution path.}
 }
 \description{
 Convenience wrapper class for solution paths of DAG learning algorithms: This class represents an entire

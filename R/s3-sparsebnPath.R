@@ -131,10 +131,13 @@ summary.sparsebnPath <- function(object, ...){
     # cat(sbp.out, sep = "\n")
 } # END SUMMARY.SPARSEBNPATH
 
+#' @param labels \code{TRUE} or \code{FALSE}. Whether or not to print out
+#' labels with summary information for each plot in the solution path.
+#'
 #' @rdname sparsebnPath
 #' @method plot sparsebnPath
 #' @export
-plot.sparsebnPath <- function(x, ...){
+plot.sparsebnPath <- function(x, labels = FALSE, ...){
     ### UPDATE 7/28/17: What are the issues? Seems fine.
     ### Issues when plotting null DAG, so remove it
     # x <- x[-1] # Do this BEFORE setting the grid layout below!
@@ -142,13 +145,16 @@ plot.sparsebnPath <- function(x, ...){
     ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
     par.default <- par()[c("mfrow", "mai")] # Only re-set what we change here
     par(mfrow = n2mfrow(length(x)),         # Automatically choose a sensible grid to use
-        mai = rep(0,4)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
+        mai = c(0, 0, 0.1, 0)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
         )
 
     tryCatch({
         # lapply(x, plot)
         for(fit in x){
             plot(fit, ...)
+            if(labels){
+                title(sprintf("lambda = %4.2f, # of edges = %d", fit$lambda, fit$nedge), cex.main = 0.85)
+            }
         }
     }, error = function(c){
         dev.off()

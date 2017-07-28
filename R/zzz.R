@@ -10,7 +10,7 @@
 # #' @exportPattern ^[^\\.] <--- DON'T USE THIS!
 
 #' @importFrom grDevices dev.off n2mfrow
-#' @importFrom graphics par plot
+#' @importFrom graphics par plot title
 #' @importFrom methods as
 #' @importFrom utils capture.output
 
