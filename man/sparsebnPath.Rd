@@ -7,6 +7,7 @@
 \alias{is.sparsebnPath}
 \alias{print.sparsebnPath}
 \alias{summary.sparsebnPath}
+\alias{plot.sparsebnPath}
 \title{sparsebnPath class}
 \usage{
 sparsebnPath(x)
@@ -16,6 +17,8 @@ is.sparsebnPath(x)
 \method{print}{sparsebnPath}(x, verbose = FALSE, ...)
 
 \method{summary}{sparsebnPath}(object, ...)
+
+\method{plot}{sparsebnPath}(x, ...)
 }
 \arguments{
 \item{x}{Only used internally.}

@@ -186,7 +186,7 @@ get.adjacency.matrix.sparsebnPath <- function(x){
     sparsebnPath(as.list(x)[i])
 }
 
-#' @rdname plot.edgeList
+#' @rdname sparsebnPath
 #' @method plot sparsebnPath
 #' @export
 plot.sparsebnPath <- function(x, ...){

@@ -286,7 +286,7 @@ num.samples.sparsebnFit <- function(x){
     x$nn
 } # END NUM.SAMPLES.SPARSEBNFIT
 
-#' @rdname plot.edgeList
+#' @rdname sparsebnFit
 #' @method plot sparsebnFit
 #' @export
 plot.sparsebnFit <- function(x, ...){
