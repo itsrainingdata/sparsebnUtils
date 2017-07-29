@@ -261,23 +261,6 @@ summary.sparsebnFit <- function(object, ...){
 #' @export
 plot.sparsebnFit <- function(x, ...){
     plot(x$edges, ...)
-
-    # pkg_plot <- getPlotPackage()
-    #
-    # if(!is.null(pkg_plot)){
-    #     if(pkg_plot == "igraph"){
-    #         ### Over-ride defaults for igraph.plot
-    #         circle_layout <- igraph::layout.circle(to_igraph(x$edges))
-    #         plot(x$edges,
-    #              layout = circle_layout,
-    #              vertex.label.color = gray(0),
-    #              vertex.color = gray(0.9),
-    #              edge.color = gray(0),
-    #              ...)
-    #     } else{
-    #         plot(x$edges, ...)
-    #     }
-    # }
 }
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix

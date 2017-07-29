@@ -14,11 +14,14 @@
 #       alg_input_data_frame
 #       has_missing_values
 #       invalid_pkg_specification
+#       pkg_not_installed
 #       global_coerce_warning
 #       feature_not_supported
 #       invalid_class
 #       dag_summary
 #       empty_dag_summary
+#       data_not_numeric
+#       invalid_type_input
 #
 
 #' @name sparsebn-messages

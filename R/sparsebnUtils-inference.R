@@ -17,6 +17,7 @@
 #       fit_multinom_dag
 #       gaussian_loglikelihood
 #       gaussian_profile_loglikelihood
+#       multinom_loglikelihood
 #
 
 ### DAG fitting --------------------------------------------------------

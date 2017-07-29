@@ -12,6 +12,7 @@
 #   CONTENTS:
 #       select
 #       select.parameter
+#       get.solution
 #
 
 #' Select solutions from a solution path
