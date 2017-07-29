@@ -115,7 +115,13 @@ test_that("Coercion to bn works", {
 })
 
 test_that("Iterative coercing works", {
-    if(requireNamespace(c("graph", "igraph", "network", "bnlearn"), quietly = TRUE)){
+    ### Check for all 4 suggested pkgs
+    pkg_check <- requireNamespace("graph", quietly = TRUE) &
+                 requireNamespace("igraph", quietly = TRUE) &
+                 requireNamespace("network", quietly = TRUE) &
+                 requireNamespace("bnlearn", quietly = TRUE)
+
+    if(pkg_check){
         ### Empty graphs: sparsebnFit
         expect_equivalent(sbf.empty, to_edgeList(to_graphNEL(to_network(to_igraph(sbf.empty)))))
         expect_equivalent(sbf.empty, to_edgeList(to_graphNEL(to_igraph(to_network(sbf.empty)))))
