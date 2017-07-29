@@ -51,7 +51,8 @@ to_igraph.edgeList <- function(x){
 #' @export
 to_igraph.graphNEL <- function(x){
     # to_igraph(to_edgeList(x))
-    igraph::graph_from_graphnel(x)
+    # igraph::graph_from_graphnel(x) ### This function is deprecated as of igraph v1.1.2
+    igraph::igraph.from.graphNEL(x)
 }
 
 #' @export
