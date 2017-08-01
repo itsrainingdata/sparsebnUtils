@@ -9,6 +9,7 @@
 \alias{sparsebnData.matrix}
 \alias{print.sparsebnData}
 \alias{summary.sparsebnData}
+\alias{plot.sparsebnData}
 \title{sparsebnData class}
 \usage{
 sparsebnData(x, ...)
@@ -22,6 +23,8 @@ is.sparsebnData(x)
 \method{print}{sparsebnData}(x, n = 5L, ...)
 
 \method{summary}{sparsebnData}(object, n = 5L, ...)
+
+\method{plot}{sparsebnData}(x, ...)
 }
 \arguments{
 \item{x}{a \code{\link{data.frame}} or \code{\link{matrix}} object.}

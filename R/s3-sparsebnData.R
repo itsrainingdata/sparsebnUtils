@@ -248,6 +248,13 @@ summary.sparsebnData <- function(object, n = 5L, ...){
     cat(.str_sparsebnData(object, n = n))
 } # END SUMMARY.SPARSEBNDATA
 
+#' @rdname sparsebnData
+#' @method plot sparsebnData
+#' @export
+plot.sparsebnData <- function(x, ...){
+    plot(x$data)
+} # END PLOT.SPARSEBNDATA
+
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
 #' @export
 num.samples.sparsebnData <- function(x){
