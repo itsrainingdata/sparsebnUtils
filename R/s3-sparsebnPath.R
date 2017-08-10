@@ -153,7 +153,8 @@ plot.sparsebnPath <- function(x, labels = FALSE, ...){
         for(fit in x){
             plot(fit, ...)
             if(labels){
-                title(sprintf("lambda = %4.2f, # of edges = %d", fit$lambda, fit$nedge), cex.main = 0.85)
+                # title(sprintf("lambda = %4.2f, # of edges = %d", fit$lambda, fit$nedge), cex.main = 0.85)
+                title(bquote(lambda*" = "*.(round(fit$lambda, 2))*" / "*.(fit$nedge)~"edges"), cex.main = 0.85)
             }
         }
     }, error = function(c){
