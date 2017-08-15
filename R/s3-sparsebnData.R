@@ -133,7 +133,7 @@ sparsebnData.list <- function(x, ...){
     if( !is.list(x)){
         stop("Input must be a list!")
     } else if( length(x) != 4 || !setequal(names(x), c("data", "type", "levels", "ivn"))){
-        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
+        stop("Input is not coercable to an object of type sparsebnData, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
     } else if( !check_if_data_matrix(x$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(x$data)))
     } else if(!(x$type %in% type_list)){
