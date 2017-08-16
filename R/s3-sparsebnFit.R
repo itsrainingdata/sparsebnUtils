@@ -47,7 +47,7 @@
 #' Since \code{edgeList}s do not contain information on the node names, the second slot
 #' \code{nodes} stores this information. The indices in \code{edges} are in one-to-one
 #' correspondence with the names in the \code{nodes} vector. The \code{lambda} slot stores
-#'  the regularization parameter used to estinate the graph.
+#'  the regularization parameter used to estimate the graph.
 #'
 #' Other slots include \code{nedge}, for the number of edges; \code{pp}, for p = number of nodes;
 #' \code{nn}, for n = number of samples, and \code{time}, for the time in seconds needed to
