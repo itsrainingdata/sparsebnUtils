@@ -1,3 +1,13 @@
+# sparsebnUtils 0.0.5
+
+## Features
+
+* `select.parameter` now works with discrete data
+* `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
+`edgeList` objects
+* `plot` generic for `sparsebnData` objects
+* `plotDAG` now includes labels for each subplot by default
+
 # sparsebnUtils 0.0.4
 
 ## Features
