@@ -47,19 +47,24 @@
 
 #' sparsebnData class
 #'
-#' This class stores data that may contain interventions on some or all of the observations. It also
-#' allows for the degenerate case with no interventions, i.e. purely observational data.
+#' This class stores data that may contain interventions on some or all of the
+#' observations. It also allows for the degenerate case with no interventions,
+#' i.e. purely observational data.
 #'
-#' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
-#' a type identifier (i.e. discrete or continuous), a list of factor levels, and a list of interventions.
+#' The structure of a \code{sparsebnData} object is very simple: It contains a
+#' \code{data.frame} object, a type identifier (i.e. discrete or continuous),
+#' a list of factor levels, and a list of interventions.
+#'
 #' \itemize{
-#' \item The \code{levels} list should be the same size as the number of nodes and consist of names of the different
-#' levels for each node. Each level should be coded to be from 0...\eqn{k}-1 where \eqn{k} is the number of levels for a
+#' \item The \code{levels} list should be the same size as the number of nodes
+#' and consist of names of the different levels for each node. Each level should
+#' be coded to be from 0...\eqn{k}-1 where \eqn{k} is the number of levels for a
 #' particular variable (see below for more).
-#' \item The \code{ivn} list should be the same size as the number of rows in the dataset,
-#' and each component indicates which column(s) in the dataset is (are) under intervention. If an
-#' observation has no interventions, then the corresponding component is \code{NULL}. Thus, if the data is
-#' purely observational, this list should contain only \code{NULL} values.
+#' \item The \code{ivn} list should be the same size as the number of rows in
+#' the dataset, and each component indicates which column(s) in the dataset is
+#' (are) under intervention. If an observation has no interventions, then the
+#' corresponding component is \code{NULL}. Thus, if the data is purely
+#' observational, this list should contain only \code{NULL} values.
 #' }
 #'
 #' Presently, only levels coded as 0,1,...,\eqn{k}-1 are supported (\eqn{k} = the number of levels for a
@@ -100,15 +105,19 @@
 #' dat <- sparsebnData(mat, type = "continuous") # purely observational data with continuous variables
 #'
 #' ### Discrete data
-#' mat <- cbind(c(0,1,1,0),
-#'              c(2,1,0,1),
-#'              c(0,0,3,0))
+#' mat <- rbind(c(0,2,0),
+#'              c(1,1,0),
+#'              c(1,0,3),
+#'              c(0,1,0))
 #' dat.levels <- list(c(0,1), c(0,1,2), c(0,1,2,3))
 #' dat <- sparsebnData(mat,
 #'                     type = "discrete",
 #'                     levels = dat.levels) # purely observational data with discrete variables
 #'
-#' dat.ivn <- list(c(1), c(1), c(2,3), c(2,3)) # add some interventions
+#' dat.ivn <- list(c(1),   # first observation was intervened at node 1
+#'                 c(1),   # second observation was intervened at node 1
+#'                 c(2,3), # third observation was intervened at nodes 2 and 3
+#'                 c(1,3)) # fourth observation was intervened at nodes 1 and 3
 #' dat <- sparsebnData(mat,
 #'                     type = "discrete",
 #'                     levels = dat.levels,
