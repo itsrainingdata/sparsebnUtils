@@ -335,8 +335,8 @@ permute.nodes <- function(x, perm = NULL){
     if(is.null(perm)){
         node_order <- sample(1:num.nodes(x))
     } else{
-        stopifnot(length(perm) != num.nodes(x))
-        stopifnot(sort(perm) != 1:num.nodes(x))
+        stopifnot(length(perm) == num.nodes(x))
+        stopifnot(sort(perm) == 1:num.nodes(x))
         node_order <- perm
     }
     permuted <- lapply(x, function(x) node_order[x])[Matrix::invPerm(node_order)]
