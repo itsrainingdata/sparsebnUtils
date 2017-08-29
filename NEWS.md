@@ -3,10 +3,14 @@
 ## Features
 
 * `select.parameter` now works with discrete data
-* `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
+* Added `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
 `edgeList` objects
-* `plot` generic for `sparsebnData` objects
+* Added `plot` generic for `sparsebnData` objects
 * `plotDAG` now includes labels for each subplot by default
+
+## Bug fixes
+
+* Fixed bug which caused `permute.nodes` to throw an error when passing in a user-specified node ordering
 
 # sparsebnUtils 0.0.4
 
