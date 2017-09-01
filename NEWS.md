@@ -6,6 +6,7 @@
 * Added `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
 `edgeList` objects
 * Added `plot` generic for `sparsebnData` objects
+* Added `specify.prior` method to simplify construction of black lists
 * `plotDAG` now includes labels for each subplot by default
 
 ## Bug fixes
