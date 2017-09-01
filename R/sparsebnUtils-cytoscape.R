@@ -33,12 +33,12 @@ openCytoscape  <- function(x){
     }
 
     UseMethod("openCytoscape", x)
-}
+} # END OPENCYTOSCAPE
 
 #' @export
 openCytoscape.sparsebnPath <- function(x){
     stop("Currently, this method only works on individual networks, and is not yet implemented for solution paths. Please select one network from the path instead (see ?select, ?select.parameter). Stay tuned, there will be an update for solution paths soon!")
-}
+} # END OPENCYTOSCAPE.SPARSEBNPATH
 
 #' @export
 openCytoscape.sparsebnFit <- function(x){
@@ -52,7 +52,7 @@ openCytoscape.sparsebnFit <- function(x){
     graph@edgeData@data <- list()
 
     showCytoscape(graph)
-}
+} # END OPENCYTOSCAPE.SPARSEBNFIT
 
 #' @export
 openCytoscape.default <- function(x){
@@ -66,7 +66,7 @@ openCytoscape.default <- function(x){
     graph@edgeData@data <- list()
 
     showCytoscape(graph)
-}
+} # END OPENCYTOSCAPE.DEFAULT
 
 ### Utility function to handle all RCy3-related functions including
 ### opening cytoscape and displaying the graph
@@ -90,4 +90,4 @@ showCytoscape <- function(graph){
                                      overwriteWindow = TRUE)
     RCy3::displayGraph(cytowin)
     RCy3::layoutNetwork(cytowin, "hierarchical")
-}
+} # END SHOWCYTOSCAPE
