@@ -43,7 +43,7 @@ openCytoscape.sparsebnPath <- function(x){
 #' @export
 openCytoscape.sparsebnFit <- function(x){
     ### Convert to graphNEL object, which is needed for RCy3
-    x <- to_igraph(graph)
+    graph <- to_igraph(x)
     graph <- igraph:::as_graphnel(graph$edges)
 
     ### NOTE: Need to remove metadata based on current implementation of to_igraph
@@ -57,7 +57,7 @@ openCytoscape.sparsebnFit <- function(x){
 #' @export
 openCytoscape.default <- function(x){
     ### Convert to graphNEL object, which is needed for RCy3
-    x <- to_igraph(graph)
+    graph <- to_igraph(x)
     graph <- igraph:::as_graphnel(graph)
 
     ### NOTE: Need to remove metadata based on current implementation of to_igraph
