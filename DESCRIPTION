@@ -21,6 +21,7 @@ Suggests:
     graph,
     igraph,
     network,
+    RCy3,
     testthat
 URL: https://github.com/itsrainingdata/sparsebnUtils
 BugReports: https://github.com/itsrainingdata/sparsebnUtils/issues
