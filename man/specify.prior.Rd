@@ -4,7 +4,7 @@
 \alias{specify.prior}
 \title{Build a black list based on prior knowledge}
 \usage{
-specify.prior(roots, leaves, nodes, indices = FALSE)
+specify.prior(roots = NULL, leaves = NULL, nodes, indices = FALSE)
 }
 \arguments{
 \item{roots}{Vector of root nodes. May be character or integer.}

@@ -38,9 +38,24 @@
 #' @param indices Logical: Return indices or character names?
 #'
 #' @export
-specify.prior <- function(roots, leaves, nodes, indices = FALSE){
-    blacklist_root <- specify_root(roots, nodes, indices)
-    blacklist_leaf <- specify_leaf(leaves, nodes, indices)
+specify.prior <- function(roots = NULL, leaves = NULL, nodes, indices = FALSE){
+    if(missing(nodes)){
+        stop("Please specify a value for the 'nodes' argument!")
+    }
+
+    ### Build matrix for root nodes
+    if(!is.null(roots)){
+        blacklist_root <- specify_root(roots, nodes, indices)
+    } else{
+        blacklist_root <- NULL
+    }
+
+    ### Build matrix for leaf nodes
+    if(!is.null(leaves)){
+        blacklist_leaf <- specify_leaf(leaves, nodes, indices)
+    } else{
+        blacklist_leaf <- NULL
+    }
 
     rbind(blacklist_root, blacklist_leaf)
 }
@@ -51,7 +66,7 @@ specify_root <- function(root, nodes, indices = FALSE){
         stop(msg)
     }
 
-    lists <- lapply(root, function(r) t(sapply(nodes, function(x) c(x, r))))
+    lists <- lapply(root, function(r) t(sapply(nodes, function(x) c(x, r), USE.NAMES = FALSE)))
     lists <- do.call("rbind", lists)
 
     if(!indices){
@@ -68,7 +83,7 @@ specify_leaf <- function(leaf, nodes, indices = FALSE){
         stop(msg)
     }
 
-    lists <- lapply(leaf, function(r) t(sapply(nodes, function(x) c(r, x))))
+    lists <- lapply(leaf, function(r) t(sapply(nodes, function(x) c(r, x), USE.NAMES = FALSE)))
     lists <- do.call("rbind", lists)
 
     if(!indices){
