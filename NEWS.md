@@ -2,6 +2,7 @@
 
 ## Features
 
+* `openCytoscape` method added for compatibility with Cytoscape app
 * `select.parameter` now works with discrete data
 * Added `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
 `edgeList` objects
