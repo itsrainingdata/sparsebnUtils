@@ -2,17 +2,20 @@
 
 ## Features
 
-* `openCytoscape` method added for compatibility with Cytoscape app
+* `openCytoscape` method added for compatibility with Cytoscape app (sparsebn #4)
 * `select.parameter` now works with discrete data
 * Added `summary` generics for `sparsebnPath`, `sparsebnFit`, `sparsebnData`, and
 `edgeList` objects
 * Added `plot` generic for `sparsebnData` objects
 * Added `specify.prior` method to simplify construction of black lists
 * `plotDAG` now includes labels for each subplot by default
+* Improve output when estimate.parameters is singular (#9)
 
 ## Bug fixes
 
 * Fixed bug which caused `permute.nodes` to throw an error when passing in a user-specified node ordering
+* Correct error message for mixed data (#8)
+* Update documentation for conversion methods (#11)
 
 # sparsebnUtils 0.0.4
 
