@@ -47,7 +47,7 @@
 #' Since \code{edgeList}s do not contain information on the node names, the second slot
 #' \code{nodes} stores this information. The indices in \code{edges} are in one-to-one
 #' correspondence with the names in the \code{nodes} vector. The \code{lambda} slot stores
-#'  the regularization parameter used to estinate the graph.
+#'  the regularization parameter used to estimate the graph.
 #'
 #' Other slots include \code{nedge}, for the number of edges; \code{pp}, for p = number of nodes;
 #' \code{nn}, for n = number of samples, and \code{time}, for the time in seconds needed to
@@ -63,7 +63,7 @@
 #' manually. Furthermore, these estimates should always be wrapped up in a \code{\link{sparsebnPath}}
 #' object, but can be handled separately if desired (be careful!).
 #'
-#' @param x An \code{R} object.
+#' @param x A \code{list} or an object of type \code{sparsebnFit}. Should only be used internally.
 #' @param maxsize If the number of nodes in a graph is \eqn{\le} \code{maxsize}, then the entire
 #' graph is printed to screen, otherwise a short summary is displayed instead.
 #' @param ... (optional) additional arguments.
@@ -189,34 +189,79 @@ as.list.sparsebnFit <- function(x, ...){
     list(edges = x$edges, nodes = x$nodes, lambda = x$lambda, nedge = x$nedge, pp = x$pp, nn = x$nn, time = x$time)
 } # END AS.LIST.SPARSEBNFIT
 
-#' @rdname sparsebnFit
-#' @method print sparsebnFit
-#' @export
-print.sparsebnFit <- function(x, maxsize = 20, ...){
-    ### Print pre-amble
-    cat("CCDr estimate\n",
-        x$nn, " observations\n",
-        "lambda = ", x$lambda, "\n",
-        sep = "")
+.str_sparsebnFit <- function(x, maxsize, ...){
+    sbf.out <- ""
+    sbf.out <- paste0(sbf.out,
+                      "CCDr estimate\n",
+                      x$nn, " observations\n",
+                      "lambda = ", x$lambda, "\n")
 
-    cat("\nDAG: \n")
-
-    ### Truncate node names, convert edge list to reference names instead of indices, generate output
-    # node_names_trunc <- substr(x$nodes, 1, 4)
-    # edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    sbf.out <- paste0(sbf.out,
+                      "\nDAG: \n")
 
     if(is.edgeList(x$edges)){
         edgeL_names <- edgeList_to_node_names(x, 4)
         edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
 
         ### Print DAG output
-        cat(edgeL.out, "\n", sep = "")
+        sbf.out <- paste0(sbf.out, edgeL.out, "\n", sep = "")
     } else{
         ### Use default print method for whichever data structure user has selected
-        print(x$edges)
+        # print(x$edges)
+        edgeL.out <- paste(capture.output(print(x$edges)), collapse = "\n")
+        sbf.out <- paste0(sbf.out, edgeL.out)
     }
 
+    sbf.out
+} # END .STR_SPARSEBNFIT
+
+#' @rdname sparsebnFit
+#' @method print sparsebnFit
+#' @export
+print.sparsebnFit <- function(x, maxsize = 20, ...){
+    # ### Print pre-amble
+    # cat("CCDr estimate\n",
+    #     x$nn, " observations\n",
+    #     "lambda = ", x$lambda, "\n",
+    #     sep = "")
+    #
+    # cat("\nDAG: \n")
+    #
+    # ### Truncate node names, convert edge list to reference names instead of indices, generate output
+    # # node_names_trunc <- substr(x$nodes, 1, 4)
+    # # edgeL_names <- lapply(as.list(x$edges), function(z) node_names_trunc[z])
+    #
+    # if(is.edgeList(x$edges)){
+    #     edgeL_names <- edgeList_to_node_names(x, 4)
+    #     edgeL.out <- .str_edgeList(edgeL_names, maxsize = maxsize)
+    #
+    #     ### Print DAG output
+    #     cat(edgeL.out, "\n", sep = "")
+    # } else{
+    #     ### Use default print method for whichever data structure user has selected
+    #     print(x$edges)
+    # }
+
+    cat(.str_sparsebnFit(x, maxsize, ...))
+
 } # END PRINT.SPARSEBNFIT
+
+#' @param object an object of type \code{sparsebnFit}
+#'
+#' @rdname sparsebnFit
+#' @method summary sparsebnFit
+#' @export
+summary.sparsebnFit <- function(object, ...){
+    print(object)
+} # END SUMMARY.SPARSEBNFIT
+
+
+#' @rdname sparsebnFit
+#' @method plot sparsebnFit
+#' @export
+plot.sparsebnFit <- function(x, ...){
+    plot(x$edges, ...)
+}
 
 #' @describeIn get.adjacency.matrix Retrieves \code{edges} slot and converts to an adjacency matrix
 #' @export
@@ -250,30 +295,6 @@ num.edges.sparsebnFit <- function(x){
 num.samples.sparsebnFit <- function(x){
     x$nn
 } # END NUM.SAMPLES.SPARSEBNFIT
-
-#' @rdname plot.edgeList
-#' @method plot sparsebnFit
-#' @export
-plot.sparsebnFit <- function(x, ...){
-    plot(x$edges, ...)
-
-    # pkg_plot <- getPlotPackage()
-    #
-    # if(!is.null(pkg_plot)){
-    #     if(pkg_plot == "igraph"){
-    #         ### Over-ride defaults for igraph.plot
-    #         circle_layout <- igraph::layout.circle(to_igraph(x$edges))
-    #         plot(x$edges,
-    #              layout = circle_layout,
-    #              vertex.label.color = gray(0),
-    #              vertex.color = gray(0.9),
-    #              edge.color = gray(0),
-    #              ...)
-    #     } else{
-    #         plot(x$edges, ...)
-    #     }
-    # }
-}
 
 #' @describeIn to_edgeList description
 #' @export

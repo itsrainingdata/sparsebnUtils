@@ -13,6 +13,7 @@
 #       check_if_matrix
 #       check_if_data_matrix
 #       check_if_complete_data
+#       check_if_numeric_data
 #       check_null
 #       check_na
 #       count_nas
@@ -28,6 +29,8 @@
 #       recode_levels
 #       convert_factor_to_discrete
 #       format_list
+#       cor_vector
+#       cor_vector_ivn
 #       pmatch_numeric
 #
 

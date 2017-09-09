@@ -7,16 +7,21 @@ sbf <- generate_fixed_sparsebnFit()
 
 test_that("Switching without coercion works", {
     ### graph pkg
-    expect_error(setGraphPackage("graph"), NA)
-    expect_equal(options()$sparsebn.graph, "graph")
+    if(requireNamespace("graph", quietly = TRUE)){
+        expect_error(setGraphPackage("graph"), NA)
+        expect_equal(options()$sparsebn.graph, "graph")
+    }
 
     ### igraph pkg
-    expect_error(setGraphPackage("igraph"), NA)
-    expect_equal(options()$sparsebn.graph, "igraph")
-
+    if(requireNamespace("igraph", quietly = TRUE)){
+        expect_error(setGraphPackage("igraph"), NA)
+        expect_equal(options()$sparsebn.graph, "igraph")
+    }
     ### network pkg
-    expect_error(setGraphPackage("network"), NA)
-    expect_equal(options()$sparsebn.graph, "network")
+    if(requireNamespace("network", quietly = TRUE)){
+        expect_error(setGraphPackage("network"), NA)
+        expect_equal(options()$sparsebn.graph, "network")
+    }
 
     ### Back to NULL
     expect_error(setGraphPackage(NULL), NA)

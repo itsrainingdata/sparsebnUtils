@@ -47,19 +47,24 @@
 
 #' sparsebnData class
 #'
-#' This class stores data that may contain interventions on some or all of the observations. It also
-#' allows for the degenerate case with no interventions, i.e. purely observational data.
+#' This class stores data that may contain interventions on some or all of the
+#' observations. It also allows for the degenerate case with no interventions,
+#' i.e. purely observational data.
 #'
-#' The structure of a \code{sparsebnData} object is very simple: It contains a \code{data.frame} object,
-#' a type identifier (i.e. discrete or continuous), a list of factor levels, and a list of interventions.
+#' The structure of a \code{sparsebnData} object is very simple: It contains a
+#' \code{data.frame} object, a type identifier (i.e. discrete or continuous),
+#' a list of factor levels, and a list of interventions.
+#'
 #' \itemize{
-#' \item The \code{levels} list should be the same size as the number of nodes and consist of names of the different
-#' levels for each node. Each level should be coded to be from 0...\eqn{k}-1 where \eqn{k} is the number of levels for a
+#' \item The \code{levels} list should be the same size as the number of nodes
+#' and consist of names of the different levels for each node. Each level should
+#' be coded to be from 0...\eqn{k}-1 where \eqn{k} is the number of levels for a
 #' particular variable (see below for more).
-#' \item The \code{ivn} list should be the same size as the number of rows in the dataset,
-#' and each component indicates which column(s) in the dataset is (are) under intervention. If an
-#' observation has no interventions, then the corresponding component is \code{NULL}. Thus, if the data is
-#' purely observational, this list should contain only \code{NULL} values.
+#' \item The \code{ivn} list should be the same size as the number of rows in
+#' the dataset, and each component indicates which column(s) in the dataset is
+#' (are) under intervention. If an observation has no interventions, then the
+#' corresponding component is \code{NULL}. Thus, if the data is purely
+#' observational, this list should contain only \code{NULL} values.
 #' }
 #'
 #' Presently, only levels coded as 0,1,...,\eqn{k}-1 are supported (\eqn{k} = the number of levels for a
@@ -100,15 +105,19 @@
 #' dat <- sparsebnData(mat, type = "continuous") # purely observational data with continuous variables
 #'
 #' ### Discrete data
-#' mat <- cbind(c(0,1,1,0),
-#'              c(2,1,0,1),
-#'              c(0,0,3,0))
+#' mat <- rbind(c(0,2,0),
+#'              c(1,1,0),
+#'              c(1,0,3),
+#'              c(0,1,0))
 #' dat.levels <- list(c(0,1), c(0,1,2), c(0,1,2,3))
 #' dat <- sparsebnData(mat,
 #'                     type = "discrete",
 #'                     levels = dat.levels) # purely observational data with discrete variables
 #'
-#' dat.ivn <- list(c(1), c(1), c(2,3), c(2,3)) # add some interventions
+#' dat.ivn <- list(c(1),   # first observation was intervened at node 1
+#'                 c(1),   # second observation was intervened at node 1
+#'                 c(2,3), # third observation was intervened at nodes 2 and 3
+#'                 c(1,3)) # fourth observation was intervened at nodes 1 and 3
 #' dat <- sparsebnData(mat,
 #'                     type = "discrete",
 #'                     levels = dat.levels,
@@ -128,14 +137,16 @@ is.sparsebnData <- function(x){
 #' @export
 sparsebnData.list <- function(x, ...){
 
+    type_list <- c("continuous", "discrete")
+
     if( !is.list(x)){
         stop("Input must be a list!")
     } else if( length(x) != 4 || !setequal(names(x), c("data", "type", "levels", "ivn"))){
-        stop("Input is not coercable to an object of type sparsebnFit, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
+        stop("Input is not coercable to an object of type sparsebnData, check list for the following elements: data (data.frame), type (character), levels (list), ivn (list)")
     } else if( !check_if_data_matrix(x$data)){
         stop(sprintf("Component 'data' must be a valid data.frame or numeric object! <Current type: %s>", class(x$data)))
-    } else if(!(x$type %in% c("continuous", "discrete", "mixed"))){
-        stop(sprintf("\'type\' must be one of the following: \'continuous\', \'discrete\', \'mixed\'."))
+    } else if(!(x$type %in% type_list)){
+        stop(invalid_type_input(type_list))
     } else if(!is.null(x$levels)){
         if(ncol(x$data) != length(x$levels)){
             stop("The length of the levels list must equal the number of columns in the data!")
@@ -163,12 +174,12 @@ sparsebnData.data.frame <- function(x, type, levels = NULL, ivn = NULL, ...){
 
     ### User must specify type
     if(missing(type)){
-        stop("The data type (continuous or discrete?) was not specified: Must choose type = 'continuous' or type = 'discrete'.")
+        stop(invalid_type_input(type_list))
         ivn <- vector("list", length = nrow(x))
     } else{
         match_string <- pmatch(type, type_list) # use partial matching to select type
         if(is.na(match_string)){ # if there was no match, error
-            stop("Invalid 'type' entered: Must match one of \'continuous\', \'discrete\', \'mixed\'.")
+            stop(invalid_type_input(type_list))
         } else{ # if match was found, use it
             type <- type_list[match_string]
         }
@@ -206,6 +217,52 @@ sparsebnData.data.frame <- function(x, type, levels = NULL, ivn = NULL, ...){
 sparsebnData.matrix <- function(x, type, levels = NULL, ivn = NULL, ...){
     sparsebnData.data.frame(as.data.frame(x), type, levels, ivn)
 } # END SPARSEBNDATA.MATRIX
+
+.str_sparsebnData <- function(x, n){
+    sbd.out <- ""
+    sbd.out <- paste0(sbd.out, sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
+    if(is.obs(x)){
+        sbd.out <- paste0(sbd.out, sprintf("Observational data with %s observations", x$type))
+    } else{
+        sbd.out <- paste0(sbd.out, sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
+    }
+} # END PRINT.SPARSEBNDATA
+
+# Default print method
+#' @rdname sparsebnData
+#' @method print sparsebnData
+#' @export
+print.sparsebnData <- function(x, n = 5L, ...){
+    # print(utils::head(data$data, n = n), row.names = FALSE)
+    .print_data_frame(x$data, topn = n)
+
+    # cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
+    # if(is.obs(x)){
+    #     cat(sprintf("Observational data with %s observations", x$type))
+    # } else{
+    #
+    #     cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
+    # }
+    cat(.str_sparsebnData(x, n))
+} # END PRINT.SPARSEBNDATA
+
+# Default summary method
+#' @param object an object of type \code{sparsebnData}
+#'
+#' @rdname sparsebnData
+#' @method summary sparsebnData
+#' @export
+summary.sparsebnData <- function(object, n = 5L, ...){
+    print(summary(object$data))
+    cat(.str_sparsebnData(object, n = n))
+} # END SUMMARY.SPARSEBNDATA
+
+#' @rdname sparsebnData
+#' @method plot sparsebnData
+#' @export
+plot.sparsebnData <- function(x, ...){
+    plot(x$data)
+} # END PLOT.SPARSEBNDATA
 
 #' @describeIn num.samples Extracts the number of samples of \link{sparsebnData} object.
 #' @export
@@ -245,23 +302,6 @@ count.interventions <- function(data){
 count.levels <- function(data){
     unlist(lapply(data$levels, length))
 } # END COUNT.LEVELS
-
-# Default print method
-#' @rdname sparsebnData
-#' @export
-print.sparsebnData <- function(x, n = 5L, ...){
-    # print(utils::head(data$data, n = n), row.names = FALSE)
-    .print_data_frame(x$data, topn = n)
-
-    cat(sprintf("\n%d total rows (%d rows omitted)\n", num.samples(x), max(num.samples(x) - 2*n, 0)))
-    if(is.obs(x)){
-        cat(sprintf("Observational data with %s observations", x$type))
-    } else{
-
-        cat(sprintf("%s data w/ interventions on %d/%d rows.", capitalize(x$type), count.interventions(x), num.samples(x)))
-    }
-    ### Add a message about the interventions as well / if purely obs, etc.
-} # END PRINT.SPARSEBNDATA
 
 #' Convert a sparsebnData object back to a data.frame
 #'

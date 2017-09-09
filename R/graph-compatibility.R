@@ -10,15 +10,8 @@
 # Various utility functions for enforcing compatibility with the 'graph' package from BioConductor.
 #
 
-#' Conversion to graphNEL object
-#'
-#' \code{to_graphNEL} converts an object to a \code{\link[graph]{graphNEL}} object. Works on both fitted
-#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
-#' \code{\link[graph]{graphNEL}}. In the second, the conversion applies directly to the object.
-#'
-#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-#' \code{\link[igraph]{igraph}}, or \code{\link[network]{network}}.
-#'
+### Conversion to graphNEL object
+#' @rdname sparsebn-compat
 #' @export
 to_graphNEL <- function(x){
     ### This function require the 'graph' package to be installed

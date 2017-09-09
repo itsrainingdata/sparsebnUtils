@@ -4,16 +4,30 @@
 \name{edgeList}
 \alias{edgeList}
 \alias{is.edgeList}
+\alias{print.edgeList}
+\alias{summary.edgeList}
 \alias{edgeList}
 \title{edgeList class}
 \usage{
 is.edgeList(x)
+
+\method{print}{edgeList}(x, maxsize = 20, ...)
+
+\method{summary}{edgeList}(object, ...)
 
 edgeList(x)
 }
 \arguments{
 \item{x}{A list containing parents for each node in a graph. The length of this list
 should be the same as the number of nodes in the graph.}
+
+\item{maxsize}{Maximum number of nodes to print out. If
+\code{num.nodes(x) > maxsize}, then a simple summary will be printed
+instead.}
+
+\item{...}{(optional) additional arguments.}
+
+\item{object}{an object of type \code{edgeList}}
 }
 \description{
 Convenience wrapper class for a (column-major) edge list. Each component of the list

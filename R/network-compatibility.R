@@ -10,15 +10,8 @@
 # Various utility functions for enforcing compatibility with the 'network' package (part of statnet).
 #
 
-#' Conversion to network object
-#'
-#' \code{to_network} converts an object to a \code{\link[network]{network}} object. Works on both fitted
-#' objects and graphs themselves. In the first case, every underlying 'edges' component is converted to
-#' \code{\link[network]{network}}. In the second, the conversion applies directly to the object.
-#'
-#' @param x An object of type \code{\link{sparsebnPath}}, \code{\link{sparsebnFit}}, \code{\link{edgeList}},
-#' \code{\link[graph]{graphNEL-class}}, or \code{\link[igraph]{igraph}}
-#'
+### Conversion to network object
+#' @rdname sparsebn-compat
 #' @export
 to_network <- function(x){
     ### This function requires the 'network' package to be installed

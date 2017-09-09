@@ -12,6 +12,7 @@
 #   CONTENTS:
 #       select
 #       select.parameter
+#       get.solution
 #
 
 #' Select solutions from a solution path
@@ -100,16 +101,24 @@ select.parameter <- function(x,
     ### Check args
     stopifnot(is.sparsebnPath(x))
     stopifnot(is.sparsebnData(data))
-    type <- match.arg(type, c("profile", "full"))
 
-    ### Estimate unpenalized parameters
-    params <- estimate.parameters(x, data)
+    if (data$type == "continuous") {
+        type <- match.arg(type, c("profile", "full"))
 
-    ### Compute (profile / full) log-likelihood + number of edges
-    obj <- switch(type,
-                  profile = unlist(lapply(params, function(x) gaussian_profile_loglikelihood(data$data, x$coefs))),
-                  full = unlist(lapply(params, function(x) gaussian_loglikelihood(data$data, x$coefs, x$vars)))
-                  )
+        ### Estimate unpenalized parameters
+        params <- estimate.parameters(x, data)
+
+        ### Compute (profile / full) log-likelihood + number of edges
+        obj <- switch(type,
+                      profile = unlist(lapply(params, function(x) gaussian_profile_loglikelihood(data$data, x$coefs))),
+                      full = unlist(lapply(params, function(x) gaussian_loglikelihood(data$data, x$coefs, x$vars)))
+        )
+    }
+    else {
+        edge_path <- lapply(x, function(x){x$edges})
+        obj <- sapply(edge_path, function(x) multinom_loglikelihood(x, data$data))
+    }
+
     nedges <- num.edges(x)
 
     ### Compute lagged differences, difference ratios, and threshold
@@ -120,7 +129,7 @@ select.parameter <- function(x,
     dr[dnedge == 0] <- NA
     threshold <- alpha * max(dr, na.rm = TRUE)
 
-    max(which(dr >= threshold))
+    max(which(dr >= threshold))+1
 }
 
 ### Deprecated

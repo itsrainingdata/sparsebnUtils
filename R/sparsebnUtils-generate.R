@@ -38,8 +38,6 @@ random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
     #
     # Sample a random edgeList
     #
-    # nnode <- 10
-    # nedge <- nnode*(nnode-1)/2
 
     ### First use natural ordering 1,...,p
     node_order <- 1:nnode

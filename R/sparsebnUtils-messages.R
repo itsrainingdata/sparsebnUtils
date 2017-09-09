@@ -14,11 +14,14 @@
 #       alg_input_data_frame
 #       has_missing_values
 #       invalid_pkg_specification
+#       pkg_not_installed
 #       global_coerce_warning
 #       feature_not_supported
 #       invalid_class
 #       dag_summary
 #       empty_dag_summary
+#       data_not_numeric
+#       invalid_type_input
 #
 
 #' @name sparsebn-messages
@@ -37,6 +40,7 @@
 #' @param nnode number of nodes in a DAG.
 #' @param nedge number of edges in a DAG.
 #' @param indices invalid indices
+#' @param types valid input types
 #'
 NULL
 
@@ -119,4 +123,11 @@ empty_dag_summary <- function(nnode){
 #' @export
 data_not_numeric <- function(indices){
     paste0("Input columns must be numeric or integer! Columns ", paste(indices, collapse = ", "), " are invalid.")
+}
+
+### Notify user that an invalid type input to sparsebnData has been entered
+#' @rdname sparsebn-messages
+#' @export
+invalid_type_input <- function(types){
+    sprintf("Invalid type entered! Must be one of the following: %s.", paste(shQuote(types), collapse = ", "))
 }

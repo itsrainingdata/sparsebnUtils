@@ -12,8 +12,8 @@ test_that("sparsebnData constructor fails if input not a list, data.frame, or ma
 
 test_that("sparsebnData constructor fails if type not specified or improperly specified", {
     expect_error(sparsebnData(x = dat), regexp = "type")
-    expect_error(sparsebnData(x = dat, type = "contns"), regexp = "Invalid \'type\'")
-    expect_error(sparsebnData(x = dat, type = "dicsrt"), regexp = "Invalid \'type\'")
+    expect_error(sparsebnData(x = dat, type = "contns"), regexp = "Invalid type")
+    expect_error(sparsebnData(x = dat, type = "dicsrt"), regexp = "Invalid type")
 
     ### Check that partial matching works OK
     expect_error(sparsebnData(x = dat, type = "c"), NA)

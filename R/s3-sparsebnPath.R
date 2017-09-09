@@ -42,7 +42,7 @@
 #' object in question. The exceptions to this rule apply when the output will always be the same
 #' for every component; e.g. \code{\link{num.nodes}} and \code{\link{num.samples}}.
 #'
-#' @param x Only used internally.
+#' @param x A \code{list} or an object of type \code{sparsebnPath}. Should only be used internally.
 #' @param ... (optional) additional arguments.
 #'
 #' @section Methods:
@@ -85,6 +85,19 @@ sparsebnPath.list <- function(x){
     structure(x, class = c("sparsebnPath", "list"))
 } # END sparsebnPath.LIST
 
+.str_sparsebnPath <- function(x){
+    sbp.out <- ""
+    sbp.out <- paste0(sbp.out,
+                      "sparsebn Solution Path\n",
+                      " ", num.nodes(x), " nodes\n",
+                      " ", num.samples(x), " observations\n",
+                      " ", length(x), " estimates for lambda in [", round(min(get.lambdas(x)), 4), ", ", round(max(get.lambdas(x)), 4), "]\n",
+                      " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n"
+                )
+
+    sbp.out
+} # END .STR_SPARSEBNPATH
+
 #' @param verbose If \code{TRUE}, then each estimate in the solution path is printed separately. Do not use for
 #'        large graphs or large solution paths. (default = \code{FALSE})
 #'
@@ -95,14 +108,62 @@ print.sparsebnPath <- function(x, verbose = FALSE, ...){
     if(verbose){
         print.default(x) # default generic reverts to list => separate calls to print.sparsebnFit for each component
     } else{
-        cat("sparsebn Solution Path\n",
-            " ", length(x), " estimates for lambda in [", min(get.lambdas(x)), ",", max(get.lambdas(x)), "]\n",
-            " ", "Number of edges per solution: ", paste(num.edges(x), collapse = "-"), "\n",
-            " ", num.nodes(x), " nodes\n",
-            " ", num.samples(x), " observations\n",
-            sep = "")
+        cat(.str_sparsebnPath(x))
     }
 } # END PRINT.SPARSEBNPATH
+
+#' @param object an object of type \code{sparsebnPath}
+#'
+#' @rdname sparsebnPath
+#' @method summary sparsebnPath
+#' @export
+summary.sparsebnPath <- function(object, ...){
+    ### Print usual sparsebnPath output
+    cat(.str_sparsebnPath(object))
+    cat("\n")
+
+    ### Add summary for each lambda
+    lambdas <- get.lambdas(object)
+    nedges <- num.edges(object)
+    print(data.frame(lambda = lambdas, nedge = nedges))
+
+    # sbp.out <- sprintf("%10.4f %5d", round(lambdas, 4), nedges)
+    # cat(sbp.out, sep = "\n")
+} # END SUMMARY.SPARSEBNPATH
+
+#' @param labels \code{TRUE} or \code{FALSE}. Whether or not to print out
+#' labels with summary information for each plot in the solution path.
+#'
+#' @rdname sparsebnPath
+#' @method plot sparsebnPath
+#' @export
+plot.sparsebnPath <- function(x, labels = FALSE, ...){
+    ### UPDATE 7/28/17: What are the issues? Seems fine.
+    ### Issues when plotting null DAG, so remove it
+    # x <- x[-1] # Do this BEFORE setting the grid layout below!
+
+    ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
+    par.default <- par()[c("mfrow", "mai")] # Only re-set what we change here
+    par(mfrow = n2mfrow(length(x)),         # Automatically choose a sensible grid to use
+        mai = c(0, 0, 0.1, 0)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
+        )
+
+    tryCatch({
+        # lapply(x, plot)
+        for(fit in x){
+            plot(fit, ...)
+            if(labels){
+                # title(sprintf("lambda = %4.2f, # of edges = %d", fit$lambda, fit$nedge), cex.main = 0.85)
+                title(bquote(lambda*" = "*.(round(fit$lambda, 2))*" / "*.(fit$nedge)~"edges"), cex.main = 0.85)
+            }
+        }
+    }, error = function(c){
+        dev.off()
+        stop(c)
+    })
+
+    par(par.default) # restore user's original settings
+}
 
 #' @export
 as.list.sparsebnPath <- function(x, ...){
@@ -161,31 +222,6 @@ get.adjacency.matrix.sparsebnPath <- function(x){
     sparsebnPath(as.list(x)[i])
 }
 
-#' @rdname plot.edgeList
-#' @method plot sparsebnPath
-#' @export
-plot.sparsebnPath <- function(x, ...){
-    ### Issues when plotting null DAG, so remove it
-    x <- x[-1] # Do this BEFORE setting the grid layout below!
-
-    ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
-    par.default <- par()[c("mfrow", "mai")] # Only re-set what we change here
-    par(mfrow = n2mfrow(length(x)),         # Automatically choose a sensible grid to use
-        mai = rep(0,4)                      # Need to reset margins (why??? graph packages seem to handle this oddly)
-        )
-
-    tryCatch({
-        # lapply(x, plot)
-        for(fit in x){
-            plot(fit, ...)
-        }
-    }, error = function(c){
-        dev.off()
-        stop(c)
-    })
-
-    par(par.default) # restore user's original settings
-}
 
 #' @export
 to_edgeList.sparsebnPath <- function(x){

@@ -38,6 +38,7 @@
 #'
 #' @param x A list containing parents for each node in a graph. The length of this list
 #'          should be the same as the number of nodes in the graph.
+#' @param ... (optional) additional arguments.
 #'
 #' @section Methods:
 #' \code{\link{get.adjacency.matrix}},
@@ -150,14 +151,6 @@ edgeList.bn <- function(x){
     to_edgeList(x)
 }
 
-#' @method print edgeList
-#' @export
-print.edgeList <- function(x, maxsize = 20, ...){
-    edgeL.out <- .str_edgeList(x, maxsize = maxsize)
-
-    cat("edgeList object\n", edgeL.out, "\n", sep = "")
-} # END PRINT.EDGELIST
-
 ### Internal method to return (as a string) the screen output of an edgeList
 ### Mainly useful for allow print.sparsebnFit to print out node names instead of numbers
 .str_edgeList <- function(x, maxsize, ...){
@@ -175,6 +168,71 @@ print.edgeList <- function(x, maxsize = 20, ...){
 
     edgeL.out
 } # END .STR_EDGELIST
+
+#' @param maxsize Maximum number of nodes to print out. If
+#' \code{num.nodes(x) > maxsize}, then a simple summary will be printed
+#' instead.
+#'
+#' @rdname edgeList
+#' @method print edgeList
+#' @export
+print.edgeList <- function(x, maxsize = 20, ...){
+    edgeL.out <- .str_edgeList(x, maxsize = maxsize)
+
+    cat("edgeList object\n", edgeL.out, "\n", sep = "")
+} # END PRINT.EDGELIST
+
+#' @param object an object of type \code{edgeList}
+#'
+#' @rdname edgeList
+#' @method summary edgeList
+#' @export
+summary.edgeList <- function(object, ...){
+    cat("edgeList object\n",
+        " ", num.nodes(object), " nodes\n",
+        " ", num.edges(object), " directed edges\n",
+        "\nNodewise summary statistics:\n",
+        sep = "")
+    print(degrees(object))
+} # END SUMMARY.SPARSEBNFIT
+
+#' Plot a fitted Bayesian network object
+#'
+#' Plots the graph object associated with the output of a learning algorithm.
+#'
+#' \code{plot.sparsebnFit} uses some default settings to make large graphs
+#' easier to interpret, but these settings can be over-ridden.
+#'
+#' @param x fitted object to plot.
+#' @param ... (optional) additional arguments to plotting mechanism.
+#'
+#' @seealso \code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
+#'
+#' @method plot edgeList
+#' @export
+plot.edgeList <- function(x, ...){
+    ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
+    par.default <- par()["mai"] # Only re-set what we change here
+    par(mai = rep(0.1,4))       # Need to reset margins (why??? graph packages seem to handle this oddly)
+
+    pkg_plot <- getPlotPackage()
+
+    if(!is.null(pkg_plot)){
+        if(pkg_plot == "graph"){
+            graph::plot(to_graphNEL(x), ...)
+        } else if(pkg_plot == "igraph"){
+            plot(to_igraph(x), ...)
+        } else if(pkg_plot == "network"){
+            plot(to_network(x), ...)
+        } else{
+            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
+        }
+    } else{
+        stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
+    }
+
+    par(par.default) # restore user's original settings
+} # END PLOT.EDGELIST
 
 #' @export
 as.matrix.edgeList <- function(x, ...){
@@ -219,6 +277,33 @@ num.edges.edgeList <- function(x){
     sum(sapply(x, length))
 } # END NUM.EDGES.EDGELIST
 
+#' Degree distribution of a graph
+#'
+#' Returns a \code{data.frame} with summary statistics on the total degree,
+#' in-degree, and out-degree of each node in the network.
+#'
+#' @param x an \code{edgeList} object
+#' @export
+degrees <- function(x){
+    stopifnot(is.edgeList(x))
+
+    indegrees <- sapply(x, length)
+    outdegrees <- tabulate(unlist(x))
+    names(indegrees) <- names(outdegrees) <- names(x)
+    degrees <- indegrees + outdegrees
+
+    out <- data.frame(node = names(x), indegree = indegrees, outdegree = outdegrees, degree = degrees)
+    rownames(out) <- NULL
+    if(sum(out$indegree) != sum(out$outdegree)){
+        stop(sprintf("There was an issue computing the degrees,
+                     total indegree = %d != total outdegree = %d.
+                     Please report this to the maintainer.",
+                     sum(out$indegree), sum(out$outdegree)))
+    }
+
+    out
+}
+
 #' @describeIn is.zero Determines whether or not the object represents a null graph with no edges.
 #' @export
 is.zero.edgeList <- function(x){
@@ -250,52 +335,14 @@ permute.nodes <- function(x, perm = NULL){
     if(is.null(perm)){
         node_order <- sample(1:num.nodes(x))
     } else{
-        stopifnot(length(perm) != num.nodes(x))
-        stopifnot(sort(perm) != 1:num.nodes(x))
+        stopifnot(length(perm) == num.nodes(x))
+        stopifnot(sort(perm) == 1:num.nodes(x))
         node_order <- perm
     }
     permuted <- lapply(x, function(x) node_order[x])[Matrix::invPerm(node_order)]
 
     edgeList(permuted)
 }
-
-#' Plot a fitted Bayesian network object
-#'
-#' Plots the graph object associated with the output of a learning algorithm.
-#'
-#' \code{plot.sparsebnFit} uses some default settings to make large graphs
-#' easier to interpret, but these settings can be over-ridden.
-#'
-#' @param x fitted object to plot.
-#' @param ... (optional) additional arguments to plotting mechanism.
-#'
-#' @seealso \code{\link{setPlotPackage}}, \code{\link{getPlotPackage}}
-#'
-#' @method plot edgeList
-#' @export
-plot.edgeList <- function(x, ...){
-    ### Set plotting parameters (Don't use no.readonly = TRUE! See https://stat.ethz.ch/pipermail/r-help/2007-July/136770.html)
-    par.default <- par()["mai"] # Only re-set what we change here
-    par(mai = rep(0.1,4))       # Need to reset margins (why??? graph packages seem to handle this oddly)
-
-    pkg_plot <- getPlotPackage()
-
-    if(!is.null(pkg_plot)){
-        if(pkg_plot == "graph"){
-            graph::plot(to_graphNEL(x), ...)
-        } else if(pkg_plot == "igraph"){
-            plot(to_igraph(x), ...)
-        } else if(pkg_plot == "network"){
-            plot(to_network(x), ...)
-        } else{
-            stop("Incorrect package specified. Must be one of: 'graph', 'igraph', 'network'.")
-        }
-    } else{
-        stop("No package specified for plotting! This is an internal error and should not happen -- please report this issue.")
-    }
-
-    par(par.default) # restore user's original settings
-} # END PLOT.EDGELIST
 
 #' @export
 to_edgeList.edgeList <- function(x){

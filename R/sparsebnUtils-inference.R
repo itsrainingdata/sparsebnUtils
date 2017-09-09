@@ -17,6 +17,7 @@
 #       fit_multinom_dag
 #       gaussian_loglikelihood
 #       gaussian_profile_loglikelihood
+#       multinom_loglikelihood
 #
 
 ### DAG fitting --------------------------------------------------------
@@ -79,29 +80,41 @@ fit_glm_dag <- function(parents,
     coefs <- Matrix::Diagonal(pp, 0)
     vars <- numeric(pp)
 
-    # print(parents)
+    warn <- FALSE
     for(j in 1:pp){
         select.vars <- parents[[j]]
 
-        if(length(select.vars) > nn){
-            stop(sprintf("Node %d has too many parents! <%d > %d>\n", j, length(select.vars), nn))
+        num.parents <- length(select.vars)
+        if(num.parents <= nn){
+            # lm.fit is much faster than glm.fit!
+            #         lm.fit, p = 200, n = 1000
+            #         elapsed
+            #           2.898
+            #         glm.fit, p = 200, n = 1000
+            #         elapsed
+            #           5.289
+            #         if(opt == 1) ols.fit <- lm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j])
+            #         if(opt == 2) ols.fit <- glm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian())
+            dag.fit <- do.call(what = call, args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], ...))
+            # if(opt == 2) ols.fit <- do.call("glm.fit", args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian()))
+
+            coefs[select.vars, j] <- dag.fit$coefficients
+            vars[j] <- stats::var(dag.fit$residuals)
+        } else{
+            ### If singularity encountered, simply return NA for these nodes and
+            ### emit a warning
+            coefs[select.vars, j] <- NA
+            vars[j] <- NA
+
+            if(!warn){
+                msg <- "NAs returned due to overfitting: In order to estimate the parameters for a node, there must be at least as many observations as parents in the graph. To avoid this warning, pick a larger value of lambda so that every node has at most n = %d parents, or increase the sample size. (This warning will only be displayed once.)"
+                warning(sprintf(msg, nn))
+                warn <- TRUE
+            }
+
+            msg <- "NAs returned due to overfitting: Node %d has %d parents but there are only n = %d observations in the data."
+            warning(sprintf(msg, j, num.parents, nn))
         }
-
-        # lm.fit is much faster than glm.fit!
-        #         lm.fit, p = 200, n = 1000
-        #         elapsed
-        #           2.898
-        #         glm.fit, p = 200, n = 1000
-        #         elapsed
-        #           5.289
-#         if(opt == 1) ols.fit <- lm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j])
-#         if(opt == 2) ols.fit <- glm.fit(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian())
-        dag.fit <- do.call(what = call, args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], ...))
-        # if(opt == 2) ols.fit <- do.call("glm.fit", args = list(x = dat[, select.vars, drop = FALSE], y = dat[, j], family = gaussian()))
-
-        coefs[select.vars, j] <- dag.fit$coefficients
-
-        vars[j] <- stats::var(dag.fit$residuals)
     }
 
     list(coefs = coefs, vars = Matrix::Diagonal(pp, vars))
@@ -227,4 +240,51 @@ gaussian_profile_loglikelihood <- function(dat, coefs){
     pll <- sum(pll)
 
     -pll ### Need to take negative output loglikelihood (vs NLL)
+}
+
+# a function that calculate log-likelihood of a single graph
+# parents is an edgeList object
+# dat is a data.frame
+multinom_loglikelihood <- function(parents,
+                                   data
+) {
+    # check parents
+    if(!sparsebnUtils::is.edgeList(parents)) stop("parents should be a edgeList object!")
+
+    # check data
+    if(!is.data.frame(data)) stop("dat should be a data.frame object!")
+
+    # data <- as.data.frame(data)
+    n_levels <- unlist(sparsebnUtils::auto_count_levels(data))
+
+    node <- ncol(data)
+    # check that the number of node and the what has been input in parents are consistent
+    if (length(parents) != ncol(data)) {stop(sprintf("Incompatible graph and data! Data has %d columns but graph has %d nodes.", ncol(data), length(parents)))}
+
+    # factorize each observation
+    for (i in 1:node){
+        data[,i] <- factor(data[,i])
+    }
+
+    # subtract dependent and independent variables for each regression
+    loglikelihood <- 0
+    loglikelihood_path <- rep(0, node)
+    for (i in 1:node){
+        x_ind <- parents[[i]] # if inputs are only edgeList object
+        if (length(x_ind)!=0) { # do nothing if a node has no parents
+            sub_dat <- cbind(data[, c(i, x_ind)])
+            fu <- stats::as.formula(paste0(colnames(sub_dat)[1], "~", paste(colnames(sub_dat)[c(-1)], collapse = "+")))
+            fit <- nnet::multinom(fu, data = sub_dat, trace = FALSE)
+            loglikelihood_path[i] <- as.numeric(stats::logLik(fit))
+            loglikelihood <- loglikelihood + as.numeric(stats::logLik(fit))
+        }
+        else {
+            sub_dat <- data[, i, drop = FALSE]
+            fu <- stats::as.formula(paste0(colnames(sub_dat)[1], "~ 1"))
+            fit <- nnet::multinom(fu, data = sub_dat, trace = FALSE)
+            # loglikelihood_path[i] <- as.numeric(stats::logLik(fit))
+            loglikelihood <- loglikelihood + as.numeric(stats::logLik(fit))
+        }
+    }
+    return(loglikelihood)
 }

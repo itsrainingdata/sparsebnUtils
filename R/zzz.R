@@ -10,8 +10,9 @@
 # #' @exportPattern ^[^\\.] <--- DON'T USE THIS!
 
 #' @importFrom grDevices dev.off n2mfrow
-#' @importFrom graphics par plot
+#' @importFrom graphics par plot title
 #' @importFrom methods as
+#' @importFrom utils capture.output
 
 .onAttach <- function(libname, pkgname){
     ### Only sparsebn needs a package startup message
@@ -21,16 +22,6 @@
 ### Set global options for this packages: Shamelessly stolen from /devtools/R/zzz.R
 .onLoad <- function(libname, pkgname) {
   opt <- options()
-#   op.devtools <- list(
-#     devtools.path = "~/R-dev",
-#     devtools.install.args = "",
-#     devtools.name = "Your name goes here",
-#     devtools.desc.author = 'person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))',
-#     devtools.desc.license = "What license is it under?",
-#     devtools.desc.suggests = NULL,
-#     devtools.desc = list(),
-#     devtools.revdep.libpath = file.path(tempdir(), "R-lib")
-#   )
 
   opt.sparsebn <- list(
       sparsebn.graph = NULL,                              # graph package to use / NULL = no external package
