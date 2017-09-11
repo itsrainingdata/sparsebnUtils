@@ -6,6 +6,7 @@ vers <- paste("R package version", meta$Version)
 citEntry(entry = "Article",
   title        = "Learning Large-Scale Bayesian Networks with the sparsebn Package",
   author       = personList(as.person("Bryon Aragam"),
+                   as.person("Jiaying Gu"),
                    as.person("Qing Zhou")),
   year         = "2017",
   journal      = "Submitted",
