@@ -1,7 +1,7 @@
 Package: sparsebnUtils
 Title: Utilities for Learning Sparse Bayesian Networks
-Version: 0.0.5
-Date: 2017-09-07
+Version: 0.0.6
+Date: 2017-09-11
 Authors@R: c(
     person("Bryon", "Aragam", email = "sparsebn@gmail.com", role = c("aut", "cre")),
     person("Jiaying", "Gu", role = c("aut"))
