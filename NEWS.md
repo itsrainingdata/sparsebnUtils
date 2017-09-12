@@ -8,7 +8,6 @@
 `edgeList` objects
 * Added `plot` generic for `sparsebnData` objects
 * Added `specify.prior` method to simplify construction of black lists
-* `plotDAG` now includes labels for each subplot by default
 * Improve output when estimate.parameters is singular (#9)
 
 ## Bug fixes
