@@ -23,13 +23,17 @@
 #'
 #' @param x \code{\link{sparsebnFit}} object.
 #' @param nodes \code{character} vector containing names of nodes to show.
+#' @param nchar \code{integer} indicating how many characters of each parent to show in
+#' printed output. Use this to control how the output appears on screen, larger
+#' numbers allow for longer node names but may present formatting issues for
+#' large graphs. Defaults to 4.
 #'
 #' @export
-show.parents <- function(x, nodes){
+show.parents <- function(x, nodes, nchar = 4){
     stopifnot(is.sparsebnFit(x))
 
     ### Convert edgeList to plain list with desired data
-    edges.str <- edgeList_to_node_names(x, 4)                   # convert edgeList to use node names
+    edges.str <- edgeList_to_node_names(x, nchar)               # convert edgeList to use node names
     match.nodes <- pmatch(nodes, x$nodes, duplicates.ok = TRUE) # find the nodes of interest
 
     check_match <- is.na(match.nodes)
