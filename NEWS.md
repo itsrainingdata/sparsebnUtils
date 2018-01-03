@@ -1,3 +1,9 @@
+# sparsebnUtils 0.0.6
+
+## Features
+
+* Added `nchar` argument to improve output of show.parents with long node names (#13)
+
 # sparsebnUtils 0.0.5
 
 ## Features
