@@ -4,7 +4,7 @@
 \alias{openCytoscape}
 \title{Display graphs in Cytoscape}
 \usage{
-openCytoscape(x)
+openCytoscape(x, title, ...)
 }
 \arguments{
 \item{x}{A \code{\link{sparsebnFit}} object or other graph object.}
