@@ -1,6 +1,6 @@
 ## Test environments
 * local OS X install, R 3.4.3
-* ubuntu 12.04.5 (travis-ci: oldrel, devel, and release)
+* ubuntu 14.04.5 (travis-ci: oldrel, devel, and release)
 * win-builder (devel and release)
 * r-hub (devel)
 
