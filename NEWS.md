@@ -3,6 +3,7 @@
 ## Features
 
 * Added `nchar` argument to improve output of show.parents with long node names (#13)
+* `openCytoscape` now accepts title argument -- allows multiple cytoscape networks with different names to be open at the same time
 
 # sparsebnUtils 0.0.5
 

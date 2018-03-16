@@ -29,15 +29,19 @@ to_graphNEL.graphNEL <- function(x){
 
 #' @export
 to_graphNEL.edgeList <- function(x){
-    el.graphNEL <- edgeList_to_graphNEL_edgeL(x)
-    names.graphNEL <- as.character(1:num.nodes(x))
+    # el.graphNEL <- edgeList_to_graphNEL_edgeL(x)
+    # names.graphNEL <- as.character(1:num.nodes(x))
+    #
+    # graph::graphNEL(nodes = names.graphNEL, edgeL = el.graphNEL, edgemode = 'directed')
 
-    graph::graphNEL(nodes = names.graphNEL, edgeL = el.graphNEL, edgemode = 'directed')
+    ### Use igraph instead to preserve node names (NOTE: current implementation of to_igraph is slow)
+    to_graphNEL.igraph(to_igraph(x))
 }
 
 #' @export
 to_graphNEL.igraph <- function(x){
-    to_graphNEL(to_edgeList(x))
+    # to_graphNEL(to_edgeList(x))
+    igraph::as_graphnel(x)
 }
 
 #' @export
