@@ -5,16 +5,7 @@
 * r-hub (devel)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs. There was 1 NOTE:
-
-checking dependencies in R code ... NOTE
-Unexported object imported by a ':::' call: ‘igraph:::as_graphnel’
-
-- This is due to a known bug in the igraph package in which the method
-as_graphnel was mistakenly not exported, and has already been
-patched (https://github.com/igraph/rigraph/pull/222). Once this patch
-makes it to CRAN, we will update our package according to match the 
-idiomatic use of :: instead of :::.
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Reverse dependencies
 
