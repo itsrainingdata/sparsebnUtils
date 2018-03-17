@@ -1,3 +1,10 @@
+# sparsebnUtils 0.0.6
+
+## Features
+
+* Added `nchar` argument to improve output of show.parents with long node names (#13)
+* `openCytoscape` now accepts title argument -- allows multiple cytoscape networks with different names to be open at the same time
+
 # sparsebnUtils 0.0.5
 
 ## Features
@@ -8,7 +15,6 @@
 `edgeList` objects
 * Added `plot` generic for `sparsebnData` objects
 * Added `specify.prior` method to simplify construction of black lists
-* `plotDAG` now includes labels for each subplot by default
 * Improve output when estimate.parameters is singular (#9)
 
 ## Bug fixes

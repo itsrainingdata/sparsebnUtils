@@ -4,12 +4,17 @@
 \alias{show.parents}
 \title{Inspect subgraph}
 \usage{
-show.parents(x, nodes)
+show.parents(x, nodes, nchar = 4)
 }
 \arguments{
 \item{x}{\code{\link{sparsebnFit}} object.}
 
 \item{nodes}{\code{character} vector containing names of nodes to show.}
+
+\item{nchar}{\code{integer} indicating how many characters of each parent to show in
+printed output. Use this to control how the output appears on screen, larger
+numbers allow for longer node names but may present formatting issues for
+large graphs. Defaults to 4.}
 }
 \description{
 Print out the edge list corresponding to a subset of nodes in a graph. Useful

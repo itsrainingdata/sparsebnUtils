@@ -24,9 +24,14 @@
 #' downloaded at \href{http://www.cytoscape.org/}{http://www.cytoscape.org/}.
 #'
 #' @param x A \code{\link{sparsebnFit}} object or other graph object.
+#' @param title A character string, this is the name you will see on the Cytoscape
+#'              network window. Multiple windows with the same name are not
+#'              permitted. See \code{\link[RCy3]{CytoscapeWindow}} for more
+#'              details.
+#' @param ... Other arguments to \code{\link[RCy3]{CytoscapeWindow}}.
 #'
 #' @export
-openCytoscape  <- function(x){
+openCytoscape  <- function(x, title, ...){
     ### This function requires the 'igraph' package to be installed
     if (!requireNamespace("igraph", quietly = TRUE)) {
         stop("This method requires the igraph package; please install it first via install.packages('igraph').", call. = FALSE)
@@ -36,42 +41,44 @@ openCytoscape  <- function(x){
 } # END OPENCYTOSCAPE
 
 #' @export
-openCytoscape.sparsebnPath <- function(x){
+openCytoscape.sparsebnPath <- function(x, title, ...){
     stop("Currently, this method only works on individual networks, and is not yet implemented for solution paths. Please select one network from the path instead (see ?select, ?select.parameter). Stay tuned, there will be an update for solution paths soon!")
 } # END OPENCYTOSCAPE.SPARSEBNPATH
 
 #' @export
-openCytoscape.sparsebnFit <- function(x){
+openCytoscape.sparsebnFit <- function(x, title, ...){
     ### Convert to graphNEL object, which is needed for RCy3
-    graph <- to_igraph(x)
-    graph <- igraph:::as_graphnel(graph$edges)
+    # graph <- to_igraph(x)
+    # graph <- igraph::as_graphnel(graph$edges)
+    graph <- to_graphNEL(x$edges)
 
     ### NOTE: Need to remove metadata based on current implementation of to_igraph
     ### TODO: Update this to handle the metadata more gracefully
     graph@edgeData@defaults <- list()
     graph@edgeData@data <- list()
 
-    showCytoscape(graph)
+    showCytoscape(graph, title, ...)
 } # END OPENCYTOSCAPE.SPARSEBNFIT
 
 #' @export
-openCytoscape.default <- function(x){
+openCytoscape.default <- function(x, title, ...){
     ### Convert to graphNEL object, which is needed for RCy3
-    graph <- to_igraph(x)
-    graph <- igraph:::as_graphnel(graph)
+    # graph <- to_igraph(x)
+    # graph <- igraph::as_graphnel(graph)
+    graph <- to_graphNEL(x)
 
     ### NOTE: Need to remove metadata based on current implementation of to_igraph
     ### TODO: Update this to handle the metadata more gracefully
     graph@edgeData@defaults <- list()
     graph@edgeData@data <- list()
 
-    showCytoscape(graph)
+    showCytoscape(graph, title, ...)
 } # END OPENCYTOSCAPE.DEFAULT
 
 ### Utility function to handle all RCy3-related functions including
 ### opening cytoscape and displaying the graph
-###  Expects graphNEL input; open Cytoscape handles any and all conversions
-showCytoscape <- function(graph){
+###  Expects graphNEL input; openCytoscape handles any and all conversions
+showCytoscape <- function(graph, title, ...){
     ### This function requires the 'graph' package to be installed
     if (!requireNamespace("graph", quietly = TRUE)) {
         stop("This method requires the graph package; please install it first via BioConductor.", call. = FALSE)
@@ -85,9 +92,9 @@ showCytoscape <- function(graph){
     stopifnot(inherits(graph, "graphNEL"))
 
     ### Open cytoscape window and show graph
-    cytowin <- RCy3::CytoscapeWindow(title = "sparsebn",
+    cytowin <- RCy3::CytoscapeWindow(title = title,
                                      graph = graph,
-                                     overwriteWindow = TRUE)
+                                     ...)
     RCy3::displayGraph(cytowin)
     RCy3::layoutNetwork(cytowin, "hierarchical")
 } # END SHOWCYTOSCAPE

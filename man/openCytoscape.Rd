@@ -4,10 +4,17 @@
 \alias{openCytoscape}
 \title{Display graphs in Cytoscape}
 \usage{
-openCytoscape(x)
+openCytoscape(x, title, ...)
 }
 \arguments{
 \item{x}{A \code{\link{sparsebnFit}} object or other graph object.}
+
+\item{title}{A character string, this is the name you will see on the Cytoscape
+network window. Multiple windows with the same name are not
+permitted. See \code{\link[RCy3]{CytoscapeWindow}} for more
+details.}
+
+\item{...}{Other arguments to \code{\link[RCy3]{CytoscapeWindow}}.}
 }
 \description{
 NOTE: This method is currently experimental and under development!
