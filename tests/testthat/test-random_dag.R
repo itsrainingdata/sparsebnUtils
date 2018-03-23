@@ -35,3 +35,24 @@ test_that("random.dag always produces a DAG", {
         expect_warning(igraph::topo_sort(igraph::graph.adjacency(m)), NA)
     }
 })
+
+test_that("random.dag works in degenerate cases", {
+    # Null graphs
+    expect_error(random.dag(1, 0), NA)
+    expect_error(random.dag(2, 0), NA)
+    expect_error(random.dag(3, 0), NA)
+    expect_error(random.dag(5, 0), NA)
+
+    # One edge
+    ### nnode = 1 can't have any edges
+    expect_error(random.dag(2, 1), NA)
+    expect_error(random.dag(3, 1), NA)
+    expect_error(random.dag(5, 1), NA)
+
+    # Max edges
+    expect_error(random.dag(1, 0), NA)
+    expect_error(random.dag(2, 1), NA)
+    expect_error(random.dag(3, 3), NA)
+    expect_error(random.dag(5, 10), NA)
+})
+

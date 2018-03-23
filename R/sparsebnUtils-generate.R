@@ -24,54 +24,65 @@
 #' @param nedge Number of edges in the graph.
 #' @param acyclic If \code{TRUE}, output will be an acyclic graph.
 #' @param loops If \code{TRUE}, output may include self-loops.
+#' @param permute If \code{TRUE}, order of nodes will be randomly permuted.
+#'                If \code{FALSE}, output will be ordered according to its
+#'                topological sort, i.e. with a lower-triangular adjacency matrix.
 #'
 #' @return An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for each node.
 #'
 #' @export
-random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE){
+random.graph <- function(nnode, nedge, acyclic = TRUE, loops = FALSE, permute = TRUE){
 
     max_nnz <- nnode*(nnode-1)/2
     if(nedge > max_nnz){
         stop(sprintf("A DAG with p = %d nodes can have at most p*(p-1)/2 = %d edges! Please check your input for nedge.", nnode, max_nnz))
     }
 
-    #
-    # Sample a random edgeList
-    #
+    if(nnode == 1){
+        as.edgeList(matrix(0, nrow = 1, ncol = 1)) # special case of 1x1 DAG
+    } else{
 
-    ### First use natural ordering 1,...,p
-    node_order <- 1:nnode
+        #
+        # Sample a random edgeList
+        #
 
-    ### Get all pairs of off-diagonal indices in a pxp matrix
-    indices <- allBlocks(node_order)
+        ### First use natural ordering 1,...,p
+        node_order <- seq_len(nnode)
 
-    ### Eliminate self-loops
-    if(!loops){
-        indices <- indices[indices[,1] != indices[,2], ]
+        ### Get all pairs of off-diagonal indices in a pxp matrix
+        indices <- allBlocks(node_order)
+
+        ### Eliminate self-loops
+        if(!loops){
+            indices <- indices[indices[,1] != indices[,2], , drop = FALSE]
+        }
+
+        ### If acyclic, select pairs in the lower triangular portion
+        if(acyclic){
+            indices <- indices[indices[,1] > indices[,2], , drop = FALSE]
+        }
+
+        ### Randomly sample nedge of these pairs
+        edges <- sample(seq_len(nrow(indices)), size = nedge)
+        indices <- indices[edges, , drop = FALSE]
+
+        ### Convert from sparse representation to child-parent edge list
+        edgeL <- lapply(node_order, function(x) unname(indices[indices[, 2] == x, 1, drop = TRUE]))
+
+        ### Name the cols/rows according to the current top sort
+        ### This is useful since it gives quick access to a
+        ###  top sort for the graph even after permuting
+        names(edgeL) <- paste0("V", node_order)
+
+        ### Create edgeList object
+        edgeL <- edgeList(edgeL)
+
+        ### Permute the nodes and return result
+        if(permute) edgeL <- permute.nodes(edgeL)
+
+        ### Return final results
+        edgeL
     }
-
-    ### If acyclic, select pairs in the lower triangular portion
-    if(acyclic){
-        indices <- indices[indices[,1] > indices[,2], ]
-    }
-
-    ### Randomly sample nedge of these pairs
-    edges <- sample(1:nrow(indices), size = nedge)
-    indices <- indices[edges, ]
-
-    ### Convert from sparse representation to child-parent edge list
-    edgeL <- lapply(1:nnode, function(x) unname(indices[indices[,2] == x, 1, drop = TRUE]))
-
-    ### Name the cols/rows according to the current top sort
-    ### This is useful since it gives quick access to a
-    ###  top sort for the graph even after permuting
-    names(edgeL) <- paste0("V", 1:nnode)
-
-    ### Create edgeList object
-    edgeL <- edgeList(edgeL)
-
-    ### Permute the nodes and return result
-    permute.nodes(edgeL)
 }
 
 ### Generate a vector of parameters compatible with generate_mvn_data
@@ -100,17 +111,19 @@ gen_params <- function(graph, FUN = NULL, ...){
 #' FUN can be any function whose first argument is called \code{n}. This
 #' allows for both random and deterministic outputs.
 #'
-#' @param nnode Number of nodes in the DAG
-#' @param nedge Number of edges in the DAG
-#' @param FUN Optional function to be used as a random number generator
-#' @param ... Additional arguments to \code{FUN}.
+#' @param nnode Number of nodes in the DAG.
+#' @param nedge Number of edges in the DAG.
+#' @param FUN Optional function to be used as a random number generator.
+#' @param permute If \code{TRUE}, order of nodes will be randomly permuted.
+#'                If \code{FALSE}, output will be ordered according to its
+#'                topological sort, i.e. with a lower-triangular adjacency matrix.
 #'
 #' @return An (weighted) adjacency matrix.
 #'
 #' @export
-random.dag <- function(nnode, nedge, FUN = NULL, ...){
+random.dag <- function(nnode, nedge, FUN = NULL, permute = TRUE){
 
-    graph <- random.graph(nnode, nedge, acyclic = TRUE)
+    graph <- random.graph(nnode, nedge, acyclic = TRUE, permute = permute)
     amat <- as.matrix(graph)
 
     ### Randomly sample values for nonzero coefs
@@ -130,10 +143,10 @@ random.dag <- function(nnode, nedge, FUN = NULL, ...){
 
 #' Generate a random positive definite matrix
 #'
-#' @param nnode Number of nodes in the matrix
+#' @param nnode Number of nodes in the matrix.
 #' @param eigenvalues Vector of eigenvalues desired in output. If this
 #' has fewer than nnode values, the remainder are filled in as zero.
-#' @param num.ortho Number of random Householder reflections to compose
+#' @param num.ortho Number of random Householder reflections to compose.
 #'
 #' @export
 random.spd <- function(nnode,
