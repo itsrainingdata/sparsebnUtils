@@ -115,7 +115,7 @@ sparse.list <- function(x, ...){
         stop("Input must be a list!")
     }
 
-    if( length(x) != 5 || names(x) != c("rows", "cols", "vals", "dim", "start") || is.null(names(x))){
+    if( length(x) != 5 || any(names(x) != c("rows", "cols", "vals", "dim", "start")) || is.null(names(x))){
         stop("Input is not coercable to an object of type sparse, check list for the following (named) elements: rows, cols, vals, dim, start")
     }
 
