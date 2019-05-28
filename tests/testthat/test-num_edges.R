@@ -1,5 +1,9 @@
 context("num.edges")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 test_that("num.edges works on edgeLists", {
     ### Trivial case
     expect_equal(num.edges(generate_empty_edgeList()), 0)

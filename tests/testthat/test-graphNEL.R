@@ -1,5 +1,9 @@
 context("to_graphNEL")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 # gr.empty <- generate_empty_graphNEL() ### MISSING!
 gr <- generate_fixed_graphNEL()
 edgeL <- generate_fixed_edgeList()

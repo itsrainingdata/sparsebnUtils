@@ -1,5 +1,9 @@
 context("as.____")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 gr <- generate_fixed_graphNEL()
 edgeL <- generate_fixed_edgeList()
 edgeL0 <- generate_empty_edgeList()
