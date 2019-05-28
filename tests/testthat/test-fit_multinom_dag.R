@@ -1,5 +1,9 @@
 context("fit_multinom_dag")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 # set up input variable
 data <- generate_fixed_discrete_data_frame()
 data_matrix <- as.matrix(data)

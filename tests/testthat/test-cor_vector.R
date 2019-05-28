@@ -1,5 +1,9 @@
 context("cor_vector")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 ### New tests w/ cor_vector_ivn
 test_that("cor_vector only accepts numeric values", {
     ### Integer OK

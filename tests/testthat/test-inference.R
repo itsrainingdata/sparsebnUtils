@@ -1,5 +1,9 @@
 context("inference")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 dat_cts <- generate_continuous_sparsebnData()
 dat_disc <- generate_discrete_sparsebnData()
 sbp_empty <- generate_empty_sparsebnPath()

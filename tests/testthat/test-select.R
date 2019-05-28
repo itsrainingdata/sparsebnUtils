@@ -1,5 +1,9 @@
 context("select")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 sbp <- generate_nontrivial_sparsebnPath()
 
 test_that("Selection by number of edges works", {

@@ -1,5 +1,9 @@
 context("sparsebnFit")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 ## True num.nodes = 5
 ## True num.edges = 5
 edges <- generate_fixed_edgeList()
