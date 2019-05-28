@@ -3,7 +3,6 @@
 \docType{class}
 \name{sparse}
 \alias{sparse}
-\alias{sparse}
 \alias{is.sparse}
 \title{sparse class}
 \usage{

@@ -4,8 +4,8 @@
 \alias{generate.lambdas}
 \title{generate.lambdas}
 \usage{
-generate.lambdas(lambda.max, lambdas.ratio = 0.001, lambdas.length = 50,
-  scale = "linear")
+generate.lambdas(lambda.max, lambdas.ratio = 0.001,
+  lambdas.length = 50, scale = "linear")
 }
 \arguments{
 \item{lambda.max}{Maximum value of lambda; in terms of the algorithm this is the initial value

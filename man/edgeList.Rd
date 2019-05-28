@@ -6,7 +6,6 @@
 \alias{is.edgeList}
 \alias{print.edgeList}
 \alias{summary.edgeList}
-\alias{edgeList}
 \title{edgeList class}
 \usage{
 is.edgeList(x)

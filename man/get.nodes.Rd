@@ -21,8 +21,6 @@ Vector of \code{character} names.
 }
 \description{
 Returns the node names associated with a fitted object.
-
-Extract node names from solution path
 }
 \section{Methods (by class)}{
 \itemize{

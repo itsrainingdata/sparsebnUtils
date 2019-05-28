@@ -4,7 +4,8 @@
 \alias{random.graph}
 \title{Generate random DAGs}
 \usage{
-random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE, permute = TRUE)
+random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE,
+  permute = TRUE)
 }
 \arguments{
 \item{nnode}{Number of nodes in the graph.}
