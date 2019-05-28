@@ -17,8 +17,6 @@ Vector of \code{numeric} lambda values in fitted object.
 }
 \description{
 Extracts the lambda values from a \code{\link{sparsebnPath}} object.
-
-Extract regularization path from solution path
 }
 \section{Methods (by class)}{
 \itemize{

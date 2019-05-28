@@ -3,7 +3,6 @@
 \docType{class}
 \name{sparsebnFit}
 \alias{sparsebnFit}
-\alias{sparsebnFit}
 \alias{is.sparsebnFit}
 \alias{print.sparsebnFit}
 \alias{summary.sparsebnFit}
