@@ -11,10 +11,10 @@ openCytoscape(x, title, ...)
 
 \item{title}{A character string, this is the name you will see on the Cytoscape
 network window. Multiple windows with the same name are not
-permitted. See \code{\link[RCy3]{CytoscapeWindow}} for more
+permitted. See \code{\link[RCy3]{createNetworkFromGraph}} for more
 details.}
 
-\item{...}{Other arguments to \code{\link[RCy3]{CytoscapeWindow}}.}
+\item{...}{Other arguments to \code{\link[RCy3]{createNetworkFromGraph}}.}
 }
 \description{
 NOTE: This method is currently experimental and under development!
