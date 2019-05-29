@@ -9,3 +9,4 @@ man-roxygen
 ^\.httr-oauth$
 ^revdep$
 ^codecov\.yml$
+^CRAN-RELEASE$
