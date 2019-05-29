@@ -4,16 +4,18 @@
 \alias{random.dag}
 \title{Generate random DAGs}
 \usage{
-random.dag(nnode, nedge, FUN = NULL, ...)
+random.dag(nnode, nedge, FUN = NULL, permute = TRUE)
 }
 \arguments{
-\item{nnode}{Number of nodes in the DAG}
+\item{nnode}{Number of nodes in the DAG.}
 
-\item{nedge}{Number of edges in the DAG}
+\item{nedge}{Number of edges in the DAG.}
 
-\item{FUN}{Optional function to be used as a random number generator}
+\item{FUN}{Optional function to be used as a random number generator.}
 
-\item{...}{Additional arguments to \code{FUN}.}
+\item{permute}{If \code{TRUE}, order of nodes will be randomly permuted.
+If \code{FALSE}, output will be ordered according to its
+topological sort, i.e. with a lower-triangular adjacency matrix.}
 }
 \value{
 An (weighted) adjacency matrix.

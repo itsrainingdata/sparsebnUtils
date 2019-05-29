@@ -1,5 +1,9 @@
 context("sparsebnData")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 dat <- generate_fixed_data_frame()
 dat_na <- generate_na_data_frame()
 dat_disc <- generate_fixed_discrete_data_frame()

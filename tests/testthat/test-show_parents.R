@@ -1,5 +1,9 @@
 context("show.parents")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 sbp <- generate_nontrivial_sparsebnPath()
 
 test_that("show.parents runs without error with valid input", {

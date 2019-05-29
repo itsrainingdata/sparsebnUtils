@@ -1,5 +1,9 @@
 context("list_classes")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 test_that("list_classes behaves as expected", {
     expect_equal(list_classes(list(numeric(0), integer(0), character(0))),
                  c("numeric", "integer", "character"))

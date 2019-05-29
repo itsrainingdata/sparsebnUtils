@@ -1,5 +1,9 @@
 context("compatibility")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 sbf.empty <- generate_empty_sparsebnFit()
 sbp.empty <- generate_empty_sparsebnPath()
 sbp <- generate_fixed_sparsebnPath()

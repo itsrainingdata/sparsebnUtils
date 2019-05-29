@@ -7,3 +7,9 @@ src/*.so
 src/*.dll
 #man/*.Rd
 *.tar.gz
+
+# REVDEP CHECK
+revdep/library.noindex
+revdep/checks.noindex
+revdep/checks.rds
+*.sqlite

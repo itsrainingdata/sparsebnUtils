@@ -4,7 +4,8 @@
 \alias{random.graph}
 \title{Generate random DAGs}
 \usage{
-random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE)
+random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE,
+  permute = TRUE)
 }
 \arguments{
 \item{nnode}{Number of nodes in the graph.}
@@ -14,6 +15,10 @@ random.graph(nnode, nedge, acyclic = TRUE, loops = FALSE)
 \item{acyclic}{If \code{TRUE}, output will be an acyclic graph.}
 
 \item{loops}{If \code{TRUE}, output may include self-loops.}
+
+\item{permute}{If \code{TRUE}, order of nodes will be randomly permuted.
+If \code{FALSE}, output will be ordered according to its
+topological sort, i.e. with a lower-triangular adjacency matrix.}
 }
 \value{
 An \code{\link[sparsebnUtils]{edgeList}} object containing a list of parents for each node.

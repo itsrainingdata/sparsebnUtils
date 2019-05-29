@@ -26,9 +26,9 @@
 #' @param x A \code{\link{sparsebnFit}} object or other graph object.
 #' @param title A character string, this is the name you will see on the Cytoscape
 #'              network window. Multiple windows with the same name are not
-#'              permitted. See \code{\link[RCy3]{CytoscapeWindow}} for more
+#'              permitted. See \code{\link[RCy3]{createNetworkFromGraph}} for more
 #'              details.
-#' @param ... Other arguments to \code{\link[RCy3]{CytoscapeWindow}}.
+#' @param ... Other arguments to \code{\link[RCy3]{createNetworkFromGraph}}.
 #'
 #' @export
 openCytoscape  <- function(x, title, ...){
@@ -92,9 +92,13 @@ showCytoscape <- function(graph, title, ...){
     stopifnot(inherits(graph, "graphNEL"))
 
     ### Open cytoscape window and show graph
-    cytowin <- RCy3::CytoscapeWindow(title = title,
-                                     graph = graph,
-                                     ...)
-    RCy3::displayGraph(cytowin)
-    RCy3::layoutNetwork(cytowin, "hierarchical")
+    # cytowin <- RCy3::CytoscapeWindow(title = title,
+    #                                  graph = graph,
+    #                                  ...)
+    cytowin <- RCy3::createNetworkFromGraph(title = title,
+                                            graph = graph,
+                                            ...)
+
+    # RCy3::displayGraph(cytowin)
+    RCy3::layoutNetwork(network = cytowin, layout.name = "hierarchical")
 } # END SHOWCYTOSCAPE

@@ -1,13 +1,13 @@
 Package: sparsebnUtils
 Title: Utilities for Learning Sparse Bayesian Networks
-Version: 0.0.6
-Date: 2018-03-16
+Version: 0.0.7
+Date: 2019-05-28
 Authors@R: c(
     person("Bryon", "Aragam", email = "sparsebn@gmail.com", role = c("aut", "cre")),
     person("Jiaying", "Gu", role = c("aut"))
     )
 Maintainer: Bryon Aragam <sparsebn@gmail.com>
-Description: A set of tools for representing and estimating sparse Bayesian networks from continuous and discrete data.
+Description: A set of tools for representing and estimating sparse Bayesian networks from continuous and discrete data, as described in Aragam, Gu, and Zhou (2017) <arXiv:1703.04025>.
 Depends:
     R (>= 3.2.3)
 Imports:
@@ -26,4 +26,4 @@ Suggests:
 URL: https://github.com/itsrainingdata/sparsebnUtils
 BugReports: https://github.com/itsrainingdata/sparsebnUtils/issues
 License: GPL (>= 2)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

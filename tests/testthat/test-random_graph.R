@@ -13,3 +13,22 @@ test_that("random.graph does not produce loops", {
     expect_equivalent(diag(m), rep(0, 5))
 })
 
+test_that("random.graph works in degenerate cases", {
+    # Null graphs
+    expect_error(random.graph(1, 0), NA)
+    expect_error(random.graph(2, 0), NA)
+    expect_error(random.graph(3, 0), NA)
+    expect_error(random.graph(5, 0), NA)
+
+    # One edge
+    ### nnode = 1 can't have any edges
+    expect_error(random.graph(2, 1), NA)
+    expect_error(random.graph(3, 1), NA)
+    expect_error(random.graph(5, 1), NA)
+
+    # Max edges
+    expect_error(random.graph(1, 0), NA)
+    expect_error(random.graph(2, 1), NA)
+    expect_error(random.graph(3, 3), NA)
+    expect_error(random.graph(5, 10), NA)
+})

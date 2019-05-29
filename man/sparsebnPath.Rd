@@ -3,7 +3,6 @@
 \docType{class}
 \name{sparsebnPath}
 \alias{sparsebnPath}
-\alias{sparsebnPath}
 \alias{is.sparsebnPath}
 \alias{print.sparsebnPath}
 \alias{summary.sparsebnPath}

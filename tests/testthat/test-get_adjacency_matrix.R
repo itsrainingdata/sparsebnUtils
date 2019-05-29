@@ -1,5 +1,9 @@
 context("get.adjacency.matrix")
 
+#
+# THESE TESTS RELY ON A HELPER FILE
+#
+
 test_that("get.adjacency.matrix works on empty graphs", {
     adj <- generate_empty_adjacency_matrix()
 
