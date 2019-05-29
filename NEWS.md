@@ -1,3 +1,7 @@
+# sparsebnUtils 0.0.7
+
+* Maintenance release for R 3.6.0
+
 # sparsebnUtils 0.0.6
 
 ## Features
